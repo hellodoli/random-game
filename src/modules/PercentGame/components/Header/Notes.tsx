@@ -1,20 +1,22 @@
-import React from "react";
-import { DEFAULT_TICKET_PRICE } from "modules/PercentGame/constants";
+import React from 'react'
+import { DEFAULT_TICKET_PRICE } from 'modules/PercentGame/constants'
 
-import { Flex } from "@gapo_ui/components";
-import TicketIcon from "components/Icons/Game/Ticket";
-import CrownCoin from "components/Icons/Game/CrownCoin";
+import TicketIcon from 'components/Icons/Game/Ticket'
+import CrownCoin from 'components/Icons/Game/CrownCoin'
 
 interface Props {
-  ticketPrice?: number;
+  ticketPrice?: number
 }
 
 const Notes = ({ ticketPrice = DEFAULT_TICKET_PRICE }: Props) => {
   return (
-    <Flex
-      alignItems="center"
-      UNSAFE_className="consume-item notes"
-      marginEnd="auto"
+    <div
+      className="consume-item notes"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        marginRight: 'auto',
+      }}
     >
       <span>(</span>
       <TicketIcon size={14} marginRight={4} />
@@ -26,8 +28,8 @@ const Notes = ({ ticketPrice = DEFAULT_TICKET_PRICE }: Props) => {
         classNames="coin-icon"
       />
       <span>)</span>
-    </Flex>
-  );
-};
+    </div>
+  )
+}
 
-export default Notes;
+export default Notes

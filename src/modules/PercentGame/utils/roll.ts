@@ -18,7 +18,6 @@ export const getRandom = (
   rate: number
   type: RESULT_ROLL_TYPE
 } => {
-  let rate = 0
   let type = RESULT_ROLL_TYPE.NOTHING
   const numbers = getRateNumberArr(rates)
   const total = numbers.reduce((a, b) => a + b, 0)
@@ -40,5 +39,5 @@ export const getRandom = (
     }
     return { rate, type }
   }
-  return { rate, type }
+  return { rate: 0, type }
 }

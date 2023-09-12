@@ -1,25 +1,25 @@
-import React, { memo } from "react";
-import { GradientSet } from "types/enum/color";
-import { GRADIENT_COLOR_SET } from "modules/PercentGame/constants";
-import { ROLL_TYPE, RollResult } from "modules/PercentGame/types";
-import { DEFAULT_ROLL_TYPE } from "modules/PercentGame/constants";
+import React, { memo } from 'react'
+import { GradientColorFromTo } from 'types/enum/color'
+import { GRADIENT_COLOR_SET } from 'modules/PercentGame/constants'
+import { ROLL_TYPE, RollResult } from 'modules/PercentGame/types'
+import { DEFAULT_ROLL_TYPE } from 'modules/PercentGame/constants'
 
-import TicketIcon from "components/Icons/Game/Ticket";
-import { Button } from "antd";
+import TicketIcon from 'components/Icons/Game/Ticket'
+import { Button } from 'antd'
 
 interface Props {
-  id: number;
+  id: number
   onRoll: (
     consume: number,
     count: number,
     rates: RollResult[],
-    gradient: GradientSet
-  ) => void;
-  disabled?: boolean;
-  rollType?: ROLL_TYPE;
-  consume?: number;
-  count?: number;
-  rates: RollResult[];
+    gradient: GradientColorFromTo,
+  ) => void
+  disabled?: boolean
+  rollType?: ROLL_TYPE
+  consume?: number
+  count?: number
+  rates: RollResult[]
 }
 
 const ConSumeTicket = ({ consume = 1 }: { consume?: number }) => {
@@ -30,28 +30,27 @@ const ConSumeTicket = ({ consume = 1 }: { consume?: number }) => {
       <span className="consume-count">{`x ${consume}`}</span>
       <span>)</span>
     </span>
-  );
-};
+  )
+}
 
 const RollItem = ({
-  id,
   onRoll,
   disabled = false,
   rollType = DEFAULT_ROLL_TYPE,
   consume = 1, // ticket/roll
   count = 1, // maximum roll
-  rates
+  rates,
 }: Props) => {
-  const gradient = GRADIENT_COLOR_SET[rollType];
-  const fromColor = gradient?.FROM || GRADIENT_COLOR_SET.BRONZE.FROM;
-  const toColor = gradient?.TO || GRADIENT_COLOR_SET.BRONZE.TO;
+  const gradient = GRADIENT_COLOR_SET[rollType]
+  const fromColor = gradient?.FROM || GRADIENT_COLOR_SET.BRONZE.FROM
+  const toColor = gradient?.TO || GRADIENT_COLOR_SET.BRONZE.TO
 
-  const maxConsumeTicket = count * consume;
-  const background = `linear-gradient(to right, ${fromColor} , ${toColor})`;
+  const maxConsumeTicket = count * consume
+  const background = `linear-gradient(to right, ${fromColor} , ${toColor})`
 
   const onClickStartRoll = (consume: number, count: number) => {
-    onRoll(consume, count, rates, gradient);
-  };
+    onRoll(consume, count, rates, gradient)
+  }
 
   return (
     <div className="roll-block">
@@ -88,7 +87,7 @@ const RollItem = ({
         </strong>
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default memo(RollItem);
+export default memo(RollItem)

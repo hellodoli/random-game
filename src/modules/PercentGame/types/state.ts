@@ -1,5 +1,5 @@
 import { Prize } from './prize'
-import { GradientSet } from 'types/enum/color'
+import { GradientColorFromTo } from 'types/enum/color'
 
 export interface PercentGameState {
   money: number
@@ -10,5 +10,5 @@ export interface PercentGameState {
   setPrizes: Prize[]
   prize: Prize | null
   prizeHover: Prize | null
-  rollColorGradient: GradientSet | null
+  rollColorGradient: GradientColorFromTo | null
 }

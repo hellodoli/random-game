@@ -36,7 +36,8 @@ const TrackMouse = () => {
   }
 
   useEffect(() => {
-    const track = (event) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const track = (event: { clientY: number; clientX: any }) => {
       const threshold = 12
       const windowWidth = window.innerWidth
       const container = containerRef.current

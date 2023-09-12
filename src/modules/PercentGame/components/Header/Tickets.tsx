@@ -1,31 +1,29 @@
-import React, { memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { memo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   ticketSelector,
   moneySelector,
-  isRollingSelector
-} from "modules/PercentGame/selectors";
-import { actions } from "modules/PercentGame/slices";
+  isRollingSelector,
+} from 'modules/PercentGame/selectors'
+import { actions } from 'modules/PercentGame/slices'
 
-import { Button } from "antd";
-import { Flex } from "@gapo_ui/components";
-import {
-  IconIc24FillPlusmarkCircle as PlusIcon,
-  IconIc24FillMinusCircle as MinusIcon
-} from "@gapo_ui/icon";
-import TicketIcon from "components/Icons/Game/Ticket";
+import { Button } from 'antd'
+import TicketIcon from 'components/Icons/Game/Ticket'
 
 const Tickets = () => {
-  const dispatch = useDispatch();
-  const ticket = useSelector(ticketSelector);
-  const money = useSelector(moneySelector);
-  const isRolling = useSelector(isRollingSelector);
+  const dispatch = useDispatch()
+  const ticket = useSelector(ticketSelector)
+  const money = useSelector(moneySelector)
+  const isRolling = useSelector(isRollingSelector)
   return (
-    <Flex alignItems="center" UNSAFE_className="consume-item ticket">
+    <div
+      className="consume-item ticket"
+      style={{ display: 'flex', alignItems: 'center' }}
+    >
       <TicketIcon size={20} marginRight={4} />
       <Button
         shape="circle"
-        icon={<PlusIcon size={14} className="buy-ticket-icon" />}
+        icon={<span className="buy-ticket-icon">+</span>}
         className="buy-ticket-btn buy-ticket-add"
         onClick={() => dispatch(actions.buyTicket())}
         disabled={!money || isRolling}
@@ -34,14 +32,14 @@ const Tickets = () => {
       <span className="text number-ticket">{ticket}</span>
       <Button
         shape="circle"
-        icon={<MinusIcon size={14} className="buy-ticket-icon" />}
+        icon={<span className="buy-ticket-icon">-</span>}
         className="buy-ticket-btn buy-ticket-minus"
         onClick={() => dispatch(actions.sellTicket())}
         disabled={!ticket || isRolling}
         ghost
       ></Button>
-    </Flex>
-  );
-};
+    </div>
+  )
+}
 
-export default memo(Tickets);
+export default memo(Tickets)

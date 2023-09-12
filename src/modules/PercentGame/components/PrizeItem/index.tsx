@@ -2,8 +2,8 @@ import React, { memo } from 'react'
 import { GameIcon, Type, Shape, Gradient, GradientSet } from 'types'
 import {
   ICONS,
-  onMouseLeavePrize,
-  onMouseEnterPrize,
+  OnMouseEnterPrize,
+  OnMouseLeavePrize,
 } from 'modules/PercentGame/types'
 
 import './style.scss'
@@ -18,8 +18,8 @@ interface Props {
   number?: number
   isShowNumber?: boolean
   gap?: number
-  onMouseEnter?: onMouseEnterPrize
-  onMouseLeave?: onMouseLeavePrize
+  onMouseEnter?: OnMouseEnterPrize
+  onMouseLeave?: OnMouseLeavePrize
 }
 
 const PrizeItem = ({

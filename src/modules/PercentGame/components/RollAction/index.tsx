@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { GradientSet } from 'types/enum/color'
+import { GradientColorFromTo } from 'types/enum/color'
 import {
   isRollingSelector,
   ticketSelector,
@@ -18,10 +18,9 @@ import RollProgress from './RollProgress'
 import './style.scss'
 
 let flag = false
-let intervalProgress: any = null
+let intervalProgress: string | number | NodeJS.Timeout | undefined
 const clearProgressInterval = () => {
   clearInterval(intervalProgress)
-  intervalProgress = null
 }
 
 const RollAction = () => {
@@ -38,7 +37,7 @@ const RollAction = () => {
       consume: number,
       count: number,
       rates: RollResult[],
-      gradient: GradientSet,
+      gradient: GradientColorFromTo,
     ) => {
       if (isRolling) return
       flag = false

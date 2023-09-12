@@ -1,8 +1,8 @@
 import { GradientSet, Gradient } from 'types'
 import { ICONS } from './enum'
 
-export type onMouseEnterPrize = (prize?: Prize | null) => void
-export type onMouseLeavePrize = () => void
+export type OnMouseEnterPrize = (prize?: Prize | null) => void
+export type OnMouseLeavePrize = () => void
 
 export interface Prize {
   id: string

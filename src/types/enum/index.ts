@@ -1,3 +1,3 @@
-export * from "./icon";
-export * from "./game";
-export * from "./color";
+export * from './icon'
+export * from './game'
+export * from './color'

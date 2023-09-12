@@ -1,15 +1,11 @@
-import React from "react";
+import React, { ReactNode } from 'react'
 
-const PrizeViewWrapp: React.FC = ({
-  children
-}: {
-  children: React.ReactNode;
-}) => {
+const PrizeViewWrapp = ({ children }: { children?: ReactNode }) => {
   return (
     <div className="game-prize-section section-border" style={{ flex: 1 }}>
       <div className="game-prize-section-wrapper">{children}</div>
     </div>
-  );
-};
+  )
+}
 
-export default PrizeViewWrapp;
+export default PrizeViewWrapp

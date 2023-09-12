@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Modal } from 'antd'
-import { Flex } from '@gapo_ui/components'
 import { Backpack } from 'components/Icons/Game'
 import PrizeView from 'modules/PercentGame/components/PrizeView'
 import { SORT_TYPE } from 'modules/PercentGame/types/enum'
@@ -33,10 +32,13 @@ const Bag = ({ rounded = false }: Props) => {
   const onClick = () => setOpen(true)
 
   return (
-    <Flex
-      UNSAFE_className="consume-item bag"
-      alignItems="center"
-      marginEnd={rounded ? 10 : 0}
+    <div
+      className="consume-item bag"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        marginRight: rounded ? 10 : 0,
+      }}
     >
       <Button
         type="primary"
@@ -60,7 +62,7 @@ const Bag = ({ rounded = false }: Props) => {
       >
         <Block />
       </Modal>
-    </Flex>
+    </div>
   )
 }
 

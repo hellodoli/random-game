@@ -1,20 +1,20 @@
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Prize } from '../types'
+import { OnMouseEnterPrize, OnMouseLeavePrize } from '../types'
 import { actions } from '../slices'
 
 let timeout: NodeJS.Timeout
-let time = 0
+const time = 0
 
 const useActions = () => {
   const dispatch = useDispatch()
 
-  const onMouseEnter = useCallback((prize: Prize | null) => {
+  const onMouseEnter: OnMouseEnterPrize = useCallback((prize) => {
     clearTimeout(timeout)
     dispatch(actions.hoverPrize({ prize }))
   }, [])
 
-  const onMouseLeave = useCallback(() => {
+  const onMouseLeave: OnMouseLeavePrize = useCallback(() => {
     clearTimeout(timeout)
     const handle = () => {
       dispatch(actions.hoverPrize({ prize: null }))

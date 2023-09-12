@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { GradientSet } from 'types/enum/color'
+import { GradientColorFromTo } from 'types/enum/color'
 import {
   PercentGameState,
   RollResult,
@@ -16,7 +16,7 @@ import {
 export const rollActions = {
   startRoll: (
     state: PercentGameState,
-    action: PayloadAction<{ consume: number; gradient: GradientSet }>,
+    action: PayloadAction<{ consume: number; gradient: GradientColorFromTo }>,
   ) => {
     const { consume, gradient } = action.payload
     state.isRolling = true

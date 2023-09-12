@@ -5,8 +5,8 @@ import { showModalSuccess } from 'modules/PercentGame/utils'
 import { DEFAULT_LIST_PRIZE_OB } from 'modules/PercentGame/constants'
 import {
   Prize,
-  onMouseEnterPrize,
-  onMouseLeavePrize,
+  OnMouseEnterPrize,
+  OnMouseLeavePrize,
 } from 'modules/PercentGame/types'
 import useActions from 'modules/PercentGame/hooks/useActions'
 import PrizeItem from '../PrizeItem'
@@ -17,8 +17,8 @@ const Prizes = ({
   onMouseLeave,
 }: {
   prizes: Prize[]
-  onMouseEnter?: onMouseEnterPrize
-  onMouseLeave?: onMouseLeavePrize
+  onMouseEnter?: OnMouseEnterPrize
+  onMouseLeave?: OnMouseLeavePrize
 }) => {
   return (
     <div>
@@ -26,6 +26,7 @@ const Prizes = ({
         const { id, iconId, iconName, gradientSet, number = 1 } = prize
         return (
           <PrizeItem
+            key={id}
             id={id}
             isShowNumber={true}
             icon={DEFAULT_LIST_PRIZE_OB[iconId]['icon']}

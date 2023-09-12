@@ -1,36 +1,37 @@
-import { Modal } from "antd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Modal } from 'antd'
 
 export const showModalInfo = ({
-  title = "",
-  content = null
+  title = '',
+  content = null,
 }: {
-  title?: string;
-  content?: any;
+  title?: string
+  content?: any
 }) => {
   Modal.info({
     title,
     content,
-    onOk() {}
-  });
-};
+    onOk() {},
+  })
+}
 
 export const showModalSuccess = ({
-  title = "Success",
-  content = null
+  title = 'Success',
+  content = null,
 }: {
-  title?: string;
-  content?: any;
+  title?: string
+  content?: any
 }) => {
   Modal.success({
     title,
     content,
-    onOk() {}
-  });
-};
+    onOk() {},
+  })
+}
 
-export const showModalError = ({ title = "Error", content = null }) => {
+export const showModalError = ({ title = 'Error', content = null }) => {
   Modal.error({
     title,
-    content
-  });
-};
+    content,
+  })
+}
