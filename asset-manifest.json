@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/random-game/static/css/main.d006f80d.css",
+    "main.js": "/random-game/static/js/main.d22f9b50.js",
+    "index.html": "/random-game/index.html",
+    "main.d006f80d.css.map": "/random-game/static/css/main.d006f80d.css.map",
+    "main.d22f9b50.js.map": "/random-game/static/js/main.d22f9b50.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d006f80d.css",
+    "static/js/main.d22f9b50.js"
+  ]
+}
