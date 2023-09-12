@@ -1,0 +1,57 @@
+.game-module-percent-game {
+  height: calc(100vh - 2 * var(--body-gap));
+  --game-module-gap: 8px;
+  --coin-color: #fcd975;
+  
+  .game-module-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    background: var(--color-primary);
+    border-radius: 8px;
+    padding: var(--game-module-gap);
+    min-height: 400px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+  }
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--color-black);
+    margin: 0 calc(-1 * var(--game-module-gap));
+    padding: 0 var(--game-module-gap);
+    margin-bottom: var(--game-module-gap);
+    padding-bottom: var(--game-module-gap);
+  }
+  .section-border {
+    border: 3px solid var(--color-black);
+    & + .section-border {
+      margin-top: -3px;
+    }
+  }
+  .section-padding {
+    padding: var(--body-gap);
+  }
+  .test-view-prize-preview {
+    flex: 1;
+    padding: var(--body-gap);
+    .section-border {
+      border: none;
+    }
+  }
+  .my-bag-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: linear-gradient(to right, rgb(205, 133, 0), var(--color-secondary));
+    color: var(--color-white);
+    &:hover {
+      color: var(--color-white);
+    }
+  }
+}

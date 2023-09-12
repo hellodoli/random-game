@@ -1,0 +1,12 @@
+circle, path, text {
+  transition: all .2s easa;
+}
+
+svg.game-svg-icon {
+  fill: var(--color-white);
+  g {
+    path {
+      fill: inherit!important;
+    }
+  }
+}

@@ -1,0 +1,52 @@
+.game-rolling-area {
+  padding: var(--body-gap);
+  flex: 1;
+  .rate-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400;
+    color: var(--color-white);
+    .game-icon {
+      cursor: pointer;
+    }
+  }
+  .rate-progress {
+    margin: 8px 0;
+    &.off-transition {
+      .ant-progress-bg {
+        transition: none!important;
+      }
+    }
+    
+  }
+  .btn-roll {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-white);
+    &:hover {
+      color: var(--color-white);
+    }
+    &:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+    .consume-ticket-count {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+  .roll-block {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+  }
+}
