@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
-import { GameIcon, Type, Shape, Gradient, GradientSet } from 'types'
+import { Type, Shape, Gradient, GradientSet } from 'types'
+import { GameIcon } from 'components/Icons/types'
 import {
   ICONS,
   OnMouseEnterPrize,

@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
-import clsx from "clsx";
-import { v4 as uuidv4 } from "uuid";
-import { Gradient, Type } from "types/enum/icon";
-import { WrapperIcon } from "types/icon";
+import React, { useMemo } from 'react'
+import clsx from 'clsx'
+import { v4 as uuidv4 } from 'uuid'
+import { Gradient, Type } from 'types/enum/icon'
+import { WrapperIcon } from '../types'
 import {
   DEFAULT_BG_FILL,
   DEFAULT_WIDTH,
@@ -16,12 +16,12 @@ import {
   DEFAULT_GRADIENT_COLOR_SET,
   DEFAULT_TYPE,
   DEFAULT_FILL,
-  DEFAULT_SIZE
-} from "./constants";
+  DEFAULT_SIZE,
+} from './constants'
 
-import BgShape from "./BgShape";
-import BgGradient from "./BgGradient";
-import "./style.scss";
+import BgShape from './BgShape'
+import BgGradient from './BgGradient'
+import './style.scss'
 
 const Wrapper = ({
   children,
@@ -30,7 +30,7 @@ const Wrapper = ({
   size = DEFAULT_SIZE,
   height: heightProp = DEFAULT_HEIGHT,
   shape = DEFAULT_SHAPE,
-  classNames = "",
+  classNames = '',
   fill = DEFAULT_FILL,
   bgFill = DEFAULT_BG_FILL,
   dimension = DEFAULT_DIMENSION,
@@ -44,22 +44,22 @@ const Wrapper = ({
   marginRight = 0,
   marginTop = 0,
   marginBottom = 0,
-  onClick: onClickProp = undefined
+  onClick: onClickProp = undefined,
 }: WrapperIcon) => {
-  const gradientId = useMemo(() => `${iconName}-gradient-${uuidv4()}`, []);
+  const gradientId = useMemo(() => `${iconName}-gradient-${uuidv4()}`, [])
   const bgFillId = useMemo(() => {
-    return gradient === Gradient.PLAIN ? bgFill : `url(#${gradientId})`;
-  }, [gradient, bgFill, gradientId]);
-  const width = useMemo(() => size || widthProp, [size, widthProp]);
-  const height = useMemo(() => size || heightProp, [size, heightProp]);
+    return gradient === Gradient.PLAIN ? bgFill : `url(#${gradientId})`
+  }, [gradient, bgFill, gradientId])
+  const width = useMemo(() => size || widthProp, [size, widthProp])
+  const height = useMemo(() => size || heightProp, [size, heightProp])
   const onClick = () => {
-    if (typeof onClickProp === "function") onClickProp();
-  };
+    if (typeof onClickProp === 'function') onClickProp()
+  }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 ${dimension} ${dimension}`}
-      className={clsx("game-svg-icon", "game-icon", classNames)}
+      className={clsx('game-svg-icon', 'game-icon', classNames)}
       style={{
         width,
         height,
@@ -67,7 +67,7 @@ const Wrapper = ({
         ...(marginLeft && { marginLeft }),
         ...(marginRight && { marginRight }),
         ...(marginTop && { marginTop }),
-        ...(marginBottom && { marginBottom })
+        ...(marginBottom && { marginBottom }),
       }}
       onClick={onClick}
     >
@@ -86,7 +86,7 @@ const Wrapper = ({
       )}
       {children}
     </svg>
-  );
-};
+  )
+}
 
-export default Wrapper;
+export default Wrapper

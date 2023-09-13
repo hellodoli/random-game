@@ -1,6 +1,6 @@
-import React from "react";
-import IconWrapper from "components/Icons/Wrapper";
-import { GameIcon } from "types";
+import React from 'react'
+import IconWrapper from 'components/Icons/Wrapper'
+import { GameIcon } from '../types'
 
 const OysterPearl = (props: GameIcon) => {
   return (
@@ -13,7 +13,7 @@ const OysterPearl = (props: GameIcon) => {
         ></path>
       </g>
     </IconWrapper>
-  );
-};
+  )
+}
 
-export default OysterPearl;
+export default OysterPearl

@@ -1,51 +1,51 @@
-import React from "react";
-import { Gradient, GradientSet } from "types/enum/icon";
-import { BackgroundGradient as BgGradientProps } from "types/icon";
+import React from 'react'
+import { Gradient, GradientSet } from 'types/enum/icon'
+import { BackgroundGradient } from '../types'
 import {
   DEFAULT_GRADIENT,
   DEFAULT_FROM_COLOR,
   DEFAULT_TO_COLOR,
   DEFAULT_GRADIENT_COLOR_SET,
-  GRADIENT_COLOR_SET
-} from "./constants";
+  GRADIENT_COLOR_SET,
+} from './constants'
 
 const getGradientSet = (
   gradientSet = GradientSet.BRONZE,
-  fromColor = "",
-  toColor = ""
+  fromColor = '',
+  toColor = '',
 ) => {
   switch (gradientSet) {
     case GradientSet.BRONZE:
-      return GRADIENT_COLOR_SET.BRONZE;
+      return GRADIENT_COLOR_SET.BRONZE
     case GradientSet.SILVER:
-      return GRADIENT_COLOR_SET.SILVER;
+      return GRADIENT_COLOR_SET.SILVER
     case GradientSet.GOLD:
-      return GRADIENT_COLOR_SET.GOLD;
+      return GRADIENT_COLOR_SET.GOLD
     case GradientSet.DIAMOND:
-      return GRADIENT_COLOR_SET.DIAMOND;
+      return GRADIENT_COLOR_SET.DIAMOND
     case GradientSet.CUSTOM: {
       return {
         FROM: fromColor,
-        TO: toColor
-      };
+        TO: toColor,
+      }
     }
     default:
-      return GRADIENT_COLOR_SET.BRONZE;
+      return GRADIENT_COLOR_SET.BRONZE
   }
-};
+}
 
 const BgGradient = ({
-  gradientId = "",
+  gradientId = '',
   gradient = DEFAULT_GRADIENT,
   gradientSet = DEFAULT_GRADIENT_COLOR_SET,
   fromColor: fromColorProp = DEFAULT_FROM_COLOR,
-  toColor: toColorProp = DEFAULT_TO_COLOR
-}: BgGradientProps) => {
+  toColor: toColorProp = DEFAULT_TO_COLOR,
+}: BackgroundGradient) => {
   const { FROM: fromColor, TO: toColor } = getGradientSet(
     gradientSet,
     fromColorProp,
-    toColorProp
-  );
+    toColorProp,
+  )
   switch (gradient) {
     case Gradient.HORIZONTAL: {
       return (
@@ -55,7 +55,7 @@ const BgGradient = ({
             <stop offset="100%" stopColor={toColor} stopOpacity={1} />
           </linearGradient>
         </defs>
-      );
+      )
     }
     case Gradient.RADIAL: {
       return (
@@ -65,11 +65,11 @@ const BgGradient = ({
             <stop offset="100%" stopColor={toColor} stopOpacity={1} />
           </radialGradient>
         </defs>
-      );
+      )
     }
     default:
-      return null;
+      return null
   }
-};
+}
 
-export default BgGradient;
+export default BgGradient

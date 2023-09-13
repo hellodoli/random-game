@@ -1,6 +1,6 @@
-import React from "react";
-import IconWrapper from "components/Icons/Wrapper";
-import { GameIcon } from "types";
+import React from 'react'
+import IconWrapper from 'components/Icons/Wrapper'
+import { GameIcon } from '../types'
 
 const Emerald = (props: GameIcon) => {
   return (
@@ -13,7 +13,7 @@ const Emerald = (props: GameIcon) => {
         ></path>
       </g>
     </IconWrapper>
-  );
-};
+  )
+}
 
-export default Emerald;
+export default Emerald

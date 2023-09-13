@@ -1,3 +1,2 @@
-export * from "./enum";
-export * from "./RootState";
-export * from "./icon";
+export * from './enum'
+export * from './RootState'
