@@ -7,14 +7,7 @@ import './style.scss'
 const GameHeader = () => {
   return (
     <div className="game-header">
-      <div
-        className="consume"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexGrow: 1,
-        }}
-      >
+      <div className="consume">
         <Notes />
         <Money />
         <Tickets />

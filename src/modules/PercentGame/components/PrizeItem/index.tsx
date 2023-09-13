@@ -58,7 +58,7 @@ const PrizeItem = ({
       onMouseLeave={onMouseLeave}
     >
       <Icon
-        size={32}
+        size={48}
         type={Type.GRADIENT}
         shape={Shape.ROUNDED_SQUARE}
         gradient={gradient}

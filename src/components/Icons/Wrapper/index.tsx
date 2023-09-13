@@ -47,14 +47,13 @@ const Wrapper = ({
   onClick: onClickProp = undefined,
 }: WrapperIcon) => {
   const gradientId = useMemo(() => `${iconName}-gradient-${uuidv4()}`, [])
-  const bgFillId = useMemo(() => {
-    return gradient === Gradient.PLAIN ? bgFill : `url(#${gradientId})`
-  }, [gradient, bgFill, gradientId])
+  const bgFillId = useMemo(
+    () => (gradient === Gradient.PLAIN ? bgFill : `url(#${gradientId})`),
+    [gradient, bgFill, gradientId],
+  )
   const width = useMemo(() => size || widthProp, [size, widthProp])
   const height = useMemo(() => size || heightProp, [size, heightProp])
-  const onClick = () => {
-    if (typeof onClickProp === 'function') onClickProp()
-  }
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +68,7 @@ const Wrapper = ({
         ...(marginTop && { marginTop }),
         ...(marginBottom && { marginBottom }),
       }}
-      onClick={onClick}
+      onClick={() => onClickProp?.()}
     >
       {type === Type.GRADIENT && gradient !== Gradient.PLAIN && (
         <BgGradient
