@@ -15,6 +15,7 @@ const initialState: PercentGameState = {
   prize: null,
   prizeHover: null,
   rollColorGradient: GRADIENT_COLOR_SET.BRONZE,
+  slots: [null, null, null, null],
 }
 
 export { initialState }

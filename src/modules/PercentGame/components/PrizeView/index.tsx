@@ -1,8 +1,9 @@
 import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
-import { GradientSet, Gradient } from 'types'
+import clsx from 'clsx'
 import { getIconPrize } from 'modules/PercentGame/utils'
 import { prizesSelector } from 'modules/PercentGame/selectors'
+import { IconSize, OnSelectPrize } from 'modules/PercentGame/types'
 import useActions from 'modules/PercentGame/hooks/useActions'
 
 import PrizeItem from '../PrizeItem'
@@ -11,41 +12,42 @@ import './style.scss'
 
 interface Props {
   gap?: number
+  isBorderWrapper?: boolean
+  iconSize?: IconSize
+  onClick?: OnSelectPrize
 }
 
-const PrizeView = ({ gap = 4 }: Props) => {
+const View = ({
+  gap = 4,
+  isBorderWrapper = true,
+  iconSize = 'medium',
+  onClick,
+}: Props) => {
   const prizes = useSelector(prizesSelector)
   const { onMouseEnter, onMouseLeave } = useActions()
 
   return (
-    <div className="game-prize-section section-border">
+    <div
+      className={clsx('game-prize-section', {
+        'section-border': isBorderWrapper,
+      })}
+    >
       <div
         className="game-prize-section-wrapper"
         style={{ margin: `calc(${-1 * gap}px)` }}
       >
         {prizes.map((prize) => {
-          const {
-            id,
-            iconId,
-            gradient = Gradient.HORIZONTAL,
-            gradientSet = GradientSet.BRONZE,
-            number = 1,
-            iconName,
-          } = prize
           return (
             <PrizeItem
-              key={id}
-              id={id}
-              gradient={gradient}
-              gradientSet={gradientSet}
-              number={number}
-              icon={getIconPrize(iconId)}
-              iconId={iconId}
-              iconName={iconName}
+              key={prize.id}
+              {...prize}
+              icon={getIconPrize(prize.iconId)}
+              iconSize={iconSize}
               gap={gap / 2}
               isHoverView={true}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
+              onClick={onClick}
             />
           )
         })}
@@ -54,5 +56,7 @@ const PrizeView = ({ gap = 4 }: Props) => {
   )
 }
 
-export { PrizeViewWrapp }
-export default memo(PrizeView)
+const PrizeView = memo(View)
+
+export { PrizeViewWrapp, PrizeView }
+export default PrizeView

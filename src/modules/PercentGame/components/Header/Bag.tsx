@@ -22,7 +22,6 @@ const Bag = ({ rounded = false }: Props) => {
         type="primary"
         shape="circle"
         icon={<Backpack width={20} height={20} classNames="my-bag-icon" />}
-        size="middle"
         className="my-bag-btn btn-item-action"
         onClick={onClick}
         style={{

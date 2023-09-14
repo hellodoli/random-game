@@ -1,4 +1,4 @@
-import { Prize } from './prize'
+import { Prize, Slots } from './prize'
 import { GradientColorFromTo } from 'types/enum/color'
 
 export interface PercentGameState {
@@ -11,4 +11,5 @@ export interface PercentGameState {
   prize: Prize | null
   prizeHover: Prize | null
   rollColorGradient: GradientColorFromTo | null
+  slots: Slots
 }

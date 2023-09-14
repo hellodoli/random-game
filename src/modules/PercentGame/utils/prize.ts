@@ -31,9 +31,10 @@ const getGradientSet = (type: RESULT_ROLL_TYPE = RESULT_ROLL_TYPE.BRONZE) => {
   }
 }
 
-const isSamePrize = (myPrize: Prize, newPrize: Prize) => {
+export const isSamePrize = (myPrize: Prize, newPrize: Prize) => {
   if (
     myPrize.iconId === newPrize.iconId &&
+    myPrize?.gradient === newPrize?.gradient &&
     myPrize?.gradientSet === newPrize?.gradientSet
   )
     return true

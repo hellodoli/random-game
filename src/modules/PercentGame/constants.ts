@@ -1,4 +1,7 @@
-import { GRADIENT_COLOR_SET } from '../../constants'
+import {
+  GRADIENT_COLOR_SET,
+  GRADIENT_COLOR_SET_FROM_ENUM,
+} from '../../constants'
 import { GameIcon } from 'components/Icons/types'
 import {
   ROLL_TYPE,
@@ -13,7 +16,7 @@ import {
   PowerRing,
 } from 'components/Icons/Jewellery'
 
-export { GRADIENT_COLOR_SET }
+export { GRADIENT_COLOR_SET, GRADIENT_COLOR_SET_FROM_ENUM }
 
 /**
  * default state value

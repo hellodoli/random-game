@@ -1,7 +1,18 @@
-.game-module-percent-game {
-  height: calc(100vh - 2 * var(--body-gap));
+.game-module-percent-game,
+.game-module-percent-game-modal {
   --game-module-gap: 8px;
   --coin-color: #fcd975;
+
+  .section-border {
+    border: 3px solid var(--color-black);
+  }
+  .section-padding {
+    padding: var(--body-gap);
+  }
+}
+
+.game-module-percent-game {
+  height: calc(100vh - 2 * var(--body-gap));
 
   .game-module-wrapper {
     display: flex;
@@ -27,12 +38,8 @@
     padding-bottom: var(--game-module-gap);
   }
   .section-border {
-    border: 3px solid var(--color-black);
     & + .section-border {
       margin-top: -3px;
     }
-  }
-  .section-padding {
-    padding: var(--body-gap);
   }
 }

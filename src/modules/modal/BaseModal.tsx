@@ -7,9 +7,16 @@ interface Props {
   onClose: () => void
   // optional
   centered?: boolean
+  className?: string
 }
 
-const BaseModal = ({ children, isOpen, onClose, centered = true }: Props) => {
+const BaseModal = ({
+  children,
+  isOpen,
+  onClose,
+  centered = true,
+  className = '',
+}: Props) => {
   const onOk = useCallback(() => {
     onClose()
   }, [])
@@ -26,6 +33,7 @@ const BaseModal = ({ children, isOpen, onClose, centered = true }: Props) => {
       onCancel={onCancel}
       closable={false}
       cancelButtonProps={{ style: { display: 'none' } }}
+      className={className}
     >
       {children}
     </Modal>

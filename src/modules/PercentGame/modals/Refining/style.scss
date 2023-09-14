@@ -1,0 +1,33 @@
+.percent-game-refening-menu {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  gap: 8px;
+  .menu-left {
+    flex: 0 0 60%;
+    max-width: 60%;
+    padding: var(--game-module-gap);
+  }
+  .menu-right {
+    flex: 0 0 40%;
+    max-width: 40%;
+    padding: var(--game-module-gap);
+  }
+  .forge-wrapper {
+    margin: 0 auto;
+    max-width: 104px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .forge-action {
+    margin-top: 10px;
+    & > * {
+      margin-top: 4px;
+    }
+    .merge-rate {
+      text-align: center;
+      font-size: 20px;
+    }
+  }
+}

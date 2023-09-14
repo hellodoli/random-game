@@ -29,6 +29,11 @@ export const prizesSelector = createSelector(
   (state) => state.prizes,
 )
 
+export const slotsSelector = createSelector(
+  [selectSlice],
+  (state) => state.slots,
+)
+
 export const prizeSelector = createSelector(
   [selectSlice],
   (state) => state.prize,

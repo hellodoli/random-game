@@ -5,6 +5,7 @@ import {
   ICONS,
   OnMouseEnterPrize,
   OnMouseLeavePrize,
+  OnSelectPrize,
   IconSize,
 } from 'modules/PercentGame/types'
 import { getIconSize } from 'modules/PercentGame/utils'
@@ -28,6 +29,7 @@ interface Props {
   isHoverView?: boolean
   onMouseEnter?: OnMouseEnterPrize
   onMouseLeave?: OnMouseLeavePrize
+  onClick?: OnSelectPrize
 }
 
 const PrizeItem = ({
@@ -47,6 +49,7 @@ const PrizeItem = ({
   isHoverView = false,
   onMouseEnter: onMouseEnterProp,
   onMouseLeave: onMouseLeaveProp,
+  onClick,
 }: Props) => {
   const onMouseEnter = () => {
     if (isHoverView && onMouseEnterProp) {
@@ -68,6 +71,7 @@ const PrizeItem = ({
       style={{ margin: `${gap}px` }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onClick={() => onClick?.(id)}
     >
       <Icon
         size={getIconSize(iconSize)}
