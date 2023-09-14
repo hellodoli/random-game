@@ -1,42 +1,20 @@
-import React, { memo, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { Button, Modal } from 'antd'
+import React, { memo } from 'react'
+import { Button } from 'antd'
+import modal from 'modules/modal/provider'
 import { Backpack } from 'components/Icons/Game'
-import PrizeView from 'modules/PercentGame/components/PrizeView'
-import { SORT_TYPE } from 'modules/PercentGame/types/enum'
-import { actions } from 'modules/PercentGame/slices'
 
 interface Props {
   rounded?: boolean
 }
 
-const Block = () => {
-  const dispatch = useDispatch()
-  const sort = (sortType: SORT_TYPE) => {
-    dispatch(actions.sortPrize({ type: sortType }))
-  }
-  return (
-    <div>
-      <PrizeView />
-      <div>
-        <br />
-        <button onClick={() => sort(SORT_TYPE.DOWN_TO)}>Sort down </button>{' '}
-        <button onClick={() => sort(SORT_TYPE.UP_TO)}>Sort up </button>
-      </div>
-    </div>
-  )
-}
-
 const Bag = ({ rounded = false }: Props) => {
-  const [open, setOpen] = useState(false)
-  const onClick = () => setOpen(true)
-
+  const onClick = () => {
+    modal.percentGame.openBag()
+  }
   return (
     <div
       className="consume-item bag"
       style={{
-        display: 'flex',
-        alignItems: 'center',
         marginRight: rounded ? 10 : 0,
       }}
     >
@@ -49,19 +27,9 @@ const Bag = ({ rounded = false }: Props) => {
         onClick={onClick}
         style={{
           width: rounded ? 'auto' : '100%',
-          borderRadius: rounded ? '50%' : '20px',
+          borderRadius: rounded ? '50%' : '4px',
         }}
       />
-      <Modal
-        open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
-        centered={true}
-        closable={false}
-        cancelButtonProps={{ style: { display: 'none' } }}
-      >
-        <Block />
-      </Modal>
     </div>
   )
 }

@@ -6,7 +6,8 @@ import { actions } from './slices'
 import Header from './components/Header'
 import RollAction from './components/RollAction'
 import TrackMousePointer from './components/TrackMousePointer'
-import Bag from './components/Header/Bag'
+import Menu from './components/Menu'
+
 import './style.scss'
 
 const PercentGame = () => {
@@ -22,9 +23,7 @@ const PercentGame = () => {
       <div className="game-module-wrapper section-border">
         <TrackMousePointer />
         <Header />
-        <div className="test-view-prize-preview section-border">
-          <Bag />
-        </div>
+        <Menu />
         <RollAction />
       </div>
     </div>

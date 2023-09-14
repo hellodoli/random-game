@@ -34,6 +34,8 @@ const Prizes = ({
             number={number}
             iconId={iconId}
             iconName={iconName}
+            gap={2}
+            isHoverView={true}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
           />

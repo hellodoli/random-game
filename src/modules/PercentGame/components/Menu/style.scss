@@ -1,0 +1,15 @@
+.game-menu-area {
+  flex: 1;
+  padding: var(--body-gap);
+  .section-border {
+    border: none;
+  }
+  .consume-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    & + .consume-item {
+      margin-top: 8px;
+    }
+  }
+}

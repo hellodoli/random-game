@@ -1,6 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import { GradientSet, Gradient } from 'types'
-import { RESULT_ROLL_TYPE, Prize, ICONS } from 'modules/PercentGame/types'
+import {
+  RESULT_ROLL_TYPE,
+  Prize,
+  ICONS,
+  IconSize,
+} from 'modules/PercentGame/types'
 import {
   DEFAULT_LIST_PRIZE_ARR,
   DEFAULT_LIST_PRIZE_OB,
@@ -81,4 +86,17 @@ export const getPrize = (type = RESULT_ROLL_TYPE.BRONZE) => {
 
 export const getIconPrize = (iconId: ICONS) => {
   return DEFAULT_LIST_PRIZE_OB[iconId]['icon']
+}
+
+export const getIconSize = (iconSize: IconSize) => {
+  switch (iconSize) {
+    case 'big':
+      return 80
+    case 'medium':
+      return 56
+    case 'small':
+      return 28
+    default:
+      return iconSize
+  }
 }

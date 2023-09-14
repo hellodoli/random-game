@@ -43,6 +43,7 @@ const PrizeView = ({ gap = 4 }: Props) => {
               iconId={iconId}
               iconName={iconName}
               gap={gap / 2}
+              isHoverView={true}
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
             />

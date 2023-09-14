@@ -2,7 +2,7 @@
   height: calc(100vh - 2 * var(--body-gap));
   --game-module-gap: 8px;
   --coin-color: #fcd975;
-  
+
   .game-module-wrapper {
     display: flex;
     flex-direction: column;
@@ -34,24 +34,5 @@
   }
   .section-padding {
     padding: var(--body-gap);
-  }
-  .test-view-prize-preview {
-    flex: 1;
-    padding: var(--body-gap);
-    .section-border {
-      border: none;
-    }
-  }
-  .my-bag-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: none;
-    background: linear-gradient(to right, rgb(205, 133, 0), var(--color-secondary));
-    color: var(--color-white);
-    &:hover {
-      color: var(--color-white);
-    }
   }
 }

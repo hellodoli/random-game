@@ -5,7 +5,9 @@ import {
   ICONS,
   OnMouseEnterPrize,
   OnMouseLeavePrize,
+  IconSize,
 } from 'modules/PercentGame/types'
+import { getIconSize } from 'modules/PercentGame/utils'
 
 import './style.scss'
 
@@ -16,9 +18,14 @@ interface Props {
   iconName: string
   gradientSet?: GradientSet
   gradient?: Gradient
+  iconSize?: IconSize
+  // quatity
   number?: number
   isShowNumber?: boolean
+  // item spacing
   gap?: number
+  // hover option
+  isHoverView?: boolean
   onMouseEnter?: OnMouseEnterPrize
   onMouseLeave?: OnMouseLeavePrize
 }
@@ -28,16 +35,21 @@ const PrizeItem = ({
   icon: Icon,
   iconId,
   iconName,
+  iconSize = 'medium',
   gradientSet = GradientSet.BRONZE,
   gradient = Gradient.HORIZONTAL,
+  // quatity
   number = 1,
   isShowNumber = true,
-  gap = 2,
+  // item spacing
+  gap = 0,
+  // hover option
+  isHoverView = false,
   onMouseEnter: onMouseEnterProp,
   onMouseLeave: onMouseLeaveProp,
 }: Props) => {
   const onMouseEnter = () => {
-    if (onMouseEnterProp) {
+    if (isHoverView && onMouseEnterProp) {
       onMouseEnterProp({
         id,
         iconId,
@@ -48,7 +60,7 @@ const PrizeItem = ({
     }
   }
   const onMouseLeave = () => {
-    if (onMouseLeaveProp) onMouseLeaveProp()
+    if (isHoverView && onMouseLeaveProp) onMouseLeaveProp()
   }
   return (
     <div
@@ -58,7 +70,7 @@ const PrizeItem = ({
       onMouseLeave={onMouseLeave}
     >
       <Icon
-        size={48}
+        size={getIconSize(iconSize)}
         type={Type.GRADIENT}
         shape={Shape.ROUNDED_SQUARE}
         gradient={gradient}

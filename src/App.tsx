@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { GAME_TYPE } from 'types/enum'
 import { gameSelector } from 'selectors'
-import { PercentGame, MainMenu } from './modules'
+import { PercentGame, MainMenu, Modals } from './modules'
 
 function App() {
   const game = useSelector(gameSelector)
@@ -16,6 +16,7 @@ function App() {
   }
   return (
     <div className="App main">
+      <Modals />
       <MainMenu />
       {/* Module games */}
       {renderGameModule()}
