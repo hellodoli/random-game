@@ -2,6 +2,7 @@ import {
   DEFAULT_MONEY,
   DEFAULT_TICKET_NUMBER,
   GRADIENT_COLOR_SET,
+  DEFAULT_SLOTS,
 } from 'modules/PercentGame/constants'
 import { PercentGameState } from 'modules/PercentGame/types/state'
 import { getRandomPrizes } from 'modules/PercentGame/utils/prize'
@@ -16,7 +17,7 @@ const initialState: PercentGameState = {
   prize: null,
   prizeHover: null,
   rollColorGradient: GRADIENT_COLOR_SET.BRONZE,
-  slots: [null, null, null, null],
+  slots: DEFAULT_SLOTS,
 }
 
 export { initialState }

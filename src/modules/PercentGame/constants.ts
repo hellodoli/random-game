@@ -3,7 +3,7 @@ import {
   GRADIENT_COLOR_SET_FROM_ENUM,
 } from '../../constants'
 import { GradientSet } from 'types'
-import { ROLL_TYPE, RESULT_ROLL_TYPE } from 'modules/PercentGame/types'
+import { ROLL_TYPE, RESULT_ROLL_TYPE, Slots } from 'modules/PercentGame/types'
 
 export * from './data'
 export { GRADIENT_COLOR_SET, GRADIENT_COLOR_SET_FROM_ENUM }
@@ -59,3 +59,4 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
 ]
 export const DEFAULT_HIGHEST_GRADIENT_SET = GradientSet.DIAMOND
+export const DEFAULT_SLOTS: Slots = [null, null, null, null]

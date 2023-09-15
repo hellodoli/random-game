@@ -26,12 +26,31 @@ const ItemHolder = ({ iconSize, gap }: Props) => (
 const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
   const dispatch = useDispatch()
   const slots = useSelector(slotsSelector)
-  const [loading /*setLoading*/] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { isMerge, rate, randomMergeResult, resultPrizeWhenMergeSameIcon } =
     useMemo(() => getMerge(slots), [slots])
   const maxWidth = (iconSize + 8 + gap * 2) * 2
   const isEnable = isMerge
   const disabled = !isEnable || loading
+
+  const clearAnimationToast = () => {
+    const toaster = document.getElementById('forgeToaster')
+    if (toaster) {
+      toaster.classList.remove('animate__fadeInUp')
+      toaster.classList.remove('text-success')
+      toaster.classList.remove('text-fail')
+      toaster.innerHTML = ''
+    }
+  }
+
+  const showToastAfterMerge = (isSuccess: boolean) => {
+    const toaster = document.getElementById('forgeToaster')
+    if (toaster) {
+      toaster.innerHTML = isSuccess ? 'Success!!' : 'Fail!!'
+      toaster.classList.add('animate__fadeInUp')
+      toaster.classList.add(`text-${isSuccess ? 'success' : 'fail'}`)
+    }
+  }
 
   const onUnselectPrize = useCallback((id: string) => {
     dispatch(actions.unSelectPrizeForRefining({ id }))
@@ -39,7 +58,19 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
 
   const onMerge = () => {
     if (loading) return
-    alert('Comming soon ^^!!')
+    setLoading(true)
+    const cb = (isSuccess: boolean) => {
+      setLoading(false)
+      showToastAfterMerge(isSuccess)
+    }
+    dispatch(
+      actions.mergeRefining({
+        rate,
+        randomMergeResult,
+        resultPrizeWhenMergeSameIcon,
+        cb,
+      }),
+    )
   }
 
   return (
@@ -96,6 +127,13 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
         >
           Merge
         </Button>
+      </div>
+      <div className="forge-toast">
+        <span
+          id="forgeToaster"
+          className="forge-toast-text animate__animated animate__fast"
+          onAnimationEnd={clearAnimationToast}
+        ></span>
       </div>
     </>
   )

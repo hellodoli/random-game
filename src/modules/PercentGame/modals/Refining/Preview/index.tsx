@@ -1,8 +1,8 @@
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { GradientSet } from 'types'
 import { Slots, Prize } from 'modules/PercentGame/types'
 import { getIconPrize } from 'modules/PercentGame/utils'
+import { getNextGradientSet } from 'modules/PercentGame/utils/merge'
 import PrizeItem from 'modules/PercentGame/components/PrizeItem'
 import { PerspectiveDice6FacesRandom } from 'components/Icons/Game'
 
@@ -20,19 +20,6 @@ const ItemHolder = () => {
       <div style={{ width: 60, height: 60 }} />
     </div>
   )
-}
-
-const getGradientSetNext = (gradientSet: GradientSet) => {
-  switch (gradientSet) {
-    case GradientSet.BRONZE:
-      return GradientSet.SILVER
-    case GradientSet.SILVER:
-      return GradientSet.GOLD
-    case GradientSet.GOLD:
-      return GradientSet.DIAMOND
-    default:
-      return gradientSet
-  }
 }
 
 const Preview = ({
@@ -64,7 +51,7 @@ const Preview = ({
             : getIconPrize(prize.iconId)
         }
         iconSize={60}
-        gradientSet={getGradientSetNext(prize.gradientSet)}
+        gradientSet={getNextGradientSet(prize.gradientSet)}
         isHoverView={false}
         isShowNumber={false}
       />

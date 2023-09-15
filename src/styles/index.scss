@@ -3,6 +3,52 @@
 @import 'buttons.scss';
 @import 'modal.scss';
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+:root {
+  --animate-duration: 1s;
+  --animate-delay: 1s;
+  --animate-repeat: 1;
+}
+.animate__animated {
+  animation-duration: 1s;
+  animation-duration: var(--animate-duration);
+  animation-fill-mode: both;
+}
+.animate__animated.animate__infinite {
+  animation-iteration-count: infinite;
+}
+.animate__fadeInUp {
+  animation-name: fadeInUp;
+}
+.animate__animated.animate__faster {
+  animation-duration: calc(1s / 2);
+  animation-duration: calc(var(--animate-duration) / 2);
+}
+.animate__animated.animate__fast {
+  animation-duration: calc(1s * 0.8);
+  animation-duration: calc(var(--animate-duration) * 0.8);
+}
+.animate__animated.animate__slow {
+  animation-duration: calc(1s * 2);
+  animation-duration: calc(var(--animate-duration) * 2);
+}
+.animate__animated.animate__slower {
+  animation-duration: calc(1s * 3);
+  animation-duration: calc(var(--animate-duration) * 3);
+}
+
 .main {
   .play-game-btn,
   .back-to-btn {
@@ -23,7 +69,11 @@
     line-height: 40px;
     min-width: 180px;
     color: var(--color-primary);
-    background: linear-gradient(to right, var(--color-secondary) , var(--color-primary));
+    background: linear-gradient(
+      to right,
+      var(--color-secondary),
+      var(--color-primary)
+    );
   }
   .back-to-btn {
     position: fixed;

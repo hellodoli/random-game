@@ -4,6 +4,7 @@
   width: 100%;
   .menu-left {
     flex: 1;
+    position: relative;
     padding: var(--game-module-gap);
     min-width: calc(100% - 176px);
     max-width: calc(100% - 176px);
@@ -21,6 +22,41 @@
     @media (max-width: 576px) {
       max-width: 118px;
       min-width: 118px;
+    }
+  }
+  .forge-toast {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    pointer-events: none;
+  }
+  .forge-toast-text {
+    position: relative;
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      bottom: 0;
+      border-radius: 8px;
+      background: #000;
+      opacity: 0.15;
+    }
+    &.text-success {
+      color: #c90f03;
+    }
+    &.text-fail {
+      color: rgba(0, 0, 0, 0.8);
     }
   }
   .forge-wrapper {
@@ -42,6 +78,7 @@
     padding: var(--game-module-gap);
     border-radius: 4px;
     border: 3px dashed var(--color-primary);
+
     @media (max-width: 576px) {
       flex-wrap: wrap;
       flex-direction: column;

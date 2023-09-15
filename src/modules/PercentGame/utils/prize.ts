@@ -116,3 +116,7 @@ export const getRandomPrizes = () => {
   }
   return prizes
 }
+
+export const getFilterNumberZeroPrizes = (prizes: Prize[]) => {
+  return prizes.filter((prize) => !!(prize.number || 0))
+}

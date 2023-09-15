@@ -12,11 +12,11 @@ interface MergeInfoProps {
   isMergeSameIconType?: boolean
 }
 
-const getLevel = (gradientSet: GradientSet) => {
+export const getLevel = (gradientSet: GradientSet) => {
   return parseInt(`${gradientSet}`)
 }
 
-const getPrizesFromSlots = (slots: Slots) => {
+export const getPrizesFromSlots = (slots: Slots) => {
   const slotsPrize = slots.filter((slot) => slot) as Prize[]
   return slotsPrize
 }
@@ -29,7 +29,7 @@ export const isIncludeHighestLevel = (slots: Slots) => {
   )
 }
 
-const getPrizeResultWhenMergeSameIcon = (slots: Slots) => {
+export const getPrizeResultWhenMergeSameIcon = (slots: Slots) => {
   let slot: Prize | null = null
   const slotsPrize = getPrizesFromSlots(slots)
   if (slotsPrize.length) {
@@ -46,7 +46,31 @@ const getPrizeResultWhenMergeSameIcon = (slots: Slots) => {
     slotsPrize,
     prize: slot,
     gradientSet: slot ? slot.gradientSet : null,
-    level: slot ? parseInt(`${slot.gradientSet}`) : -1,
+    level: slot ? getLevel(slot.gradientSet) : -1,
+  }
+}
+
+export const getPrizeResultWhenMergeRandom = (slots: Slots) => {
+  let slot: Prize | null = null
+  const slotsPrize = getPrizesFromSlots(slots)
+  if (slotsPrize.length) {
+    const listLevel: number[] = []
+    const listRandomPrize: Prize[] = []
+    slotsPrize.forEach((prize) => {
+      const level = getLevel(prize.gradientSet)
+      if (!listLevel.includes(level)) {
+        listRandomPrize.push(prize)
+      }
+    })
+    const index = Math.floor(Math.random() * listRandomPrize.length)
+    slot = listRandomPrize[index]
+  }
+
+  return {
+    slotsPrize,
+    prize: slot,
+    gradientSet: slot ? slot.gradientSet : null,
+    level: slot ? getLevel(slot.gradientSet) : -1,
   }
 }
 
@@ -175,5 +199,18 @@ export const getMerge = (slots: Slots) => {
     rate,
     randomMergeResult,
     resultPrizeWhenMergeSameIcon,
+  }
+}
+
+export const getNextGradientSet = (gradientSet: GradientSet) => {
+  switch (gradientSet) {
+    case GradientSet.BRONZE:
+      return GradientSet.SILVER
+    case GradientSet.SILVER:
+      return GradientSet.GOLD
+    case GradientSet.GOLD:
+      return GradientSet.DIAMOND
+    default:
+      return gradientSet
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { Toaster } from 'react-hot-toast'
 import { GAME_TYPE } from 'types/enum'
 import { gameSelector } from 'selectors'
 import { PercentGame, MainMenu, Modals } from './modules'
@@ -17,6 +18,7 @@ function App() {
   return (
     <div className="App main">
       <Modals />
+      <Toaster />
       <MainMenu />
       {/* Module games */}
       {renderGameModule()}
