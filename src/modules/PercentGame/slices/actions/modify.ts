@@ -133,6 +133,7 @@ export const modifyActions = {
 
     if (!isSuccess) {
       state.slots = DEFAULT_SLOTS
+      state.prizes = getFilterNumberZeroPrizes(state.prizes)
       cb(false)
       return
     }
