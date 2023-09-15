@@ -101,3 +101,18 @@ export const getIconSize = (iconSize: IconSize) => {
       return iconSize
   }
 }
+
+export const getRandomPrizes = () => {
+  let prizes: Prize[] = []
+  const resultsType = [
+    RESULT_ROLL_TYPE.GOLD,
+    RESULT_ROLL_TYPE.SILVER,
+    RESULT_ROLL_TYPE.BRONZE,
+  ]
+  for (let i = 0; i < 200; i++) {
+    const resultType = getRandomItemFromList(resultsType)
+    const newPrize = getPrize(resultType)
+    prizes = getMergePrizeSameType(prizes, newPrize).prizes
+  }
+  return prizes
+}

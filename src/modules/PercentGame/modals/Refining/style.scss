@@ -2,16 +2,26 @@
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
-  gap: 8px;
   .menu-left {
-    flex: 0 0 60%;
-    max-width: 60%;
+    flex: 1;
     padding: var(--game-module-gap);
+    min-width: calc(100% - 176px);
+    max-width: calc(100% - 176px);
+    @media (max-width: 576px) {
+      min-width: calc(100% - 126px);
+      max-width: calc(100% - 126px);
+    }
   }
   .menu-right {
-    flex: 0 0 40%;
-    max-width: 40%;
+    flex: none;
+    min-width: 168px;
+    max-width: 168px;
     padding: var(--game-module-gap);
+    margin-left: 8px;
+    @media (max-width: 576px) {
+      max-width: 118px;
+      min-width: 118px;
+    }
   }
   .forge-wrapper {
     margin: 0 auto;
@@ -25,9 +35,59 @@
     & > * {
       margin-top: 4px;
     }
-    .merge-rate {
-      text-align: center;
-      font-size: 20px;
+  }
+  .forge-preview {
+    margin-top: 40px;
+    display: flex;
+    padding: var(--game-module-gap);
+    border-radius: 4px;
+    border: 3px dashed var(--color-primary);
+    @media (max-width: 576px) {
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+    .game-prize-item {
+      border-color: var(--color-primary);
+    }
+    .preview-info {
+      flex: 1;
+      margin-left: 10px;
+      .preview-name,
+      .preview-rate {
+        margin: 0;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        & > .label {
+          margin-right: 4px;
+        }
+      }
+      .preview-name {
+        flex: 1;
+        min-height: 32px;
+        white-space: nowrap;
+        overflow: hidden;
+        & > .icon-preview-name {
+          font-weight: bold;
+          color: var(--color-primary);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      .preview-rate {
+        margin-top: 2px;
+        min-height: 32px;
+        & > .rate {
+          font-size: 20px;
+          font-weight: bold;
+          color: var(--color-secondary);
+        }
+      }
+      @media (max-width: 576px) {
+        margin-left: 0;
+      }
     }
   }
 }

@@ -4,5 +4,14 @@ import Help from './Help'
 import CrownCoin from './CrownCoin'
 import Knapsack from './Knapsack'
 import ScrollUnfurled from './ScrollUnfurled'
+import PerspectiveDice6FacesRandom from './PerspectiveDice6FacesRandom'
 
-export { Backpack, Ticket, Help, CrownCoin, Knapsack, ScrollUnfurled }
+export {
+  Backpack,
+  Ticket,
+  Help,
+  CrownCoin,
+  Knapsack,
+  ScrollUnfurled,
+  PerspectiveDice6FacesRandom,
+}

@@ -2,52 +2,16 @@ import React, { useCallback, useMemo, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { Button } from 'antd'
-import { GradientSet, Gradient } from 'types'
 import { slotsSelector } from 'modules/PercentGame/selectors'
-import PrizeItem from 'modules/PercentGame/components/PrizeItem'
-import { Slots } from 'modules/PercentGame/types'
-import {
-  GRADIENT_COLOR_SET_FROM_ENUM,
-  GRADIENT_COLOR_SET,
-} from 'modules/PercentGame/constants'
 import { actions } from 'modules/PercentGame/slices'
 import { getIconPrize } from 'modules/PercentGame/utils'
-
-const mergeRate = 89 / 100
+import { getMerge } from 'modules/PercentGame/utils/merge'
+import PrizeItem from 'modules/PercentGame/components/PrizeItem'
+import Preview from '../Preview'
 
 interface Props {
   iconSize: number
   gap: number
-}
-
-const getSlotMergeEnable = (slots: Slots) => {
-  let isEnable = false
-  let isMergeSameIconType = false
-  let background = ''
-
-  if (!slots.includes(null)) {
-    const slot = slots?.[0]
-    const iconId = slot?.iconId || ''
-    const gra = slot?.gradient || Gradient.HORIZONTAL
-    const graSet = slot?.gradientSet || GradientSet.BRONZE
-    const isSameSet = slots.every(
-      (slot) => slot?.gradientSet === graSet && slot?.gradient === gra,
-    )
-    if (isSameSet) {
-      isEnable = true
-      isMergeSameIconType = slots.every((slot) => slot?.iconId === iconId)
-      const gradient = GRADIENT_COLOR_SET_FROM_ENUM[graSet]
-      const fromColor = gradient?.FROM || GRADIENT_COLOR_SET.BRONZE.FROM
-      const toColor = gradient?.TO || GRADIENT_COLOR_SET.BRONZE.TO
-      background = `linear-gradient(to right, ${fromColor} , ${toColor})`
-    }
-  }
-
-  return {
-    isEnable,
-    background,
-    isMergeSameIconType,
-  }
 }
 
 const ItemHolder = ({ iconSize, gap }: Props) => (
@@ -63,10 +27,10 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
   const dispatch = useDispatch()
   const slots = useSelector(slotsSelector)
   const [loading /*setLoading*/] = useState(false)
-  const { isEnable, background } = useMemo(() => {
-    return getSlotMergeEnable(slots)
-  }, [slots])
+  const { isMerge, rate, randomMergeResult, resultPrizeWhenMergeSameIcon } =
+    useMemo(() => getMerge(slots), [slots])
   const maxWidth = (iconSize + 8 + gap * 2) * 2
+  const isEnable = isMerge
   const disabled = !isEnable || loading
 
   const onUnselectPrize = useCallback((id: string) => {
@@ -76,10 +40,6 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
   const onMerge = () => {
     if (loading) return
     // setLoading(true)
-    const d = Math.random()
-    if (d < mergeRate) {
-      // merge success
-    }
   }
 
   return (
@@ -104,9 +64,13 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
         })}
       </div>
       <div className="forge-action">
-        <div className="merge-rate">
-          {isEnable ? `${mergeRate * 100}%` : ''}
-        </div>
+        <Preview
+          rate={rate}
+          isMerge={isMerge}
+          randomMergeResult={randomMergeResult}
+          slots={slots}
+          resultPrizeWhenMergeSameIcon={resultPrizeWhenMergeSameIcon}
+        />
         <Button
           type="primary"
           className={clsx({
@@ -114,21 +78,15 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
           })}
           disabled={disabled}
           style={{
-            background: !disabled ? '' : 'rgba(0, 0, 0, 0.45)',
-            opacity: !disabled ? 0.8 : 1,
-          }}
-          block
-        >
-          Preview
-        </Button>
-        <Button
-          type="primary"
-          className={clsx({
-            'is-disable': disabled,
-          })}
-          disabled={disabled}
-          style={{
-            background: !disabled ? background : 'rgba(0, 0, 0, 0.45)',
+            marginTop: 20,
+            textTransform: 'uppercase',
+            fontSize: 20,
+            fontWeight: 'bold',
+            height: 60,
+            borderRadius: 40,
+            background: !disabled
+              ? 'linear-gradient(to right, var(--color-primary), var(--color-secondary))'
+              : 'rgba(0, 0, 0, 0.45)',
           }}
           block
           onClick={onMerge}
