@@ -1,2 +1,4 @@
 # random-game
-Created with CodeSandbox
+Random reward game and more.
+
+Link demo: https://hellodoli.github.io/random-game
