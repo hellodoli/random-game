@@ -13,12 +13,12 @@ const Menu = () => {
   const props = { iconSize, gap }
 
   const onSelecPrize = useCallback((id: string) => {
-    dispatch(actions.selectPrizeForRefining({ id }))
+    dispatch(actions.selectPrizeForMerge({ id }))
   }, [])
 
   useEffect(() => {
     return () => {
-      dispatch(actions.resetRefining())
+      dispatch(actions.resetMerge())
     }
   }, [])
 

@@ -127,4 +127,39 @@
       }
     }
   }
+  .forege-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .actions {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .action-row {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      user-select: none;
+    }
+    .action-checkbox {
+      margin-right: 8px;
+    }
+    .result-prize > .game-prize-item {
+      position: relative;
+      border-color: var(--color-primary);
+    }
+  }
+  .btn-merge {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    height: 60px;
+    border: none;
+    border-radius: 40px;
+    box-shadow:
+      rgba(0, 0, 0, 0.16) 0px 3px 6px,
+      rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
 }

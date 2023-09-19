@@ -3,8 +3,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { Slots, Prize } from 'modules/PercentGame/types'
 import { getIconPrize } from 'modules/PercentGame/utils'
 import { getNextGradientSet } from 'modules/PercentGame/utils/merge'
-import PrizeItem from 'modules/PercentGame/components/PrizeItem'
 import { PerspectiveDice6FacesRandom } from 'components/Icons/Game'
+import PrizeItem from 'modules/PercentGame/components/PrizeItem'
+import SlotHolder from '../SlotHolder'
 
 interface Props {
   isMerge?: boolean
@@ -12,14 +13,6 @@ interface Props {
   resultPrizeWhenMergeSameIcon?: Prize | null
   rate: number
   slots: Slots
-}
-
-const ItemHolder = () => {
-  return (
-    <div className="game-prize-item game-prize-item--holder">
-      <div style={{ width: 60, height: 60 }} />
-    </div>
-  )
 }
 
 const Preview = ({
@@ -32,7 +25,7 @@ const Preview = ({
   const successRate = isMerge ? `${rate * 100}%` : ''
 
   const renderPreviewItem = () => {
-    if (!isMerge) return <ItemHolder />
+    if (!isMerge) return <SlotHolder iconSize={60} gap={0} />
     const prize =
       randomMergeResult && slots
         ? slots[0]

@@ -4,7 +4,7 @@ import {
   GRADIENT_COLOR_SET,
   DEFAULT_SLOTS,
 } from 'modules/PercentGame/constants'
-import { PercentGameState } from 'modules/PercentGame/types/state'
+import { MERGE_STATUS, PercentGameState } from '../types'
 import { getRandomPrizes } from 'modules/PercentGame/utils/prize'
 
 const initialState: PercentGameState = {
@@ -18,6 +18,10 @@ const initialState: PercentGameState = {
   prizeHover: null,
   rollColorGradient: GRADIENT_COLOR_SET.BRONZE,
   slots: DEFAULT_SLOTS,
+  mergeStatus: MERGE_STATUS.PREPARE,
+  mergeActions: {
+    pickUpPrizeToBagAfterMerge: false,
+  },
 }
 
 export { initialState }

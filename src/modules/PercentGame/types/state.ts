@@ -1,5 +1,10 @@
 import { Prize, Slots } from './prize'
 import { GradientColorFromTo } from 'types/enum/color'
+import { MERGE_STATUS } from './enum'
+
+export interface MergeActions {
+  pickUpPrizeToBagAfterMerge: boolean
+}
 
 export interface PercentGameState {
   money: number
@@ -12,4 +17,6 @@ export interface PercentGameState {
   prizeHover: Prize | null
   rollColorGradient: GradientColorFromTo | null
   slots: Slots
+  mergeStatus: MERGE_STATUS
+  mergeActions: MergeActions
 }
