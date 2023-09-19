@@ -73,3 +73,18 @@ export const colorGradientSelector = createSelector(
   [selectSlice],
   (state) => state.rollColorGradient,
 )
+
+export const mergeStatusSelector = createSelector(
+  [selectSlice],
+  (state) => state.mergeStatus,
+)
+
+export const mergeActionsSelector = createSelector(
+  [selectSlice],
+  (state) => state.mergeActions,
+)
+
+export const pickUpPrizeAfterMergeSelector = createSelector(
+  [selectSlice],
+  (state) => state.mergeActions?.pickUpPrizeToBagAfterMerge || false,
+)

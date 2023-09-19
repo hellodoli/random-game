@@ -1,7 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 import { GradientSet } from 'types'
-import { SORT_TYPE, Prize, PercentGameState } from 'modules/PercentGame/types'
+import {
+  SORT_TYPE,
+  Prize,
+  PercentGameState,
+  MERGE_STATUS,
+  MergeActions,
+} from 'modules/PercentGame/types'
 import {
   isSamePrize,
   getMergePrizeSameType,
@@ -44,7 +50,8 @@ export const modifyActions = {
     const { prize = null } = action.payload
     state.prizeHover = prize
   },
-  selectPrizeForRefining: (
+  // merge prize
+  selectPrizeForMerge: (
     state: PercentGameState,
     action: PayloadAction<{ id: string }>,
   ) => {
@@ -54,9 +61,8 @@ export const modifyActions = {
     const isFullSlot = !state.slots.includes(null)
     if (prize && !isFullSlot && prizeCount > 0) {
       const emptySlotIndex = state.slots.indexOf(null)
-      if (emptySlotIndex >= 0) {
+      if (emptySlotIndex >= 0)
         state.slots[emptySlotIndex] = { ...prize, id: uuidv4(), number: 1 }
-      }
       state.prizes = state.prizes.map((prize) => {
         if (prize.id === id) {
           let number = prizeCount
@@ -69,9 +75,10 @@ export const modifyActions = {
         }
         return prize
       })
+      state.mergeStatus = MERGE_STATUS.PREPARE
     }
   },
-  unSelectPrizeForRefining: (
+  unSelectPrizeForMerge: (
     state: PercentGameState,
     action: PayloadAction<{ id: string }>,
   ) => {
@@ -84,7 +91,6 @@ export const modifyActions = {
         if (selectPrize.id === slot?.id) index = i
       })
       if (index >= 0) state.slots[index] = null
-
       state.prizes = state.prizes.map((prize) => {
         if (isSamePrize(prize, selectPrize)) {
           return {
@@ -94,9 +100,18 @@ export const modifyActions = {
         }
         return prize
       })
+      state.mergeStatus = MERGE_STATUS.PREPARE
     }
   },
-  resetRefining: (state: PercentGameState) => {
+  selectResultPrize: (
+    state: PercentGameState,
+    action: PayloadAction<{ prize: Prize }>,
+  ) => {
+    const { prize } = action.payload
+    state.prizes = getMergePrizeSameType(state.prizes, prize).prizes
+    state.mergeStatus = MERGE_STATUS.INITITAL
+  },
+  resetMerge: (state: PercentGameState) => {
     const slots = state.slots.filter((slot) => slot) as Prize[]
     if (slots.length) {
       const prizes = [...state.prizes]
@@ -111,15 +126,16 @@ export const modifyActions = {
         })
       })
       state.slots = DEFAULT_SLOTS
+      state.mergeStatus = MERGE_STATUS.INITITAL
     }
   },
-  mergeRefining: (
+  merge: (
     state: PercentGameState,
     action: PayloadAction<{
       rate: number
       randomMergeResult: boolean
       resultPrizeWhenMergeSameIcon: Prize | null
-      cb: (isSuccess: boolean) => void
+      cb: (isSuccess: boolean, prize: Prize | null) => void
     }>,
   ) => {
     const {
@@ -128,18 +144,18 @@ export const modifyActions = {
       resultPrizeWhenMergeSameIcon: prizeWhenMergeSameIcon,
       cb,
     } = action.payload
-    let newPrize: Prize | null = null
     const isSuccess = rate === 1 ? true : Math.random() <= rate
 
     if (!isSuccess) {
       state.slots = DEFAULT_SLOTS
       state.prizes = getFilterNumberZeroPrizes(state.prizes)
-      cb(false)
+      state.mergeStatus = MERGE_STATUS.MERGE_FAILED
+      cb(false, null)
       return
     }
 
     // create new prize
-    const createNewPrize = (prize: Prize | null) => {
+    const createNewPrize = (prize: Prize | null): Prize | null => {
       if (prize) {
         return {
           ...prize,
@@ -149,19 +165,29 @@ export const modifyActions = {
       }
       return null
     }
-    if (randomMergeResult) {
-      const { prize } = getPrizeResultWhenMergeRandom([...state.slots])
-      newPrize = createNewPrize(prize)
-    } else {
-      newPrize = createNewPrize(prizeWhenMergeSameIcon)
-    }
+    const newPrize = randomMergeResult
+      ? createNewPrize(getPrizeResultWhenMergeRandom([...state.slots]).prize)
+      : createNewPrize(prizeWhenMergeSameIcon)
 
     // merge new prize to exist prizes
     if (newPrize) {
-      const newPrizes = getMergePrizeSameType(state.prizes, newPrize).prizes
+      const { pickUpPrizeToBagAfterMerge: autoPickUp } = state.mergeActions
       state.slots = DEFAULT_SLOTS
+      const newPrizes = autoPickUp
+        ? getMergePrizeSameType(state.prizes, newPrize).prizes
+        : state.prizes
       state.prizes = getFilterNumberZeroPrizes(newPrizes)
+      state.mergeStatus = MERGE_STATUS.MERGE_SUCCESS
     }
-    cb(true)
+    cb(true, newPrize)
+  },
+  changeMergeActions: (
+    state: PercentGameState,
+    action: PayloadAction<{
+      mergeActions: Partial<MergeActions>
+    }>,
+  ) => {
+    const { mergeActions } = action.payload
+    state.mergeActions = { ...state.mergeActions, ...mergeActions }
   },
 }

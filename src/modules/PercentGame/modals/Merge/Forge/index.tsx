@@ -1,31 +1,27 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import clsx from 'clsx'
 import { Button } from 'antd'
+import { Prize } from 'modules/PercentGame/types'
 import { slotsSelector } from 'modules/PercentGame/selectors'
 import { actions } from 'modules/PercentGame/slices'
 import { getIconPrize } from 'modules/PercentGame/utils'
 import { getMerge } from 'modules/PercentGame/utils/merge'
 import PrizeItem from 'modules/PercentGame/components/PrizeItem'
-import Preview from '../Preview'
+import Preview from './Preview'
+import SlotHolder from './SlotHolder'
+import ForgeToast, { showToast as showToastAfterMerge } from './Toast'
+import Result, { ResultRef } from './Result'
 
 interface Props {
   iconSize: number
   gap: number
 }
 
-const ItemHolder = ({ iconSize, gap }: Props) => (
-  <div
-    className="game-prize-item game-prize-item--holder"
-    style={{ margin: `${gap}px` }}
-  >
-    <div style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
-  </div>
-)
-
 const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
   const dispatch = useDispatch()
   const slots = useSelector(slotsSelector)
+  const resultRef = useRef<ResultRef>(null)
   const [loading, setLoading] = useState(false)
   const { isMerge, rate, randomMergeResult, resultPrizeWhenMergeSameIcon } =
     useMemo(() => getMerge(slots), [slots])
@@ -33,42 +29,28 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
   const isEnable = isMerge
   const disabled = !isEnable || loading
 
-  const clearAnimationToast = () => {
-    const toaster = document.getElementById('forgeToaster')
-    if (toaster) {
-      toaster.classList.remove('animate__fadeInUp')
-      toaster.classList.remove('text-success')
-      toaster.classList.remove('text-fail')
-      toaster.innerHTML = ''
-    }
-  }
-
-  const showToastAfterMerge = (isSuccess: boolean) => {
-    const toaster = document.getElementById('forgeToaster')
-    if (toaster) {
-      toaster.innerHTML = isSuccess ? 'Success!!' : 'Fail!!'
-      toaster.classList.add('animate__fadeInUp')
-      toaster.classList.add(`text-${isSuccess ? 'success' : 'fail'}`)
-    }
-  }
+  const onHandleMergeCallback = useCallback(
+    (isSuccess: boolean, prize: Prize | null) => {
+      setLoading(false)
+      showToastAfterMerge(isSuccess)
+      resultRef.current?.changePrize(prize)
+    },
+    [],
+  )
 
   const onUnselectPrize = useCallback((id: string) => {
-    dispatch(actions.unSelectPrizeForRefining({ id }))
+    dispatch(actions.unSelectPrizeForMerge({ id }))
   }, [])
 
   const onMerge = () => {
     if (loading) return
     setLoading(true)
-    const cb = (isSuccess: boolean) => {
-      setLoading(false)
-      showToastAfterMerge(isSuccess)
-    }
     dispatch(
-      actions.mergeRefining({
+      actions.merge({
         rate,
         randomMergeResult,
         resultPrizeWhenMergeSameIcon,
-        cb,
+        cb: onHandleMergeCallback,
       }),
     )
   }
@@ -78,7 +60,7 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
       <div className="forge-wrapper" style={{ maxWidth: `${maxWidth}px` }}>
         {slots.map((slot, index) => {
           if (!slot)
-            return <ItemHolder key={index} iconSize={iconSize} gap={gap} />
+            return <SlotHolder key={index} iconSize={iconSize} gap={gap} />
           const prize = slot
           return (
             <PrizeItem
@@ -94,6 +76,7 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
           )
         })}
       </div>
+      <Result ref={resultRef} iconSize={iconSize} />
       <div className="forge-action">
         <Preview
           rate={rate}
@@ -104,23 +87,15 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
         />
         <Button
           type="primary"
-          className={clsx({
+          className={clsx('btn-merge', {
             'is-disable': disabled,
           })}
           disabled={disabled}
           style={{
             marginTop: 20,
-            textTransform: 'uppercase',
-            fontSize: 20,
-            fontWeight: 'bold',
-            height: 60,
-            border: 'none',
-            borderRadius: 40,
             background: !disabled
               ? 'linear-gradient(to right, var(--color-primary), var(--color-secondary))'
               : 'rgba(0, 0, 0, 0.45)',
-            boxShadow:
-              'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
           }}
           block
           onClick={onMerge}
@@ -128,13 +103,7 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
           Merge
         </Button>
       </div>
-      <div className="forge-toast">
-        <span
-          id="forgeToaster"
-          className="forge-toast-text animate__animated animate__fast"
-          onAnimationEnd={clearAnimationToast}
-        ></span>
-      </div>
+      <ForgeToast />
     </>
   )
 }

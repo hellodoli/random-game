@@ -5,6 +5,7 @@ import CrownCoin from './CrownCoin'
 import Knapsack from './Knapsack'
 import ScrollUnfurled from './ScrollUnfurled'
 import PerspectiveDice6FacesRandom from './PerspectiveDice6FacesRandom'
+import WingedSword from './WingedSword'
 
 export {
   Backpack,
@@ -14,4 +15,5 @@ export {
   Knapsack,
   ScrollUnfurled,
   PerspectiveDice6FacesRandom,
+  WingedSword,
 }
