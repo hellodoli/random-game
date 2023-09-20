@@ -126,8 +126,8 @@ export const modifyActions = {
         })
       })
       state.slots = DEFAULT_SLOTS
-      state.mergeStatus = MERGE_STATUS.INITITAL
     }
+    state.mergeStatus = MERGE_STATUS.INITITAL
   },
   merge: (
     state: PercentGameState,
