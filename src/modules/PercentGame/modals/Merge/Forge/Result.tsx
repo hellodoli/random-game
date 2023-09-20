@@ -5,6 +5,7 @@ import React, {
   useState,
   useCallback,
   useEffect,
+  useRef,
 } from 'react'
 import clsx from 'clsx'
 import { useSelector, useDispatch } from 'react-redux'
@@ -37,6 +38,7 @@ const Result = forwardRef<ResultRef, Props>((props, ref) => {
   const [prizeResult, setPrizeResult] = useState<Prize | null>(null)
   const isShowPrizeResult =
     !!prizeResult && !isPickUp && mergeStatus === MERGE_STATUS.MERGE_SUCCESS
+  const cache = useRef({ prizeResult })
 
   useImperativeHandle(
     ref,
@@ -48,11 +50,16 @@ const Result = forwardRef<ResultRef, Props>((props, ref) => {
     [isPickUp],
   )
 
-  const onSelectResultPrize = useCallback(() => {
-    if (!prizeResult) return
-    dispatch(actions.selectResultPrize({ prize: prizeResult }))
-    setPrizeResult(null)
-  }, [prizeResult])
+  const onSelectResultPrize = useCallback(
+    (id: string = '') => {
+      const { prizeResult: prizeResultInput } = cache.current
+      const prize = id ? prizeResult : prizeResultInput
+      if (!prize) return
+      dispatch(actions.selectResultPrize({ prize }))
+      setPrizeResult(null)
+    },
+    [prizeResult],
+  )
 
   const renderMergeResult = () => {
     const size = iconSize * 1.5
@@ -71,11 +78,20 @@ const Result = forwardRef<ResultRef, Props>((props, ref) => {
   }
 
   useEffect(() => {
-    if (mergeStatus === MERGE_STATUS.PREPARE && prizeResult) {
-      console.log('>>> quiet select result prize !!!')
-      onSelectResultPrize()
-    }
+    cache.current.prizeResult = prizeResult
+  }, [prizeResult])
+
+  useEffect(() => {
+    const isPrepare = mergeStatus === MERGE_STATUS.PREPARE
+    if (isPrepare && prizeResult) onSelectResultPrize(prizeResult.id)
   }, [mergeStatus, prizeResult])
+
+  useEffect(() => {
+    return () => {
+      const { prizeResult } = cache.current
+      if (prizeResult) onSelectResultPrize()
+    }
+  }, [])
 
   return (
     <div className="forege-result">
