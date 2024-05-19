@@ -19,7 +19,9 @@ const Bag = ({
   shape = 'default',
 }: Props) => {
   const onClick = () => {
-    modal.percentGame.openBag()
+    modal.percentGame.openBag({
+      maskClosable: false,
+    })
   }
   return (
     <Button

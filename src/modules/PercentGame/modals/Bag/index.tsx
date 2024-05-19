@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import modal from 'modules/modal/provider'
-import { BaseModalProps, BaseModal, useModal } from 'modules/modal'
+import { BaseModalProps, Modal } from 'modules/modal'
 import { SORT_TYPE } from 'modules/PercentGame/types/enum'
 import { actions } from 'modules/PercentGame/slices'
 
@@ -9,7 +9,7 @@ import { Button } from 'antd'
 import { ScrollUnfurled } from 'components/Icons/Game'
 import PrizeView from 'modules/PercentGame/components/PrizeView'
 
-const MyBag = () => {
+const InsideMyBag = () => {
   const dispatch = useDispatch()
   const sort = (sortType: SORT_TYPE) => {
     dispatch(actions.sortPrize({ type: sortType }))
@@ -56,19 +56,12 @@ const MyBag = () => {
   )
 }
 
-const OpenBag = (props: BaseModalProps) => {
-  const { type: modalType } = props
-  const { isOpen, onClose, modalExtraProps } = useModal(modalType)
+const Bag = ({ type: modalType }: BaseModalProps) => {
   return (
-    <BaseModal
-      isOpen={isOpen}
-      onClose={onClose}
-      modalExtraProps={modalExtraProps}
-      className="game-module-percent-game-modal"
-    >
-      <MyBag />
-    </BaseModal>
+    <Modal modalType={modalType} className="game-module-percent-game-modal">
+      <InsideMyBag />
+    </Modal>
   )
 }
 
-export default OpenBag
+export default Bag

@@ -1,17 +1,7 @@
-import React, { ReactNode, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { Modal } from 'antd'
-import { ModalExtraProps } from './types'
+import { BaseModalCompProps } from './types'
 import { MODAL_EXTRA_PROPS_DEFAULT } from './constants'
-
-interface Props {
-  children?: ReactNode
-  isOpen: boolean
-  onClose: () => void
-  // optional
-  centered?: boolean
-  className?: string
-  modalExtraProps?: ModalExtraProps
-}
 
 const BaseModal = ({
   children,
@@ -20,7 +10,7 @@ const BaseModal = ({
   centered = true,
   className = '',
   modalExtraProps = MODAL_EXTRA_PROPS_DEFAULT,
-}: Props) => {
+}: BaseModalCompProps) => {
   const {
     maskClosable = MODAL_EXTRA_PROPS_DEFAULT.maskClosable,
     closable = MODAL_EXTRA_PROPS_DEFAULT.closable,

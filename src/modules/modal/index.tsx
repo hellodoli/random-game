@@ -7,6 +7,7 @@ import { MODAL_TYPE } from './constants'
 import { showModal } from './helper'
 import { allViews } from './modalViews'
 import BaseModal from './BaseModal'
+import Modal from './Modal'
 
 const Modals = () => {
   useModalSlice()
@@ -24,4 +25,4 @@ const Modals = () => {
 }
 
 export * from './types'
-export { Modals, BaseModal, MODAL_TYPE, showModal, useModal }
+export { Modals, BaseModal, Modal, MODAL_TYPE, showModal, useModal }
