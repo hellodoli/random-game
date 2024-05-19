@@ -9,6 +9,10 @@
   .section-padding {
     padding: var(--body-gap);
   }
+  .section-rounded {
+    border-radius: 8px;
+    padding: 10px;
+  }
 }
 
 .game-module-percent-game {

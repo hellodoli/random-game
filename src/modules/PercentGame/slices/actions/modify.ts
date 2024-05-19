@@ -1,6 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
-import { GradientSet } from 'types'
 import {
   SORT_TYPE,
   Prize,
@@ -17,31 +16,17 @@ import {
   getNextGradientSet,
   getPrizeResultWhenMergeRandom,
 } from 'modules/PercentGame/utils/merge'
-import { DEFAULT_SLOTS } from 'modules/PercentGame/constants'
-
-const getFilterPrize = (prizes: Prize[], gradientSet: GradientSet) => {
-  return prizes.filter((prize) => prize.gradientSet === gradientSet)
-}
-
-const getPrizeGroup = (prizes: Prize[]) => {
-  return {
-    diamond: getFilterPrize(prizes, GradientSet.DIAMOND),
-    gold: getFilterPrize(prizes, GradientSet.GOLD),
-    silver: getFilterPrize(prizes, GradientSet.SILVER),
-    bronze: getFilterPrize(prizes, GradientSet.BRONZE),
-  }
-}
+import { getSortPrizes } from 'modules/PercentGame/utils/sort'
+import { DEFAULT_SLOTS, DEFAULT_SORT } from 'modules/PercentGame/constants'
 
 export const modifyActions = {
   sortPrize: (
     state: PercentGameState,
     action: PayloadAction<{ type?: SORT_TYPE }>,
   ) => {
-    const { type = SORT_TYPE.DOWN_TO } = action.payload
-    const { diamond, gold, silver, bronze } = getPrizeGroup(state.prizes)
-    if (type === SORT_TYPE.DOWN_TO)
-      state.prizes = [...diamond, ...gold, ...silver, ...bronze]
-    else state.prizes = [...bronze, ...silver, ...gold, ...diamond]
+    const { type = DEFAULT_SORT } = action.payload
+    const sortPrizes = getSortPrizes(state.prizes, type)
+    state.prizes = sortPrizes
   },
   hoverPrize: (
     state: PercentGameState,

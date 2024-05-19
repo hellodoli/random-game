@@ -2,8 +2,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { GradientSet, Gradient } from 'types'
 import {
   RESULT_ROLL_TYPE,
-  Prize,
   ICONS,
+  Prize,
   IconSize,
 } from 'modules/PercentGame/types'
 import {

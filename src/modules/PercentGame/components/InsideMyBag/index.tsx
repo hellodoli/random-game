@@ -1,18 +1,13 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 import modal from 'modules/modal/provider'
-import { SORT_TYPE } from 'modules/PercentGame/types/enum'
-import { actions } from 'modules/PercentGame/slices'
 
 import { Button } from 'antd'
 import { ScrollUnfurled } from 'components/Icons/Game'
 import PrizeView from 'modules/PercentGame/components/PrizeView'
 
+import Filters from './Filters'
+
 const InsideMyBag = () => {
-  const dispatch = useDispatch()
-  const sort = (sortType: SORT_TYPE) => {
-    dispatch(actions.sortPrize({ type: sortType }))
-  }
   const onOpenRefining = () => {
     modal.percentGame.refining({
       maskClosable: false,
@@ -20,21 +15,16 @@ const InsideMyBag = () => {
   }
   return (
     <div>
-      <PrizeView isBorderWrapper={false} />
-      <div
-        className="section-border"
-        style={{
-          marginTop: 20,
-          borderRadius: 8,
-          padding: 10,
-        }}
-      >
+      <Filters />
+      <div style={{ marginTop: 20, marginBottom: 20 }}>
+        <PrizeView isBorderWrapper={false} />
+      </div>
+      <div className="section-border section-rounded">
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '4px',
-            flexGrow: 1,
           }}
         >
           <Button
@@ -43,12 +33,11 @@ const InsideMyBag = () => {
             icon={<ScrollUnfurled size={24} />}
             onClick={onOpenRefining}
           />
-          <Button type="primary" onClick={() => sort(SORT_TYPE.UP_TO)}>
-            Sort up
-          </Button>
-          <Button type="primary" onClick={() => sort(SORT_TYPE.DOWN_TO)}>
-            Sort down
-          </Button>
+          <Button
+            type="primary"
+            className="btn-item-action"
+            onClick={onOpenRefining}
+          />
         </div>
       </div>
     </div>
