@@ -15,7 +15,9 @@ const MyBag = () => {
     dispatch(actions.sortPrize({ type: sortType }))
   }
   const onOpenRefining = () => {
-    modal.percentGame.refining()
+    modal.percentGame.refining({
+      maskClosable: false,
+    })
   }
   return (
     <div>
@@ -56,11 +58,12 @@ const MyBag = () => {
 
 const OpenBag = (props: BaseModalProps) => {
   const { type: modalType } = props
-  const { isOpen, onClose } = useModal(modalType)
+  const { isOpen, onClose, modalExtraProps } = useModal(modalType)
   return (
     <BaseModal
       isOpen={isOpen}
       onClose={onClose}
+      modalExtraProps={modalExtraProps}
       className="game-module-percent-game-modal"
     >
       <MyBag />

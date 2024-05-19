@@ -1,6 +1,16 @@
+import { ModalExtraProps } from './types'
+import { getMergeModalName } from './helper'
+
+const modalPercentGame = getMergeModalName('PERCENT_GAME', [
+  'OPEN_BAG',
+  'REFINING',
+])
+
 export const MODAL_TYPE = {
-  PERCENT_GAME: {
-    OPEN_BAG: 'OPEN_BAG',
-    REFINING: 'REFINING',
-  },
+  ...modalPercentGame.list,
+}
+
+export const MODAL_EXTRA_PROPS_DEFAULT: ModalExtraProps = {
+  maskClosable: true,
+  closable: false,
 }

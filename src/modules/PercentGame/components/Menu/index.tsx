@@ -7,7 +7,9 @@ import './style.scss'
 
 const Menu = () => {
   const onClickOpenMerge = () => {
-    modal.percentGame.refining()
+    modal.percentGame.refining({
+      maskClosable: false,
+    })
   }
   return (
     <div className="game-menu-area section-border">
