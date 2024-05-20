@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import store from './configStore'
 import App from './App'
 import 'antd/dist/reset.css'
+import './tailwind.css'
 import './styles/index.scss'
 console.log('init')
 console.log({ store: store.getState() })

@@ -9,6 +9,8 @@ import {
 import {
   DEFAULT_LIST_PRIZE_ARR,
   DEFAULT_LIST_PRIZE_OB,
+  DEFAULT_ITEM_RANDOM_TYPE,
+  DEFAULT_ITEM_RANDOM_NUMBER,
 } from 'modules/PercentGame/constants'
 
 function getRandomItemFromList<Type>(items: Type[] = []): Type {
@@ -104,12 +106,8 @@ export const getIconSize = (iconSize: IconSize) => {
 
 export const getRandomPrizes = () => {
   let prizes: Prize[] = []
-  const resultsType = [
-    RESULT_ROLL_TYPE.GOLD,
-    RESULT_ROLL_TYPE.SILVER,
-    RESULT_ROLL_TYPE.BRONZE,
-  ]
-  for (let i = 0; i < 200; i++) {
+  const resultsType = DEFAULT_ITEM_RANDOM_TYPE
+  for (let i = 0; i < DEFAULT_ITEM_RANDOM_NUMBER; i++) {
     const resultType = getRandomItemFromList(resultsType)
     const newPrize = getPrize(resultType)
     prizes = getMergePrizeSameType(prizes, newPrize).prizes
