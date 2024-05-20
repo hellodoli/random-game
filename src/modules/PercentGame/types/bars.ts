@@ -5,4 +5,4 @@ export interface SortPrize {
   value: SORT_TYPE
 }
 
-export type SortPrizeSelect = SortPrize[]
+export type ListSortPrizeArr = SortPrize[]

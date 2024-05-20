@@ -8,7 +8,7 @@ import Header from './components/Header'
 import RollAction from './components/RollAction'
 import TrackMousePointer from './components/TrackMousePointer'
 import Menu from './components/Menu'
-import StartInfo from './components/StartInfo'
+import StartInfo from './components/Guide/StartInfo'
 
 import './style.scss'
 

@@ -10,7 +10,7 @@ import {
   SORT_TYPE,
   /* interface */
   Slots,
-  SortPrizeSelect,
+  ListSortPrizeArr,
 } from './types'
 
 export * from './data'
@@ -75,7 +75,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
 export const DEFAULT_HIGHEST_GRADIENT_SET = GradientSet.DIAMOND
 export const DEFAULT_SLOTS: Slots = [null, null, null, null]
 export const DEFAULT_SORT = SORT_TYPE.UP_TO
-export const DEFAULT_SORT_PRIZE: SortPrizeSelect = [
+export const DEFAULT_SORT_PRIZE: ListSortPrizeArr = [
   {
     label: 'Price: low to high',
     value: DEFAULT_SORT,
