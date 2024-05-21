@@ -5,6 +5,7 @@ import {
   RollResult,
   RESULT_ROLL_TYPE,
   Prize,
+  ListPrizeOb,
 } from 'modules/PercentGame/types'
 import {
   getRandom,
@@ -37,7 +38,7 @@ export const rollActions = {
     state.rollColorGradient = null
 
     const prizes = { ...state.prizes }
-    const setPrizes = { ...state.setPrizes }
+    const setPrizes: ListPrizeOb = {}
     for (let i = 0; i < count; i++) {
       const { type: resultType } = getRandom(rates)
       if (resultType !== RESULT_ROLL_TYPE.NOTHING) {
