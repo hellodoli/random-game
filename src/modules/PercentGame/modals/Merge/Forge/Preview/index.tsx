@@ -1,8 +1,10 @@
 import React from 'react'
-import { v4 as uuidv4 } from 'uuid'
 import { Slots, Prize } from 'modules/PercentGame/types'
 import { getIconPrize } from 'modules/PercentGame/utils'
-import { getNextGradientSet } from 'modules/PercentGame/utils/merge'
+import {
+  getNextGradientSet,
+  getPrizeFromSlot,
+} from 'modules/PercentGame/utils/merge'
 import { PerspectiveDice6FacesRandom } from 'components/Icons/Game'
 import PrizeItem from 'modules/PercentGame/components/PrizeItem'
 import SlotHolder from '../SlotHolder'
@@ -26,18 +28,17 @@ const Preview = ({
 
   const renderPreviewItem = () => {
     if (!isMerge) return <SlotHolder iconSize={60} gap={0} />
-    const prize =
-      randomMergeResult && slots
-        ? slots[0]
-        : !randomMergeResult && resultPrizeWhenMergeSameIcon
-        ? resultPrizeWhenMergeSameIcon
-        : null
+    const prize = randomMergeResult
+      ? getPrizeFromSlot(slots[0])
+      : !randomMergeResult && resultPrizeWhenMergeSameIcon
+      ? resultPrizeWhenMergeSameIcon
+      : null
 
     if (!prize) return null
+
     return (
       <PrizeItem
         {...prize}
-        id={uuidv4()}
         icon={
           randomMergeResult
             ? PerspectiveDice6FacesRandom
@@ -54,14 +55,14 @@ const Preview = ({
   const renderIconPreviewName = () => {
     if (!isMerge) return ''
     if (randomMergeResult) return '<??????>'
-    const prize = slots[0]
-    if (!prize) return ''
-    return `<${prize.iconName}>`
+    const slot = slots[0]
+    if (!slot) return ''
+    return `<${slot.iconName}>`
   }
 
   return (
     <div className="forge-preview">
-      <div style={{ flex: 'none' }}>{renderPreviewItem()}</div>
+      <div className="flex-none">{renderPreviewItem()}</div>
       <div className="preview-info">
         <p className="preview-name">
           <span className="label">Name:</span>

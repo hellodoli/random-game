@@ -13,7 +13,7 @@ const initialState: PercentGameState = {
   isRolling: false,
   progress: 0,
   prizes: getRandomPrizes(),
-  setPrizes: [], // cache prizes in one roll
+  setPrizes: {}, // cache prizes in one roll
   prize: null,
   prizeHover: null,
   rollColorGradient: GRADIENT_COLOR_SET.BRONZE,

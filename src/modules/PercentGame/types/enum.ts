@@ -14,6 +14,12 @@ export enum RESULT_ROLL_TYPE {
   NOTHING = 'NOTHING',
 }
 
+export enum PRIZE_VIEW_OPEN_FROM {
+  INIT,
+  BAG,
+  REFENING,
+}
+
 export enum ICONS {
   GEMCHAIN = 'GEMCHAIN',
   TRAIBALPENDANT = 'TRAIBALPENDANT',

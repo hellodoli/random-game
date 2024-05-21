@@ -1,5 +1,5 @@
 import { GradientSet } from 'types'
-import { Slots, Prize } from 'modules/PercentGame/types'
+import { Slots, Slot, Prize } from 'modules/PercentGame/types'
 import {
   GRADIENT_COLOR_SET_FROM_ENUM,
   GRADIENT_COLOR_SET,
@@ -16,9 +16,14 @@ export const getLevel = (gradientSet: GradientSet) => {
   return parseInt(`${gradientSet}`)
 }
 
-export const getPrizesFromSlots = (slots: Slots) => {
-  const slotsPrize = slots.filter((slot) => slot) as Prize[]
-  return slotsPrize
+export const getPrizesFromSlots = (slots: Slots) =>
+  slots.filter((slot) => slot) as Slot[]
+
+export const getPrizeFromSlot = (slot: Slot | null): Prize | null => {
+  if (!slot) return null
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { slotId, ...rest } = slot
+  return { ...rest }
 }
 
 export const isIncludeHighestLevel = (slots: Slots) => {
@@ -30,7 +35,7 @@ export const isIncludeHighestLevel = (slots: Slots) => {
 }
 
 export const getPrizeResultWhenMergeSameIcon = (slots: Slots) => {
-  let slot: Prize | null = null
+  let slot = null
   const slotsPrize = getPrizesFromSlots(slots)
   if (slotsPrize.length) {
     let tempSlot = slotsPrize[0]
@@ -44,18 +49,19 @@ export const getPrizeResultWhenMergeSameIcon = (slots: Slots) => {
 
   return {
     slotsPrize,
-    prize: slot,
+    slot,
+    prize: getPrizeFromSlot(slot),
     gradientSet: slot ? slot.gradientSet : null,
     level: slot ? getLevel(slot.gradientSet) : -1,
   }
 }
 
 export const getPrizeResultWhenMergeRandom = (slots: Slots) => {
-  let slot: Prize | null = null
+  let slot = null
   const slotsPrize = getPrizesFromSlots(slots)
   if (slotsPrize.length) {
     const listLevel: number[] = []
-    const listRandomPrize: Prize[] = []
+    const listRandomPrize: Slot[] = []
     slotsPrize.forEach((prize) => {
       const level = getLevel(prize.gradientSet)
       if (!listLevel.includes(level)) {
@@ -68,7 +74,8 @@ export const getPrizeResultWhenMergeRandom = (slots: Slots) => {
 
   return {
     slotsPrize,
-    prize: slot,
+    slot,
+    prize: getPrizeFromSlot(slot),
     gradientSet: slot ? slot.gradientSet : null,
     level: slot ? getLevel(slot.gradientSet) : -1,
   }
@@ -109,7 +116,7 @@ export const getMergeRate = ({
   }
   let randomMergeResult = false
   let rate = 0
-  let resultPrizeWhenMergeSameIcon: Prize | null = null
+  let resultPrizeWhenMergeSameIcon = null
   if (isMergeSameIconType) {
     // same item but various level
     const {
@@ -149,7 +156,7 @@ export const getMerge = (slots: Slots) => {
   let background = ''
   let randomMergeResult = false
   let rate = 0
-  let resultPrizeWhenMergeSameIcon: Prize | null = null
+  let resultPrizeWhenMergeSameIcon = null
 
   const notMerge = () => ({
     isMerge: false,

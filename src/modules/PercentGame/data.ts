@@ -1,4 +1,4 @@
-import { ICONS, PrizeListOb } from 'modules/PercentGame/types'
+import { ICONS, ListPrizeItemOb } from 'modules/PercentGame/types'
 import {
   TribalPendant,
   OysterPearl,
@@ -7,7 +7,7 @@ import {
   PowerRing,
 } from 'components/Icons/Jewellery'
 
-const JEWELLERY_ICONS_OB: PrizeListOb = {
+const JEWELLERY_ICONS_OB: ListPrizeItemOb = {
   [ICONS.GEMCHAIN]: {
     id: ICONS.GEMCHAIN,
     name: 'Gem Chain',

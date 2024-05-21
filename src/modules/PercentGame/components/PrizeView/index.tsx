@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux'
 import clsx from 'clsx'
 import { getIconPrize } from 'modules/PercentGame/utils'
 import { prizesSelector } from 'modules/PercentGame/selectors'
-import { IconSize, OnSelectPrize } from 'modules/PercentGame/types'
+import {
+  IconSize,
+  OnSelectPrize,
+  PRIZE_VIEW_OPEN_FROM,
+} from 'modules/PercentGame/types'
 import useActions from 'modules/PercentGame/hooks/useActions'
 
 import PrizeItem from '../PrizeItem'
@@ -11,6 +15,7 @@ import PrizeViewWrapp from './PrizeViewWrapp'
 import './style.scss'
 
 interface Props {
+  from?: PRIZE_VIEW_OPEN_FROM
   gap?: number
   isBorderWrapper?: boolean
   iconSize?: IconSize
@@ -18,6 +23,7 @@ interface Props {
 }
 
 const View = ({
+  from = PRIZE_VIEW_OPEN_FROM.INIT,
   gap = 4,
   isBorderWrapper = true,
   iconSize = 'medium',
@@ -28,7 +34,7 @@ const View = ({
 
   return (
     <div
-      className={clsx('game-prize-section', {
+      className={clsx('game-prize-section', `open-from-view-${from}`, {
         'section-border': isBorderWrapper,
       })}
     >

@@ -36,18 +36,20 @@ export const rollActions = {
     state.isRolling = false
     state.rollColorGradient = null
 
-    let prizes: Prize[] = [...state.prizes]
-    let setPrizes: Prize[] = []
+    const prizes = { ...state.prizes }
+    const setPrizes = { ...state.setPrizes }
     for (let i = 0; i < count; i++) {
       const { type: resultType } = getRandom(rates)
       if (resultType !== RESULT_ROLL_TYPE.NOTHING) {
-        const newPrize = getPrize(resultType)
-        prizes = getMergePrizeSameType(prizes, newPrize).prizes
-        setPrizes = getMergePrizeSameType(setPrizes, newPrize).prizes
+        const generatePrize = getPrize(resultType)
+        const prizesAfter = getMergePrizeSameType(prizes, generatePrize)
+        const setPrizesAfter = getMergePrizeSameType(setPrizes, generatePrize)
+        prizes[prizesAfter.prizeId] = prizesAfter.prize
+        setPrizes[setPrizesAfter.prizeId] = setPrizesAfter.prize
       }
     }
 
-    if (!setPrizes.length) {
+    if (!Object.values(setPrizes).length) {
       const title = 'Oh no, you got nothing item (T_T)'
       showModalError({ title })
     }

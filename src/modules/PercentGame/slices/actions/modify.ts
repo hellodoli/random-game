@@ -1,33 +1,24 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuidv4 } from 'uuid'
 import {
-  SORT_TYPE,
   Prize,
   PercentGameState,
   MERGE_STATUS,
   MergeActions,
+  Slot,
+  Slots,
 } from 'modules/PercentGame/types'
 import {
-  isSamePrize,
   getMergePrizeSameType,
-  getFilterNumberZeroPrizes,
+  getZeroQuantityPrizeIds,
 } from 'modules/PercentGame/utils'
 import {
   getNextGradientSet,
   getPrizeResultWhenMergeRandom,
 } from 'modules/PercentGame/utils/merge'
-import { getSortPrizes } from 'modules/PercentGame/utils/sort'
-import { DEFAULT_SLOTS, DEFAULT_SORT } from 'modules/PercentGame/constants'
+import { DEFAULT_SLOTS } from 'modules/PercentGame/constants'
 
 export const modifyActions = {
-  sortPrize: (
-    state: PercentGameState,
-    action: PayloadAction<{ type?: SORT_TYPE }>,
-  ) => {
-    const { type = DEFAULT_SORT } = action.payload
-    const sortPrizes = getSortPrizes(state.prizes, type)
-    state.prizes = sortPrizes
-  },
   hoverPrize: (
     state: PercentGameState,
     action: PayloadAction<{ prize?: Prize | null }>,
@@ -41,50 +32,45 @@ export const modifyActions = {
     action: PayloadAction<{ id: string }>,
   ) => {
     const { id } = action.payload
-    const prize = state.prizes.find((prize) => prize.id === id)
+    const prize = state.prizes[id]
     const prizeCount = prize?.number || 0
     const isFullSlot = !state.slots.includes(null)
+
     if (prize && !isFullSlot && prizeCount > 0) {
       const emptySlotIndex = state.slots.indexOf(null)
-      if (emptySlotIndex >= 0)
-        state.slots[emptySlotIndex] = { ...prize, id: uuidv4(), number: 1 }
-      state.prizes = state.prizes.map((prize) => {
-        if (prize.id === id) {
-          let number = prizeCount
-          number -= 1
-          if (number < 0) number = 0
-          return {
-            ...prize,
-            number,
-          }
+      // update empty slot with `Prize`
+      if (emptySlotIndex >= 0) {
+        state.slots[emptySlotIndex] = {
+          ...prize,
+          slotId: uuidv4(),
+          number: 1,
         }
-        return prize
-      })
+      }
+      // update number of `Prize`
+      state.prizes[id] = {
+        ...state.prizes[id],
+        number: prizeCount - 1,
+      }
+      // update `state.mergeStatus`
       state.mergeStatus = MERGE_STATUS.PREPARE
     }
   },
   unSelectPrizeForMerge: (
     state: PercentGameState,
-    action: PayloadAction<{ id: string }>,
+    action: PayloadAction<{ slotId: string; id: string }>,
   ) => {
-    const { id } = action.payload
-    const selectPrize = state.slots.find((slot) => slot?.id === id)
-    if (selectPrize) {
-      let index = -1
-      const slots = state.slots
-      slots.forEach((slot, i) => {
-        if (selectPrize.id === slot?.id) index = i
-      })
-      if (index >= 0) state.slots[index] = null
-      state.prizes = state.prizes.map((prize) => {
-        if (isSamePrize(prize, selectPrize)) {
-          return {
-            ...prize,
-            number: (prize.number || 0) + 1,
-          }
-        }
-        return prize
-      })
+    const { slotId, id } = action.payload
+    const selectSlot = state.slots.find((slot) => slot?.slotId === slotId)
+    const targetPrize = state.prizes[id]
+    if (selectSlot && targetPrize) {
+      state.slots = state.slots.map((slot) => {
+        if (slot?.slotId === slotId) return null
+        return slot
+      }) as Slots
+      state.prizes[id] = {
+        ...targetPrize,
+        number: (targetPrize.number || 0) + 1,
+      }
       state.mergeStatus = MERGE_STATUS.PREPARE
     }
   },
@@ -93,25 +79,25 @@ export const modifyActions = {
     action: PayloadAction<{ prize: Prize }>,
   ) => {
     const { prize } = action.payload
-    state.prizes = getMergePrizeSameType(state.prizes, prize).prizes
+    const { prizeId, prize: newPrize } = getMergePrizeSameType(
+      state.prizes,
+      prize,
+    )
+    state.prizes[prizeId] = newPrize
     state.mergeStatus = MERGE_STATUS.INITITAL
   },
   resetMerge: (state: PercentGameState) => {
-    const slots = state.slots.filter((slot) => slot) as Prize[]
-    if (slots.length) {
-      const prizes = [...state.prizes]
-      slots.forEach((slot) => {
-        prizes.forEach((prize, index) => {
-          if (isSamePrize(prize, slot)) {
-            state.prizes[index] = {
-              ...state.prizes[index],
-              number: (state.prizes[index]?.number || 0) + 1,
-            }
-          }
-        })
-      })
-      state.slots = DEFAULT_SLOTS
-    }
+    const slots = state.slots
+    slots.forEach((slot) => {
+      if (slot) {
+        const id = slot.id
+        state.prizes[id] = {
+          ...state.prizes[id],
+          number: (state.prizes[id]?.number || 0) + 1,
+        }
+      }
+    })
+    state.slots = DEFAULT_SLOTS
     state.mergeStatus = MERGE_STATUS.INITITAL
   },
   merge: (
@@ -132,8 +118,16 @@ export const modifyActions = {
     const isSuccess = rate === 1 ? true : Math.random() <= rate
 
     if (!isSuccess) {
+      const prizes = { ...state.prizes }
+      const slots = state.slots.filter((slot) => slot) as Slot[]
+      const slotIds = slots.map((slot) => slot.id)
+      slotIds.forEach((id) => {
+        const prize = prizes[id]
+        if (prize && (!prize.number || prize.number === 0)) delete prizes[id]
+      })
+
       state.slots = DEFAULT_SLOTS
-      state.prizes = getFilterNumberZeroPrizes(state.prizes)
+      state.prizes = prizes
       state.mergeStatus = MERGE_STATUS.MERGE_FAILED
       cb(false, null)
       return
@@ -150,21 +144,31 @@ export const modifyActions = {
       }
       return null
     }
-    const newPrize = randomMergeResult
+    const generatePrize = randomMergeResult
       ? createNewPrize(getPrizeResultWhenMergeRandom([...state.slots]).prize)
       : createNewPrize(prizeWhenMergeSameIcon)
 
     // merge new prize to exist prizes
-    if (newPrize) {
+    if (generatePrize) {
       const { pickUpPrizeToBagAfterMerge: autoPickUp } = state.mergeActions
+      const prizes = { ...state.prizes }
+
+      if (autoPickUp) {
+        const { prizeId, prize: newPrize } = getMergePrizeSameType(
+          state.prizes,
+          generatePrize,
+        )
+        prizes[prizeId] = newPrize
+      }
+
+      const zeroQuantityPrizeIds = getZeroQuantityPrizeIds(prizes)
+      zeroQuantityPrizeIds.forEach((id) => delete prizes[id])
+
       state.slots = DEFAULT_SLOTS
-      const newPrizes = autoPickUp
-        ? getMergePrizeSameType(state.prizes, newPrize).prizes
-        : state.prizes
-      state.prizes = getFilterNumberZeroPrizes(newPrizes)
+      state.prizes = prizes
       state.mergeStatus = MERGE_STATUS.MERGE_SUCCESS
     }
-    cb(true, newPrize)
+    cb(true, generatePrize)
   },
   changeMergeActions: (
     state: PercentGameState,

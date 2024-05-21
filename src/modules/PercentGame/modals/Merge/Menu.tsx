@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react'
+import React, { memo, useCallback, useEffect, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import PrizeView from 'modules/PercentGame/components/PrizeView'
 import { actions } from 'modules/PercentGame/slices'
@@ -10,7 +10,13 @@ const gap = 2
 
 const Menu = () => {
   const dispatch = useDispatch()
-  const props = { iconSize, gap }
+  const props = useMemo(
+    () => ({
+      iconSize,
+      gap,
+    }),
+    [iconSize, gap],
+  )
 
   const onSelecPrize = useCallback((id: string) => {
     dispatch(actions.selectPrizeForMerge({ id }))

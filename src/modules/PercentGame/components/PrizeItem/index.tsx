@@ -14,6 +14,7 @@ import './style.scss'
 
 interface Props {
   id: string
+  slotId?: string // if `Prize` in slot for merge
   icon: (props: GameIcon) => JSX.Element
   iconId: ICONS
   iconName: string
@@ -34,6 +35,7 @@ interface Props {
 
 const PrizeItem = ({
   id,
+  slotId = '',
   icon: Icon,
   iconId,
   iconName,
@@ -71,7 +73,7 @@ const PrizeItem = ({
       style={{ margin: `${gap}px` }}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      onClick={() => onClick?.(id)}
+      onClick={() => onClick?.(id, slotId)}
     >
       <Icon
         size={getIconSize(iconSize)}

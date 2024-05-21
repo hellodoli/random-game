@@ -4,6 +4,7 @@ import {
   RESULT_ROLL_TYPE,
   ICONS,
   Prize,
+  ListPrizeOb,
   IconSize,
 } from 'modules/PercentGame/types'
 import {
@@ -33,6 +34,10 @@ const getGradientSet = (type: RESULT_ROLL_TYPE = RESULT_ROLL_TYPE.BRONZE) => {
   }
 }
 
+export const getPrizes = (listPrizeOb: ListPrizeOb) => {
+  return Object.values(listPrizeOb)
+}
+
 export const isSamePrize = (myPrize: Prize, newPrize: Prize) => {
   if (
     myPrize.iconId === newPrize.iconId &&
@@ -43,31 +48,31 @@ export const isSamePrize = (myPrize: Prize, newPrize: Prize) => {
   return false
 }
 
-export const getMergePrizeSameType = (prizes: Prize[], prize: Prize) => {
-  const matchPrize = prizes.find((item) => isSamePrize(item, prize))
-  if (!matchPrize) {
+export const getMergePrizeSameType = (
+  listPrizeOb: ListPrizeOb,
+  prize: Prize,
+) => {
+  const prizes = getPrizes(listPrizeOb)
+  const combinePrize = prizes.find((item) => isSamePrize(item, prize))
+  if (!combinePrize) {
     const newPrize = { ...prize, number: 1 }
     return {
-      isSameType: false,
+      isCombine: false,
       prize: newPrize,
-      prizes: [...prizes, newPrize],
+      prizeId: newPrize.id,
     }
   }
 
-  const newPrize: Prize = {
-    ...matchPrize,
-    ...(typeof matchPrize.number === 'number'
-      ? { number: matchPrize.number + 1 }
-      : { number: 1 }),
+  const newPrize = {
+    ...combinePrize,
+    number:
+      typeof combinePrize.number === 'number' ? combinePrize.number + 1 : 1,
   }
 
   return {
-    isSameType: true,
+    isCombine: true,
     prize: newPrize,
-    prizes: prizes.map((oldPrize) => {
-      if (oldPrize.id === newPrize.id) return newPrize
-      return oldPrize
-    }),
+    prizeId: newPrize.id,
   }
 }
 
@@ -105,16 +110,25 @@ export const getIconSize = (iconSize: IconSize) => {
 }
 
 export const getRandomPrizes = () => {
-  let prizes: Prize[] = []
+  const listPrize: ListPrizeOb = {}
   const resultsType = DEFAULT_ITEM_RANDOM_TYPE
   for (let i = 0; i < DEFAULT_ITEM_RANDOM_NUMBER; i++) {
     const resultType = getRandomItemFromList(resultsType)
-    const newPrize = getPrize(resultType)
-    prizes = getMergePrizeSameType(prizes, newPrize).prizes
+    const generatePrize = getPrize(resultType)
+    const { prizeId, prize: newPrize } = getMergePrizeSameType(
+      listPrize,
+      generatePrize,
+    )
+    listPrize[prizeId] = newPrize
   }
-  return prizes
+  return listPrize
 }
 
-export const getFilterNumberZeroPrizes = (prizes: Prize[]) => {
-  return prizes.filter((prize) => !!(prize.number || 0))
+export const getZeroQuantityPrizeIds = (listPrizeOb: ListPrizeOb) => {
+  const listDeleteId: string[] = []
+  const prizes = getPrizes(listPrizeOb)
+  prizes.forEach((prize) => {
+    if (!prize.number || prize.number === 0) listDeleteId.push(prize.id)
+  })
+  return listDeleteId
 }

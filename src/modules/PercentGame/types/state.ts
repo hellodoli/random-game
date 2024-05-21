@@ -1,4 +1,4 @@
-import { Prize, Slots } from './prize'
+import { Prize, Slots, ListPrizeOb } from './prize'
 import { GradientColorFromTo } from 'types/enum/color'
 import { MERGE_STATUS } from './enum'
 
@@ -11,8 +11,8 @@ export interface PercentGameState {
   ticket: number
   isRolling: boolean
   progress: number
-  prizes: Prize[]
-  setPrizes: Prize[]
+  prizes: ListPrizeOb
+  setPrizes: ListPrizeOb
   prize: Prize | null
   prizeHover: Prize | null
   rollColorGradient: GradientColorFromTo | null

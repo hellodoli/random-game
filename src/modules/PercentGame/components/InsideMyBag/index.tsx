@@ -1,7 +1,7 @@
 import React from 'react'
-import modal from 'modules/modal/provider'
-
 import { Button } from 'antd'
+import modal from 'modules/modal/provider'
+import { PRIZE_VIEW_OPEN_FROM } from 'modules/PercentGame/types/enum'
 import { ScrollUnfurled } from 'components/Icons/Game'
 import PrizeView from 'modules/PercentGame/components/PrizeView'
 
@@ -17,16 +17,10 @@ const InsideMyBag = () => {
     <div>
       <Filters />
       <div style={{ marginTop: 20, marginBottom: 20 }}>
-        <PrizeView isBorderWrapper={false} />
+        <PrizeView isBorderWrapper={false} from={PRIZE_VIEW_OPEN_FROM.BAG} />
       </div>
       <div className="section-border section-rounded">
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-          }}
-        >
+        <div className="flex items-center gap-2">
           <Button
             type="primary"
             className="btn-item-action"

@@ -4,6 +4,16 @@ import { initialState } from '../slices/initState'
 
 const selectSlice = (state: RootState) => state.percentGame || initialState
 
+export const listPrizeObSelector = createSelector(
+  [selectSlice],
+  (state) => state.prizes,
+)
+
+export const listSetPrizeObSelector = createSelector(
+  [selectSlice],
+  (state) => state.setPrizes,
+)
+
 export const moneySelector = createSelector(
   [selectSlice],
   (state) => state.money || 0,
@@ -25,8 +35,8 @@ export const progressSelector = createSelector(
 )
 
 export const prizesSelector = createSelector(
-  [selectSlice],
-  (state) => state.prizes,
+  [listPrizeObSelector],
+  (listPrizeOb) => Object.values(listPrizeOb),
 )
 
 export const slotsSelector = createSelector(
@@ -65,8 +75,8 @@ export const prizeGradientSetHoverSelector = createSelector(
 )
 
 export const setPrizesSelector = createSelector(
-  [selectSlice],
-  (state) => state.setPrizes,
+  [listSetPrizeObSelector],
+  (listPrizeOb) => Object.values(listPrizeOb),
 )
 
 export const colorGradientSelector = createSelector(

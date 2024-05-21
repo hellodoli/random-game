@@ -1,28 +1,47 @@
 import { GradientSet } from 'types'
-import { SORT_TYPE, Prize } from 'modules/PercentGame/types'
+import { SORT_TYPE, ListPrizeOb } from 'modules/PercentGame/types'
 import { DEFAULT_SORT } from 'modules/PercentGame/constants'
 
-const getFilterPrize = (prizes: Prize[], gradientSet: GradientSet) => {
-  return prizes.filter((prize) => prize.gradientSet === gradientSet)
-}
+export const getSortPrizes = (
+  listPrizeOb: ListPrizeOb,
+  sort = DEFAULT_SORT,
+) => {
+  const diamond: ListPrizeOb = {}
+  const gold: ListPrizeOb = {}
+  const silver: ListPrizeOb = {}
+  const bronze: ListPrizeOb = {}
+  const prizes = Object.values(listPrizeOb)
 
-const getPrizeGroup = (prizes: Prize[]) => {
-  return {
-    diamond: getFilterPrize(prizes, GradientSet.DIAMOND),
-    gold: getFilterPrize(prizes, GradientSet.GOLD),
-    silver: getFilterPrize(prizes, GradientSet.SILVER),
-    bronze: getFilterPrize(prizes, GradientSet.BRONZE),
-  }
-}
+  prizes.forEach((prize) => {
+    const id = prize.id
+    switch (prize.gradientSet) {
+      case GradientSet.DIAMOND: {
+        diamond[id] = prize
+        break
+      }
+      case GradientSet.GOLD: {
+        gold[id] = prize
+        break
+      }
+      case GradientSet.SILVER: {
+        silver[id] = prize
+        break
+      }
+      case GradientSet.BRONZE: {
+        bronze[id] = prize
+        break
+      }
+      default:
+        break
+    }
+  })
 
-export const getSortPrizes = (prizes: Prize[], sort = DEFAULT_SORT) => {
-  const { diamond, gold, silver, bronze } = getPrizeGroup(prizes)
   switch (sort) {
     case SORT_TYPE.DOWN_TO:
-      return [...diamond, ...gold, ...silver, ...bronze]
+      return { ...diamond, ...gold, ...silver, ...bronze }
     case SORT_TYPE.UP_TO:
-      return [...bronze, ...silver, ...gold, ...diamond]
+      return { ...bronze, ...silver, ...gold, ...diamond }
     default:
-      return prizes
+      return listPrizeOb
   }
 }

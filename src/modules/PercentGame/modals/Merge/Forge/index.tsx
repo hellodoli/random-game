@@ -38,8 +38,9 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
     [],
   )
 
-  const onUnselectPrize = useCallback((id: string) => {
-    dispatch(actions.unSelectPrizeForMerge({ id }))
+  const onUnselectPrize = useCallback((id: string, slotId: string = '') => {
+    const payload = { id, slotId }
+    dispatch(actions.unSelectPrizeForMerge(payload))
   }, [])
 
   const onMerge = () => {
@@ -61,12 +62,11 @@ const Forge = ({ iconSize = 40, gap = 2 }: Props) => {
         {slots.map((slot, index) => {
           if (!slot)
             return <SlotHolder key={index} iconSize={iconSize} gap={gap} />
-          const prize = slot
           return (
             <PrizeItem
-              key={prize.id}
-              {...prize}
-              icon={getIconPrize(prize.iconId)}
+              key={slot.slotId}
+              {...slot}
+              icon={getIconPrize(slot.iconId)}
               iconSize={iconSize}
               gap={gap}
               isHoverView={false}
