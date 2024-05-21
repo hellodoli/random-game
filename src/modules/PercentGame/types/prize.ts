@@ -1,6 +1,6 @@
 import { GradientSet, Gradient } from 'types'
 import { GameIcon } from 'components/Icons/types'
-import { ICONS } from './enum'
+import { ICONS } from './icon'
 
 export interface Prize {
   id: string

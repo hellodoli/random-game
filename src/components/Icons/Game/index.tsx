@@ -6,6 +6,8 @@ import Knapsack from './Knapsack'
 import ScrollUnfurled from './ScrollUnfurled'
 import PerspectiveDice6FacesRandom from './PerspectiveDice6FacesRandom'
 import WingedSword from './WingedSword'
+import Profit from './Profit'
+import Scissors from './Scissors'
 
 export {
   Backpack,
@@ -16,4 +18,6 @@ export {
   ScrollUnfurled,
   PerspectiveDice6FacesRandom,
   WingedSword,
+  Profit,
+  Scissors,
 }

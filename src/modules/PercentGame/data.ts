@@ -1,37 +1,51 @@
 import { ICONS, ListPrizeItemOb } from 'modules/PercentGame/types'
-import {
-  TribalPendant,
-  OysterPearl,
-  GemChain,
-  Emerald,
-  PowerRing,
-} from 'components/Icons/Jewellery'
+import * as JE from 'components/Icons/Jewellery'
 
 const JEWELLERY_ICONS_OB: ListPrizeItemOb = {
   [ICONS.GEMCHAIN]: {
     id: ICONS.GEMCHAIN,
     name: 'Gem Chain',
-    icon: GemChain,
+    icon: JE.GemChain,
   },
   [ICONS.TRAIBALPENDANT]: {
     id: ICONS.TRAIBALPENDANT,
     name: 'Traibal Pendant',
-    icon: TribalPendant,
+    icon: JE.TribalPendant,
   },
   [ICONS.OYSTERPEARL]: {
     id: ICONS.OYSTERPEARL,
     name: 'Oyster Pearl',
-    icon: OysterPearl,
+    icon: JE.OysterPearl,
   },
   [ICONS.EMERALD]: {
     id: ICONS.EMERALD,
     name: 'Emerald',
-    icon: Emerald,
+    icon: JE.Emerald,
   },
   [ICONS.POWER_RING]: {
     id: ICONS.POWER_RING,
     name: 'Power Ring',
-    icon: PowerRing,
+    icon: JE.PowerRing,
+  },
+  [ICONS.DIAMOND_HILT]: {
+    id: ICONS.DIAMOND_HILT,
+    name: 'Diamond Hilt',
+    icon: JE.DiamondHilt,
+  },
+  [ICONS.CROWN]: {
+    id: ICONS.CROWN,
+    name: 'Crown',
+    icon: JE.Crown,
+  },
+  [ICONS.JEWELED_CHALICE]: {
+    id: ICONS.JEWELED_CHALICE,
+    name: 'Jeweled Chalice',
+    icon: JE.JeweledChalice,
+  },
+  [ICONS.HEART_NECKLACE]: {
+    id: ICONS.HEART_NECKLACE,
+    name: 'Heart Necklace',
+    icon: JE.HeartNecklace,
   },
 }
 

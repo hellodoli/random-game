@@ -17,7 +17,7 @@ const Menu = () => {
       <Button
         type="primary"
         icon={<ScrollUnfurled size={28} classNames="my-bag-icon" />}
-        className="btn-item-action btn-open-bag size--medium"
+        className="btn-item btn-item-action btn-open-bag size--medium"
         onClick={onClickOpenMerge}
         style={{
           width: '100%',

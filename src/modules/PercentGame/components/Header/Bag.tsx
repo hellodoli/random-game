@@ -28,7 +28,7 @@ const Bag = ({
       type="primary"
       shape={rounded ? 'circle' : shape}
       icon={<Backpack size={iconSize} classNames="my-bag-icon" />}
-      className="btn-item-action btn-open-bag size--medium"
+      className="btn-item btn-item-action btn-open-bag size--medium"
       onClick={onClick}
       style={{
         width: rounded ? 'auto' : '100%',

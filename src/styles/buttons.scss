@@ -4,17 +4,12 @@
   justify-content: center;
 }
 
-.btn-item-action {
+.btn-item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0;
   border: none;
-  background: linear-gradient(
-    to right,
-    rgb(205, 133, 0),
-    var(--color-secondary)
-  );
   color: var(--color-white);
   &:hover {
     color: var(--color-white);
@@ -22,4 +17,20 @@
   &.size--medium {
     height: 40px;
   }
+}
+
+.btn-item-action {
+  background: linear-gradient(
+    to right,
+    rgb(205, 133, 0),
+    var(--color-secondary)
+  );
+}
+
+.btn-item-meta {
+  background: linear-gradient(
+    to right,
+    var(--color-gradient-1-start),
+    var(--color-gradient-1-end)
+  );
 }
