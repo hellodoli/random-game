@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo, useMemo, useRef } from 'react'
+import React, { memo, useMemo, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Type, Shape } from 'types'
 import {
@@ -6,8 +6,11 @@ import {
   prizeIconIdHoverSelector,
   prizeGradientHoverSelector,
   prizeGradientSetHoverSelector,
+  isDisabledActionSelector,
 } from 'modules/PercentGame/selectors'
 import { getIconPrize } from 'modules/PercentGame/utils'
+import useTrackMouse from 'modules/PercentGame/hooks/useTrackMouse'
+
 import './style.scss'
 
 const TrackMouse = () => {
@@ -15,12 +18,11 @@ const TrackMouse = () => {
   const iconName = useSelector(prizeNameHoverSelector)
   const gradient = useSelector(prizeGradientHoverSelector)
   const gradientSet = useSelector(prizeGradientSetHoverSelector)
-
-  const [x, setX] = useState(0)
-  const [y, setY] = useState(0)
+  const isDisabledAction = useSelector(isDisabledActionSelector)
   const containerRef = useRef<HTMLDivElement>(null)
-
+  const { x, y } = useTrackMouse({ offsetWidth: 120 })
   const Icon = useMemo(() => (!iconId ? null : getIconPrize(iconId)), [iconId])
+  const isDisplay = !!(Icon && !isDisabledAction)
 
   const renderIcon = () => {
     if (!Icon) return null
@@ -35,35 +37,14 @@ const TrackMouse = () => {
     )
   }
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const track = (event: { clientY: number; clientX: any }) => {
-      const threshold = 12
-      const windowWidth = window.innerWidth
-      const container = containerRef.current
-      const containerWidth = container?.offsetWidth || 100
-      const y = event.clientY + threshold
-      let x = event.clientX
-      const containerWithT = containerWidth + threshold
-      if (x + containerWithT > windowWidth) x -= containerWithT
-      else x += threshold
-      setX(x)
-      setY(y)
-    }
-    window.addEventListener('mousemove', track)
-    return () => {
-      window.removeEventListener('mousemove', track)
-    }
-  }, [])
-
   return (
     <div
       ref={containerRef}
       style={{
-        display: !Icon ? 'none' : 'flex',
+        display: isDisplay ? 'flex' : 'none',
         top: `${y}px`,
         left: `${x}px`,
-        visibility: !Icon ? 'hidden' : 'visible',
+        visibility: isDisplay ? 'visible' : 'hidden',
       }}
       className="game-item-pointer-view"
     >

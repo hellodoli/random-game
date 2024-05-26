@@ -8,51 +8,46 @@ interface ModalProps {
   content?: any
   centered?: boolean
   modalExtraProps?: ModalExtraProps
+  className?: string
+  onOk?: () => void
 }
 
-export const showModalInfo = ({
-  title = '',
-  content = null,
-  modalExtraProps = MODAL_EXTRA_PROPS_DEFAULT,
-  centered = false,
-}: ModalProps) => {
+const getModalProps = (props: ModalProps) => {
+  const { modalExtraProps, onOk, ...rest } = props
+  return {
+    ...rest,
+    content: props.content || null,
+    ...(modalExtraProps || MODAL_EXTRA_PROPS_DEFAULT),
+    className: `game-module-percent-game-modal ${props.className}`,
+    centered: props.centered || false,
+    ...(typeof onOk === 'function' ? { onOk } : {}),
+  }
+}
+
+export const showModalInfo = (props: ModalProps) => {
   Modal.info({
-    title,
-    content,
-    onOk() {},
-    className: 'game-module-percent-game-modal',
-    ...modalExtraProps,
-    centered,
+    ...getModalProps(props),
+    title: props.title || '',
   })
 }
 
-export const showModalSuccess = ({
-  title = 'Success',
-  content = null,
-  modalExtraProps = MODAL_EXTRA_PROPS_DEFAULT,
-  centered = false,
-}: ModalProps) => {
+export const showModalSuccess = (props: ModalProps) => {
   Modal.success({
-    title,
-    content,
-    onOk() {},
-    className: 'game-module-percent-game-modal',
-    ...modalExtraProps,
-    centered,
+    ...getModalProps(props),
+    title: props.title || 'Success',
   })
 }
 
-export const showModalError = ({
-  title = 'Error',
-  content = null,
-  modalExtraProps = MODAL_EXTRA_PROPS_DEFAULT,
-  centered = false,
-}: ModalProps) => {
+export const showModalError = (props: ModalProps) => {
   Modal.error({
-    title,
-    content,
-    className: 'game-module-percent-game-modal',
-    ...modalExtraProps,
-    centered,
+    ...getModalProps(props),
+    title: props.title || 'Error',
+  })
+}
+
+export const showModalConfirm = (props: ModalProps) => {
+  Modal.confirm({
+    ...getModalProps(props),
+    title: props.title || 'Confirm',
   })
 }

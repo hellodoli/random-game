@@ -32,3 +32,9 @@ export enum MERGE_STATUS {
   MERGE_SUCCESS,
   MERGE_FAILED,
 }
+
+export enum SELL_PRIZE_OPTION {
+  ONE,
+  ALL,
+  CUSTOM,
+}

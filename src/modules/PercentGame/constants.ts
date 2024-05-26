@@ -11,6 +11,8 @@ import {
   /* interface */
   Slots,
   ListSortPrizeArr,
+  PrizeSet,
+  TrackMouseOptions,
 } from './types'
 
 export * from './data'
@@ -18,6 +20,7 @@ export { GRADIENT_COLOR_SET, GRADIENT_COLOR_SET_FROM_ENUM }
 
 /**
  * default state value
+ * OPERATION WHEN START GAME
  */
 export const DEFAULT_TICKET_PRICE = 5
 export const DEFAULT_TICKET_NUMBER = 128
@@ -27,6 +30,12 @@ export const DEFAULT_ITEM_RANDOM_TYPE = [
   RESULT_ROLL_TYPE.BRONZE,
   RESULT_ROLL_TYPE.SILVER,
 ]
+
+/**
+ * ROLL
+ * PRIZE
+ */
+export const DEFAULT_SELL_PRIZE_PERCENT = 0.8
 
 export const DEFAULT_ROLL_TYPE = ROLL_TYPE.BRONZE
 export const DEFAULT_LIST_ROLL_BTN = [
@@ -72,8 +81,36 @@ export const DEFAULT_LIST_ROLL_BTN = [
     ],
   },
 ]
+
+export const PRIZE_SET: PrizeSet = {
+  [GradientSet.BRONZE]: {
+    consume: 1,
+  },
+  [GradientSet.SILVER]: {
+    consume: 4,
+  },
+  [GradientSet.GOLD]: {
+    consume: 16,
+  },
+  [GradientSet.DIAMOND]: {
+    consume: 64,
+  },
+  [GradientSet.CUSTOM]: {
+    consume: 0,
+  },
+}
+
 export const DEFAULT_HIGHEST_GRADIENT_SET = GradientSet.DIAMOND
+
+/**
+ * MERGE
+ */
 export const DEFAULT_SLOTS: Slots = [null, null, null, null]
+
+/**
+ * SORT
+ * FILTERS
+ */
 export const DEFAULT_SORT = SORT_TYPE.UP_TO
 export const DEFAULT_SORT_PRIZE: ListSortPrizeArr = [
   {
@@ -85,3 +122,11 @@ export const DEFAULT_SORT_PRIZE: ListSortPrizeArr = [
     value: SORT_TYPE.DOWN_TO,
   },
 ]
+
+/**
+ * TRACK MOUSE
+ */
+export const DEFAULT_TRACK_MOUSE_OPTIONS: TrackMouseOptions = {
+  offsetWidth: 0,
+  isNotShowWhenInit: false,
+}

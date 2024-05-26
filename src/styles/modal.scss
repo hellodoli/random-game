@@ -9,8 +9,8 @@
     padding: 20px;
   }
   .ant-btn {
-    background-color: var(--color-primary);
+    &.ant-btn-primary {
+      background-color: var(--color-primary);
+    }
   }
 }
-
-

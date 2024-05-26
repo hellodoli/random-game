@@ -4,7 +4,7 @@ import { DEFAULT_TICKET_PRICE } from 'modules/PercentGame/constants'
 
 const ticketPrice = DEFAULT_TICKET_PRICE
 
-export const moneyActions = {
+export const ticketActions = {
   buyTicket: (state: PercentGameState) => {
     if (state.money >= ticketPrice) {
       state.ticket += 1

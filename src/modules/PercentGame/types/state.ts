@@ -19,4 +19,5 @@ export interface PercentGameState {
   slots: Slots
   mergeStatus: MERGE_STATUS
   mergeActions: MergeActions
+  isSelling: boolean
 }

@@ -98,3 +98,13 @@ export const pickUpPrizeAfterMergeSelector = createSelector(
   [selectSlice],
   (state) => state.mergeActions?.pickUpPrizeToBagAfterMerge || false,
 )
+
+export const isSellingSelector = createSelector(
+  [selectSlice],
+  (state) => state.isSelling,
+)
+
+export const isDisabledActionSelector = createSelector(
+  [selectSlice],
+  (state) => state.isSelling,
+)

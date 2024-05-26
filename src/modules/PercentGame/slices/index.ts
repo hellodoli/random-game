@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { initialState } from './initState'
-import { moneyActions } from './actions/money'
+import { ticketActions } from './actions/money'
 import { rollActions } from './actions/roll'
 import { modifyActions } from './actions/modify'
 import { sortActions } from './actions/sort'
+import { sellActions } from './actions/sell'
 
 export const slice = createSlice({
   initialState,
@@ -12,10 +13,11 @@ export const slice = createSlice({
     resetState: () => {
       return initialState
     },
-    ...moneyActions,
+    ...ticketActions,
     ...sortActions,
     ...rollActions,
     ...modifyActions,
+    ...sellActions,
   },
 })
 

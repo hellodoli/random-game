@@ -22,6 +22,7 @@ const initialState: PercentGameState = {
   mergeActions: {
     pickUpPrizeToBagAfterMerge: false,
   },
+  isSelling: false,
 }
 
 export { initialState }

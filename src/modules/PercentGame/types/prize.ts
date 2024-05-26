@@ -11,14 +11,14 @@ export interface Prize {
   number?: number
 }
 export type ListPrizeOb = { [key: string]: Prize }
-export interface Slot extends Prize {
-  slotId: string
-}
 
 export type OnMouseEnterPrize = (prize?: Prize | null) => void
 export type OnMouseLeavePrize = () => void
 export type OnSelectPrize = (id: string, slotId?: string) => void
 export type IconSize = 'big' | 'medium' | 'small' | number
+export interface Slot extends Prize {
+  slotId: string
+}
 export type Slots = [null | Slot, null | Slot, null | Slot, null | Slot]
 
 export interface PrizeItem {
@@ -27,3 +27,9 @@ export interface PrizeItem {
   icon: (props: GameIcon) => JSX.Element
 }
 export type ListPrizeItemOb = { [key in ICONS]: PrizeItem }
+
+export type PrizeSet = {
+  [key in GradientSet]: {
+    consume: number
+  }
+}
