@@ -9,6 +9,7 @@ import React, {
   ForwardRefRenderFunction,
   forwardRef,
 } from 'react'
+import clsx from 'clsx'
 import { useDispatch, useSelector } from 'react-redux'
 import { Radio, Space, InputNumber, InputNumberProps } from 'antd'
 import type { RadioChangeEvent } from 'antd'
@@ -207,7 +208,11 @@ const Prizes = () => {
   )
 
   return (
-    <div className="section-prizes my-5">
+    <div
+      className={clsx('section-prizes my-5', {
+        'is-selling': isSelling,
+      })}
+    >
       <PrizeView
         isBorderWrapper={false}
         from={PRIZE_VIEW_OPEN_FROM.BAG}

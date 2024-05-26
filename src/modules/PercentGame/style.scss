@@ -16,6 +16,13 @@
     border-radius: 8px;
     padding: 10px;
   }
+  .is-selling {
+    .game-prize-item {
+      &:hover {
+        border-color: var(--color-gradient-gold-to);
+      }
+    }
+  }
 }
 
 .game-module-percent-game {
