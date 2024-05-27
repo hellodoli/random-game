@@ -2,6 +2,9 @@ import { GradientSet, Gradient } from 'types'
 import { GameIcon } from 'components/Icons/types'
 import { ICONS } from './icon'
 
+/**
+ * Prize
+ */
 export interface Prize {
   id: string
   iconId: ICONS
@@ -12,15 +15,26 @@ export interface Prize {
 }
 export type ListPrizeOb = { [key: string]: Prize }
 
-export type OnMouseEnterPrize = (prize?: Prize | null) => void
-export type OnMouseLeavePrize = () => void
-export type OnSelectPrize = (id: string, slotId?: string) => void
-export type IconSize = 'big' | 'medium' | 'small' | number
+/**
+ * Slot
+ */
 export interface Slot extends Prize {
   slotId: string
 }
 export type Slots = [null | Slot, null | Slot, null | Slot, null | Slot]
 
+/**
+ * Props PrizeItem
+ */
+export type OnMouseEnterPrize = (prize?: Prize | null) => void
+export type OnMouseLeavePrize = () => void
+export type OnSelectPrize = (id: string, slotId?: string) => void
+export type IconSize = 'big' | 'medium' | 'small' | number
+
+/**
+ * PrizeItem
+ * Props PrizeItem
+ */
 export interface PrizeItem {
   id: ICONS
   name: string
@@ -28,8 +42,12 @@ export interface PrizeItem {
 }
 export type ListPrizeItemOb = { [key in ICONS]: PrizeItem }
 
+/**
+ * PrizeSet
+ */
+
 export type PrizeSet = {
-  [key in GradientSet]: {
+  [key in GradientSet]?: {
     consume: number
   }
 }

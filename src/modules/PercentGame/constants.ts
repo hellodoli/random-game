@@ -95,9 +95,6 @@ export const PRIZE_SET: PrizeSet = {
   [GradientSet.DIAMOND]: {
     consume: 64,
   },
-  [GradientSet.CUSTOM]: {
-    consume: 0,
-  },
 }
 
 export const DEFAULT_HIGHEST_GRADIENT_SET = GradientSet.DIAMOND

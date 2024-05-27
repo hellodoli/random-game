@@ -15,7 +15,9 @@ export const getPrice = (price: number) => {
 }
 
 export const getSellOnePrize = (gradientSet: GradientSet) => {
-  const ticket = PRIZE_SET[gradientSet].consume
+  const prize = PRIZE_SET[gradientSet]
+  if (!prize) return 0
+  const ticket = prize.consume
   const price = ticket * DEFAULT_TICKET_PRICE
   return getPrice(price)
 }

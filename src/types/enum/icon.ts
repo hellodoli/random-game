@@ -1,13 +1,13 @@
 export enum Shape {
   CIRCLE,
   SQUARE,
-  ROUNDED_SQUARE
+  ROUNDED_SQUARE,
 }
 
 export enum Gradient {
   PLAIN,
   RADIAL,
-  HORIZONTAL // left -> right
+  HORIZONTAL, // left -> right
 }
 
 export enum GradientSet {
@@ -15,10 +15,10 @@ export enum GradientSet {
   GOLD,
   SILVER,
   BRONZE,
-  CUSTOM
+  CUSTOM,
 }
 
 export enum Type {
   NONE,
-  GRADIENT
+  GRADIENT,
 }
