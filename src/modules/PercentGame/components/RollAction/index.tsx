@@ -1,7 +1,7 @@
 import React, { useState, useEffect, memo, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { GradientColorFromTo } from 'types/enum/color'
+import { GradientSetColorFromTo } from 'types/enum/color'
 import {
   isRollingSelector,
   ticketSelector,
@@ -37,7 +37,7 @@ const RollAction = () => {
       consume: number,
       count: number,
       rates: RollResult[],
-      gradient: GradientColorFromTo,
+      gradient: GradientSetColorFromTo,
     ) => {
       if (isRolling) return
       flag = false

@@ -1,9 +1,9 @@
 import { GradientSet } from 'types'
 import { Slots, Slot, Prize } from 'modules/PercentGame/types'
 import {
-  GRADIENT_COLOR_SET_FROM_ENUM,
   GRADIENT_COLOR_SET,
   DEFAULT_HIGHEST_GRADIENT_SET,
+  DEFAULT_GRADIENT_COLOR_SET,
 } from 'modules/PercentGame/constants'
 
 interface MergeInfoProps {
@@ -96,9 +96,9 @@ export const getMergeColorBackground = ({
   }
   if (!slot) return ''
   const gradientSet = slot.gradientSet
-  const gradient = GRADIENT_COLOR_SET_FROM_ENUM[gradientSet]
-  const fromColor = gradient?.FROM || GRADIENT_COLOR_SET.BRONZE.FROM
-  const toColor = gradient?.TO || GRADIENT_COLOR_SET.BRONZE.TO
+  const gradient = GRADIENT_COLOR_SET[gradientSet]
+  const fromColor = gradient.FROM || DEFAULT_GRADIENT_COLOR_SET.FROM
+  const toColor = gradient.TO || DEFAULT_GRADIENT_COLOR_SET.TO
   return `linear-gradient(to right, ${fromColor} , ${toColor})`
 }
 

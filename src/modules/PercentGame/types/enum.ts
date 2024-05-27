@@ -1,11 +1,3 @@
-export enum ROLL_TYPE {
-  DIAMOND = 'DIAMOND',
-  GOLD = 'GOLD',
-  SILVER = 'SILVER',
-  BRONZE = 'BRONZE',
-  CUSTOM = 'CUSTOM',
-}
-
 export enum RESULT_ROLL_TYPE {
   DIAMOND = 'DIAMOND',
   GOLD = 'GOLD',

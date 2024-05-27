@@ -5,7 +5,7 @@ import {
   DEFAULT_GRADIENT,
   DEFAULT_FROM_COLOR,
   DEFAULT_TO_COLOR,
-  DEFAULT_GRADIENT_COLOR_SET,
+  DEFAULT_GRADIENT_SET,
   GRADIENT_COLOR_SET,
 } from './constants'
 
@@ -16,13 +16,13 @@ const getGradientSet = (
 ) => {
   switch (gradientSet) {
     case GradientSet.BRONZE:
-      return GRADIENT_COLOR_SET.BRONZE
+      return GRADIENT_COLOR_SET[GradientSet.BRONZE]
     case GradientSet.SILVER:
-      return GRADIENT_COLOR_SET.SILVER
+      return GRADIENT_COLOR_SET[GradientSet.SILVER]
     case GradientSet.GOLD:
-      return GRADIENT_COLOR_SET.GOLD
+      return GRADIENT_COLOR_SET[GradientSet.GOLD]
     case GradientSet.DIAMOND:
-      return GRADIENT_COLOR_SET.DIAMOND
+      return GRADIENT_COLOR_SET[GradientSet.DIAMOND]
     case GradientSet.CUSTOM: {
       return {
         FROM: fromColor,
@@ -30,14 +30,14 @@ const getGradientSet = (
       }
     }
     default:
-      return GRADIENT_COLOR_SET.BRONZE
+      return GRADIENT_COLOR_SET[GradientSet.BRONZE]
   }
 }
 
 const BgGradient = ({
   gradientId = '',
   gradient = DEFAULT_GRADIENT,
-  gradientSet = DEFAULT_GRADIENT_COLOR_SET,
+  gradientSet = DEFAULT_GRADIENT_SET,
   fromColor: fromColorProp = DEFAULT_FROM_COLOR,
   toColor: toColorProp = DEFAULT_TO_COLOR,
 }: BackgroundGradient) => {

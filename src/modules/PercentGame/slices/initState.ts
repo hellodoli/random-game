@@ -1,8 +1,8 @@
 import {
   DEFAULT_MONEY,
   DEFAULT_TICKET_NUMBER,
-  GRADIENT_COLOR_SET,
   DEFAULT_SLOTS,
+  DEFAULT_GRADIENT_COLOR_SET,
 } from 'modules/PercentGame/constants'
 import { MERGE_STATUS, PercentGameState } from '../types'
 import { getRandomPrizes } from 'modules/PercentGame/utils/prize'
@@ -16,7 +16,7 @@ const initialState: PercentGameState = {
   setPrizes: {}, // cache prizes in one roll
   prize: null,
   prizeHover: null,
-  rollColorGradient: GRADIENT_COLOR_SET.BRONZE,
+  rollColorGradient: DEFAULT_GRADIENT_COLOR_SET,
   slots: DEFAULT_SLOTS,
   mergeStatus: MERGE_STATUS.PREPARE,
   mergeActions: {

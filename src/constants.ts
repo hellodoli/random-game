@@ -1,4 +1,4 @@
-import { GradientColorSet } from 'types/enum/color'
+import { GradientSet, GradientSetColors } from 'types'
 
 const GRADIENT_COLOR_SET_DIAMOND = {
   // #87d068 -> #ff4d82
@@ -21,16 +21,12 @@ const GRADIENT_COLOR_SET_BRONZE = {
   TO: 'var(--color-gradient-bronze-to)',
 }
 
-export const GRADIENT_COLOR_SET_FROM_ENUM: GradientColorSet = {
-  0: GRADIENT_COLOR_SET_DIAMOND,
-  1: GRADIENT_COLOR_SET_GOLD,
-  2: GRADIENT_COLOR_SET_SILVER,
-  3: GRADIENT_COLOR_SET_BRONZE,
+export const GRADIENT_COLOR_SET: GradientSetColors = {
+  [GradientSet.DIAMOND]: GRADIENT_COLOR_SET_DIAMOND,
+  [GradientSet.GOLD]: GRADIENT_COLOR_SET_GOLD,
+  [GradientSet.SILVER]: GRADIENT_COLOR_SET_SILVER,
+  [GradientSet.BRONZE]: GRADIENT_COLOR_SET_BRONZE,
+  [GradientSet.CUSTOM]: GRADIENT_COLOR_SET_BRONZE,
 }
 
-export const GRADIENT_COLOR_SET: GradientColorSet = {
-  DIAMOND: GRADIENT_COLOR_SET_DIAMOND,
-  GOLD: GRADIENT_COLOR_SET_GOLD,
-  SILVER: GRADIENT_COLOR_SET_SILVER,
-  BRONZE: GRADIENT_COLOR_SET_BRONZE,
-}
+export const DEFAULT_GRADIENT_COLOR_SET = GRADIENT_COLOR_SET[GradientSet.BRONZE]

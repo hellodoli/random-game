@@ -1,11 +1,7 @@
-import {
-  GRADIENT_COLOR_SET,
-  GRADIENT_COLOR_SET_FROM_ENUM,
-} from '../../constants'
-import { GradientSet } from 'types'
+import { GRADIENT_COLOR_SET, DEFAULT_GRADIENT_COLOR_SET } from '../../constants'
+import { GradientSet } from 'types/enum/icon'
 import {
   /* enum */
-  ROLL_TYPE,
   RESULT_ROLL_TYPE,
   SORT_TYPE,
   /* interface */
@@ -16,7 +12,7 @@ import {
 } from './types'
 
 export * from './data'
-export { GRADIENT_COLOR_SET, GRADIENT_COLOR_SET_FROM_ENUM }
+export { GRADIENT_COLOR_SET, DEFAULT_GRADIENT_COLOR_SET }
 
 /**
  * default state value
@@ -37,11 +33,10 @@ export const DEFAULT_ITEM_RANDOM_TYPE = [
  */
 export const DEFAULT_SELL_PRIZE_PERCENT = 0.8
 
-export const DEFAULT_ROLL_TYPE = ROLL_TYPE.BRONZE
 export const DEFAULT_LIST_ROLL_BTN = [
   {
     id: 1,
-    rollType: ROLL_TYPE.BRONZE,
+    rollType: GradientSet.BRONZE,
     consume: 1,
     rates: [
       { rate: 92, type: RESULT_ROLL_TYPE.BRONZE },
@@ -52,7 +47,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
   {
     id: 2,
-    rollType: ROLL_TYPE.SILVER,
+    rollType: GradientSet.SILVER,
     consume: 4,
     rates: [
       { rate: 92, type: RESULT_ROLL_TYPE.SILVER },
@@ -63,7 +58,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
   {
     id: 3,
-    rollType: ROLL_TYPE.GOLD,
+    rollType: GradientSet.GOLD,
     consume: 16,
     rates: [
       { rate: 93, type: RESULT_ROLL_TYPE.GOLD },
@@ -73,7 +68,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
   {
     id: 4,
-    rollType: ROLL_TYPE.DIAMOND,
+    rollType: GradientSet.DIAMOND,
     consume: 64,
     rates: [
       { rate: 98, type: RESULT_ROLL_TYPE.DIAMOND },

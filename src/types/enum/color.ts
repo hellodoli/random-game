@@ -1,12 +1,4 @@
 import { GradientSet } from 'types/enum/icon'
-export interface GradientColorFromTo {
-  FROM: string
-  TO: string
-}
-
-export interface GradientColorSet {
-  [key: string]: GradientColorFromTo
-}
 
 export interface GradientSetColorFromTo {
   FROM: string
@@ -14,5 +6,5 @@ export interface GradientSetColorFromTo {
 }
 
 export type GradientSetColors = {
-  [key in GradientSet]?: GradientSetColorFromTo
+  [key in GradientSet]: GradientSetColorFromTo
 }

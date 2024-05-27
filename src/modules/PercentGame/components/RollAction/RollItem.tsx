@@ -1,8 +1,11 @@
 import React, { memo } from 'react'
-import { GradientColorFromTo } from 'types/enum/color'
-import { GRADIENT_COLOR_SET } from 'modules/PercentGame/constants'
-import { ROLL_TYPE, RollResult } from 'modules/PercentGame/types'
-import { DEFAULT_ROLL_TYPE } from 'modules/PercentGame/constants'
+import { GradientSet } from 'types/enum/icon'
+import { GradientSetColorFromTo } from 'types/enum/color'
+import {
+  GRADIENT_COLOR_SET,
+  DEFAULT_GRADIENT_COLOR_SET,
+} from 'modules/PercentGame/constants'
+import { RollResult } from 'modules/PercentGame/types'
 
 import TicketIcon from 'components/Icons/Game/Ticket'
 import { Button } from 'antd'
@@ -13,10 +16,10 @@ interface Props {
     consume: number,
     count: number,
     rates: RollResult[],
-    gradient: GradientColorFromTo,
+    gradient: GradientSetColorFromTo,
   ) => void
   disabled?: boolean
-  rollType?: ROLL_TYPE
+  rollType?: GradientSet
   consume?: number
   count?: number
   rates: RollResult[]
@@ -36,14 +39,14 @@ const ConSumeTicket = ({ consume = 1 }: { consume?: number }) => {
 const RollItem = ({
   onRoll,
   disabled = false,
-  rollType = DEFAULT_ROLL_TYPE,
+  rollType = GradientSet.BRONZE,
   consume = 1, // ticket/roll
   count = 1, // maximum roll
   rates,
 }: Props) => {
   const gradient = GRADIENT_COLOR_SET[rollType]
-  const fromColor = gradient?.FROM || GRADIENT_COLOR_SET.BRONZE.FROM
-  const toColor = gradient?.TO || GRADIENT_COLOR_SET.BRONZE.TO
+  const fromColor = gradient.FROM || DEFAULT_GRADIENT_COLOR_SET.FROM
+  const toColor = gradient.TO || DEFAULT_GRADIENT_COLOR_SET.TO
 
   const maxConsumeTicket = count * consume
   const background = `linear-gradient(to right, ${fromColor} , ${toColor})`
@@ -58,7 +61,7 @@ const RollItem = ({
         shape="round"
         onClick={() => onClickStartRoll(consume, 1)}
         disabled={disabled}
-        className={`btn-roll ${rollType.toLowerCase()}`}
+        className={`btn-roll ${rollType}`}
         style={{ background }}
         block
       >
@@ -74,7 +77,7 @@ const RollItem = ({
         shape="round"
         onClick={() => onClickStartRoll(maxConsumeTicket, count)}
         disabled={disabled}
-        className={`btn-roll ${rollType.toLowerCase()}`}
+        className={`btn-roll ${rollType}`}
         style={{ background }}
         block
       >
