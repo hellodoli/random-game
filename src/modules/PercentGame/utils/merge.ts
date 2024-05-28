@@ -95,8 +95,7 @@ export const getMergeColorBackground = ({
     slot = getPrizeResultWhenMergeSameIcon(slots).prize
   }
   if (!slot) return ''
-  const gradientSet = slot.gradientSet
-  const gradient = GRADIENT_COLOR_SET[gradientSet]
+  const gradient = GRADIENT_COLOR_SET[slot.gradientSet]
   const fromColor = gradient.FROM || DEFAULT_GRADIENT_COLOR_SET.FROM
   const toColor = gradient.TO || DEFAULT_GRADIENT_COLOR_SET.TO
   return `linear-gradient(to right, ${fromColor} , ${toColor})`
@@ -169,21 +168,15 @@ export const getMerge = (slots: Slots) => {
   })
 
   if (!slots.includes(null)) {
-    const slot = slots?.[0]
-    const iconId = slot?.iconId || ''
-    const gra = slot?.gradient
-    const graSet = slot?.gradientSet
-
-    const isSameGradient = slots.every((slot) => slot?.gradient === gra)
+    const first = slots[0] as Slot
+    const isSameGradient = slots.every((s) => s?.gradient === first.gradient)
     if (!isSameGradient) return notMerge()
 
-    isMergeSameIconType = slots.every((slot) => slot?.iconId === iconId)
-    isMergeSameLevel = slots.every((slot) => slot?.gradientSet === graSet)
+    isMergeSameIconType = slots.every((s) => s?.iconId === first.iconId)
+    isMergeSameLevel = slots.every((s) => s?.gradientSet === first.gradientSet)
+    const hasHighestLevel = isIncludeHighestLevel(slots)
 
-    if (
-      (isMergeSameLevel || isMergeSameIconType) &&
-      !isIncludeHighestLevel(slots)
-    ) {
+    if ((isMergeSameLevel || isMergeSameIconType) && !hasHighestLevel) {
       const mergeInfo = {
         slots,
         isMergeSameIconType,

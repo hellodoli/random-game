@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from 'antd'
 import modal from 'modules/modal/provider'
-import { ScrollUnfurled, Scissors } from 'components/Icons/Game'
+import { ScrollUnfurled } from 'components/Icons/Game'
 import { isDisabledActionSelector } from 'modules/PercentGame/selectors'
 import { actions } from 'modules/PercentGame/slices'
 import Sell from './Sell'
+import Cut from './Cut'
 
 const Buttons = () => {
   const dispatch = useDispatch()
@@ -35,13 +36,7 @@ const Buttons = () => {
         />
         <div className="ml-auto flex items-center gap-2">
           <Sell />
-          <Button
-            type="primary"
-            className="btn-item btn-item-meta"
-            icon={<Scissors size={24} />}
-            onClick={() => alert('Coming soon!')}
-            disabled={isDisabled}
-          />
+          <Cut />
         </div>
       </div>
     </div>

@@ -20,4 +20,5 @@ export interface PercentGameState {
   mergeStatus: MERGE_STATUS
   mergeActions: MergeActions
   isSelling: boolean
+  isCutting: boolean
 }

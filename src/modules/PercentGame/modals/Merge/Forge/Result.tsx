@@ -122,7 +122,7 @@ const Result = forwardRef<ResultRef, Props>((props, ref) => {
               'text-muted': isShowPrizeResult,
             })}
           >
-            Auto pick up prize
+            Auto pickup
           </span>
         </label>
       </div>

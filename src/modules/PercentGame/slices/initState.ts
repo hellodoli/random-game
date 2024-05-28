@@ -23,6 +23,7 @@ const initialState: PercentGameState = {
     pickUpPrizeToBagAfterMerge: false,
   },
   isSelling: false,
+  isCutting: false,
 }
 
 export { initialState }

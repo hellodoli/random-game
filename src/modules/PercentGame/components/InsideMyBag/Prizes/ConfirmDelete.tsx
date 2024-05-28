@@ -1,35 +1,18 @@
 import React, {
-  useCallback,
-  memo,
   useMemo,
   useState,
   ReactNode,
-  useRef,
   useImperativeHandle,
   ForwardRefRenderFunction,
   forwardRef,
 } from 'react'
-import clsx from 'clsx'
-import { useDispatch, useSelector } from 'react-redux'
 import { Radio, Space, InputNumber, InputNumberProps } from 'antd'
 import type { RadioChangeEvent } from 'antd'
-import { getState } from 'utils/reduxStore'
-import {
-  PRIZE_VIEW_OPEN_FROM,
-  Prize,
-  SELL_PRIZE_OPTION,
-} from 'modules/PercentGame/types'
-import { isSellingSelector } from 'modules/PercentGame/selectors'
-import { actions } from 'modules/PercentGame/slices'
-import PrizeView from 'modules/PercentGame/components/PrizeView'
-import {
-  showModalConfirm,
-  getSellPrize,
-  getItemTextName,
-} from 'modules/PercentGame/utils'
+import { Prize, SELL_PRIZE_OPTION } from 'modules/PercentGame/types'
+import { getSellPrize, getItemTextName } from 'modules/PercentGame/utils'
 import CrownCoin from 'components/Icons/Game/CrownCoin'
 
-interface ConfirmDeleteForwardRef {
+export interface ConfirmDeleteForwardRef {
   getDeleteItemValues: () => {
     type: SELL_PRIZE_OPTION
     itemQuantity: number
@@ -37,7 +20,7 @@ interface ConfirmDeleteForwardRef {
   }
 }
 
-interface ConfirmDeleteProps {
+export interface ConfirmDeleteProps {
   prize: Prize
 }
 
@@ -179,47 +162,4 @@ const ConfirmDeleteForwardRef: ForwardRefRenderFunction<
 
 const ConfirmDelete = forwardRef(ConfirmDeleteForwardRef)
 
-const Prizes = () => {
-  const isSelling = useSelector(isSellingSelector)
-  const dispatch = useDispatch()
-  const ref = useRef<ConfirmDeleteForwardRef>(null)
-
-  const onClickPrizeItem = useCallback(
-    (id: string) => {
-      if (!isSelling) return
-      const state = getState()
-      const prize = state.percentGame?.prizes?.[id]
-      showModalConfirm({
-        title: 'Do you want to sell these items?',
-        centered: true,
-        content: prize ? <ConfirmDelete prize={prize} ref={ref} /> : null,
-        onOk: () => {
-          if (ref.current) {
-            const { type, customQuantity, itemQuantity } =
-              ref.current.getDeleteItemValues()
-            dispatch(
-              actions.sellPrize({ id, customQuantity, itemQuantity, type }),
-            )
-          }
-        },
-      })
-    },
-    [isSelling],
-  )
-
-  return (
-    <div
-      className={clsx('section-prizes my-5', {
-        'is-selling': isSelling,
-      })}
-    >
-      <PrizeView
-        isBorderWrapper={false}
-        from={PRIZE_VIEW_OPEN_FROM.BAG}
-        onClick={onClickPrizeItem}
-      />
-    </div>
-  )
-}
-
-export default memo(Prizes)
+export default ConfirmDelete

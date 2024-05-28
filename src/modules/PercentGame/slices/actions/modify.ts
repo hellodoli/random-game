@@ -11,6 +11,7 @@ import {
 import {
   getMergePrizeSameType,
   getZeroQuantityPrizeIds,
+  getPrizesFromSlots,
 } from 'modules/PercentGame/utils'
 import {
   getNextGradientSet,
@@ -40,11 +41,12 @@ export const modifyActions = {
       const emptySlotIndex = state.slots.indexOf(null)
       // update empty slot with `Prize`
       if (emptySlotIndex >= 0) {
-        state.slots[emptySlotIndex] = {
+        const newSlot = {
           ...prize,
-          slotId: uuidv4(),
-          number: 1,
+          slotId: uuidv4(), // create new `Slot` with `slotId`
+          number: 1, // ratain count = 1
         }
+        state.slots[emptySlotIndex] = newSlot
       }
       // update number of `Prize`
       state.prizes[id] = {
@@ -87,14 +89,12 @@ export const modifyActions = {
     state.mergeStatus = MERGE_STATUS.INITITAL
   },
   resetMerge: (state: PercentGameState) => {
-    const slots = state.slots
+    const slots = getPrizesFromSlots(state.slots)
     slots.forEach((slot) => {
-      if (slot) {
-        const id = slot.id
-        state.prizes[id] = {
-          ...state.prizes[id],
-          number: (state.prizes[id]?.number || 0) + 1,
-        }
+      const id = slot.id
+      state.prizes[id] = {
+        ...state.prizes[id],
+        number: (state.prizes[id]?.number || 0) + 1,
       }
     })
     state.slots = DEFAULT_SLOTS

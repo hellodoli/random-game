@@ -3,6 +3,9 @@ import { PercentGameState, SELL_PRIZE_OPTION } from 'modules/PercentGame/types'
 import { getSellPrize } from 'modules/PercentGame/utils/sell'
 
 export const sellActions = {
+  toggleIsCuttingPrize: (state: PercentGameState) => {
+    state.isCutting = !state.isCutting
+  },
   toggleIsSellingPrize: (state: PercentGameState) => {
     state.isSelling = !state.isSelling
   },

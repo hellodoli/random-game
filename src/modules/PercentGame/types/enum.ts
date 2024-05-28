@@ -30,3 +30,8 @@ export enum SELL_PRIZE_OPTION {
   ALL,
   CUSTOM,
 }
+
+export enum META_TYPE {
+  CUT,
+  SELL,
+}
