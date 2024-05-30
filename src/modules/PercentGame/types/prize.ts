@@ -11,7 +11,7 @@ export interface Prize {
   iconName: string
   gradientSet: GradientSet
   gradient: Gradient
-  number?: number
+  number: number
 }
 export type ListPrizeOb = { [key: string]: Prize }
 

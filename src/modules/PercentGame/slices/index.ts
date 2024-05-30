@@ -5,6 +5,7 @@ import { rollActions } from './actions/roll'
 import { modifyActions } from './actions/modify'
 import { sortActions } from './actions/sort'
 import { sellActions } from './actions/sell'
+import { cutActions } from './actions/cut'
 
 export const slice = createSlice({
   initialState,
@@ -18,6 +19,7 @@ export const slice = createSlice({
     ...rollActions,
     ...modifyActions,
     ...sellActions,
+    ...cutActions,
   },
 })
 

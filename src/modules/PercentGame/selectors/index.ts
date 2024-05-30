@@ -1,7 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from 'types'
 import { initialState } from '../slices/initState'
-import { META_TYPE } from '../types/enum'
 
 const selectSlice = (state: RootState) => state.percentGame || initialState
 
@@ -110,10 +109,9 @@ export const isCuttingSelector = createSelector(
   (state) => state.isCutting,
 )
 
-export const isMetaActionSelector = createSelector(
-  [selectSlice, (_, metaKey: META_TYPE) => metaKey],
-  (state, metaKey) =>
-    state[metaKey === META_TYPE.CUT ? 'isCutting' : 'isSelling'],
+export const metaStatusSelector = createSelector(
+  [selectSlice],
+  (state) => state.metaStatus,
 )
 
 export const isDisabledActionSelector = createSelector(

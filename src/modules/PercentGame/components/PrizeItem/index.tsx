@@ -61,6 +61,7 @@ const PrizeItem = ({
         iconName,
         gradientSet,
         gradient,
+        number,
       })
     }
   }

@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, ReactNode } from 'react'
 import clsx from 'clsx'
+import { useDispatch } from 'react-redux'
 import { Button } from 'antd'
 import { META_TYPE } from 'modules/PercentGame/types/enum'
 import useTrackMouse from 'modules/PercentGame/hooks/useTrackMouse'
+import { actions } from 'modules/PercentGame/slices'
 
 interface Props {
   type?: META_TYPE
@@ -14,19 +16,29 @@ interface Props {
   onClick: () => void
 }
 
-const Track = ({ icon: Icon }: { icon: React.ReactNode }) => {
+const Track = (props: {
+  icon: ReactNode
+  btnRef: React.RefObject<HTMLButtonElement>
+}) => {
+  const dispatch = useDispatch()
+  const { icon: Icon, btnRef } = props
   const { x, y, isShow } = useTrackMouse({
     offsetWidth: 20,
     isNotShowWhenInit: true,
   })
 
   useEffect(() => {
-    const onDblClick = () => {
-      // handle logic dbclick outside
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onClick = (e: any) => {
+      const el = btnRef.current
+      const target = e?.target
+      if (el && !el.contains(target)) {
+        dispatch(actions.clickOutsideWhenHasMetaAction())
+      }
     }
-    window.addEventListener('dblclick', onDblClick)
+    window.addEventListener('click', onClick)
     return () => {
-      window.removeEventListener('dblclick', onDblClick)
+      window.removeEventListener('click', onClick)
     }
   }, [])
 
@@ -55,10 +67,11 @@ const MetaButton = (props: Props) => {
     title = '',
     onClick,
   } = props
-
+  const ref = useRef<HTMLButtonElement>(null)
   return (
     <>
       <Button
+        ref={ref}
         type="primary"
         className={clsx(
           'btn-item btn-item-meta',
@@ -73,7 +86,7 @@ const MetaButton = (props: Props) => {
         title={title}
         disabled={isDisabled}
       />
-      {isActive && <Track icon={Icon} />}
+      {isActive && <Track icon={Icon} btnRef={ref} />}
     </>
   )
 }

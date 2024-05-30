@@ -8,21 +8,20 @@ import React, {
 } from 'react'
 import { Radio, Space, InputNumber, InputNumberProps } from 'antd'
 import type { RadioChangeEvent } from 'antd'
-import { Prize, SELL_PRIZE_OPTION } from 'modules/PercentGame/types'
-import { getSellPrize, getItemTextName } from 'modules/PercentGame/utils'
+import {
+  Prize,
+  SELL_PRIZE_OPTION,
+  META_STATUS,
+} from 'modules/PercentGame/types'
+import type { ConfirmCutForwardRef, ConfirmDeleteForwardRef } from './type'
+import {
+  getSellPrize,
+  getItemTextName,
+  showModalConfirm,
+  showModalError,
+  dispatchChangeMetaStatus,
+} from 'modules/PercentGame/utils'
 import CrownCoin from 'components/Icons/Game/CrownCoin'
-
-export interface ConfirmDeleteForwardRef {
-  getDeleteItemValues: () => {
-    type: SELL_PRIZE_OPTION
-    itemQuantity: number
-    customQuantity: number
-  }
-}
-
-export interface ConfirmDeleteProps {
-  prize: Prize
-}
 
 const CoinIcon = () => (
   <CrownCoin
@@ -51,7 +50,7 @@ const LayoutQuantity = ({
   leftTitle?: string
 }) => {
   return (
-    <Radio value={value}>
+    <Radio value={value} className="whitespace-nowrap">
       <span className="flex items-center">
         {isHiddenLeft ? null : renderLeft ? (
           renderLeft()
@@ -81,7 +80,7 @@ const LayoutQuantity = ({
 
 const ConfirmDeleteForwardRef: ForwardRefRenderFunction<
   ConfirmDeleteForwardRef,
-  ConfirmDeleteProps
+  { prize: Prize }
 > = (props, forwardedRef) => {
   const { prize } = props
   const { gradientSet, number: quantity = 0 } = prize
@@ -112,9 +111,7 @@ const ConfirmDeleteForwardRef: ForwardRefRenderFunction<
   }
 
   const onChangeCustomQuantity: InputNumberProps['onChange'] = (value) => {
-    if (typeof value === 'number') {
-      setCustomQuantity(value)
-    }
+    if (typeof value === 'number') setCustomQuantity(value)
   }
 
   return (
@@ -146,6 +143,7 @@ const ConfirmDeleteForwardRef: ForwardRefRenderFunction<
                 max={quantity}
                 value={customQuantity}
                 onChange={onChangeCustomQuantity}
+                size="middle"
               />
             </span>
             <span className="ml-1">{`${getItemTextName(
@@ -160,6 +158,75 @@ const ConfirmDeleteForwardRef: ForwardRefRenderFunction<
   )
 }
 
-const ConfirmDelete = forwardRef(ConfirmDeleteForwardRef)
+const ConfirmCutForwardRef: ForwardRefRenderFunction<
+  ConfirmCutForwardRef,
+  { quantity: number }
+> = ({ quantity }, forwardedRef) => {
+  const [customQuantity, setCustomQuantity] = useState(1)
+  const onChangeCustomQuantity: InputNumberProps['onChange'] = (value) => {
+    if (typeof value === 'number') setCustomQuantity(value)
+  }
 
-export default ConfirmDelete
+  useImperativeHandle(
+    forwardedRef,
+    () => ({
+      getCutItemValues: () => ({
+        itemQuantity: customQuantity,
+      }),
+    }),
+    [customQuantity],
+  )
+
+  return (
+    <>
+      <InputNumber
+        min={1}
+        max={quantity - 1}
+        value={customQuantity}
+        onChange={onChangeCustomQuantity}
+        size="large"
+      />
+    </>
+  )
+}
+
+export const confirm = ({
+  title = '',
+  content,
+  onOk,
+  isShowModalError = false,
+}: {
+  title?: string
+  isShowModalError?: boolean
+  onOk?: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content: any
+}) => {
+  const setPrepareStatus = () => {
+    setTimeout(() => {
+      dispatchChangeMetaStatus(META_STATUS.PREPARE)
+    })
+  }
+  if (isShowModalError) {
+    showModalError({
+      title,
+      centered: true,
+      onOk: setPrepareStatus,
+      onCancel: setPrepareStatus,
+    })
+    return
+  }
+  showModalConfirm({
+    title,
+    centered: true,
+    content,
+    onOk: () => onOk?.(),
+    onCancel: setPrepareStatus,
+  })
+}
+
+const ConfirmDelete = forwardRef(ConfirmDeleteForwardRef)
+const ConfirmCut = forwardRef(ConfirmCutForwardRef)
+
+export type { ConfirmDeleteForwardRef, ConfirmCutForwardRef }
+export { ConfirmCut, ConfirmDelete }

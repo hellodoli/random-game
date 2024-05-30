@@ -34,7 +34,7 @@ export const modifyActions = {
   ) => {
     const { id } = action.payload
     const prize = state.prizes[id]
-    const prizeCount = prize?.number || 0
+    const prizeCount = prize.number
     const isFullSlot = !state.slots.includes(null)
 
     if (prize && !isFullSlot && prizeCount > 0) {
@@ -71,7 +71,7 @@ export const modifyActions = {
       }) as Slots
       state.prizes[id] = {
         ...targetPrize,
-        number: (targetPrize.number || 0) + 1,
+        number: targetPrize.number + 1,
       }
       state.mergeStatus = MERGE_STATUS.PREPARE
     }
@@ -94,7 +94,7 @@ export const modifyActions = {
       const id = slot.id
       state.prizes[id] = {
         ...state.prizes[id],
-        number: (state.prizes[id]?.number || 0) + 1,
+        number: state.prizes[id].number + 1,
       }
     })
     state.slots = DEFAULT_SLOTS

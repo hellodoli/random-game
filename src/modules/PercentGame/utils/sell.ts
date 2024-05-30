@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GradientSet } from 'types'
+import { getDispatch } from 'utils/reduxStore'
 import {
   DEFAULT_TICKET_PRICE,
   DEFAULT_SELL_PRIZE_PERCENT,
   PRIZE_SET,
 } from 'modules/PercentGame/constants'
+import { META_STATUS } from 'modules/PercentGame/types/enum'
+import { actions } from 'modules/PercentGame/slices'
 
 export const getItemTextName = (quantity: number) => {
   return quantity > 1 ? 'items' : 'item'
@@ -32,4 +34,20 @@ export const getSellPrize = (
     pricePerOne,
     priceAll,
   }
+}
+
+export const toggleMetaAction = (value: boolean) => {
+  return {
+    value: !value,
+    status: value ? META_STATUS.INITITAL : META_STATUS.PREPARE,
+  }
+}
+
+export const dispatchChangeMetaStatus = (status: META_STATUS) => {
+  const dispatch = getDispatch()
+  dispatch(
+    actions.changeMetaStatus({
+      status,
+    }),
+  )
 }

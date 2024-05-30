@@ -1,6 +1,6 @@
 import { Prize, Slots, ListPrizeOb } from './prize'
 import { GradientSetColorFromTo } from 'types/enum/color'
-import { MERGE_STATUS } from './enum'
+import { MERGE_STATUS, META_STATUS } from './enum'
 
 export interface MergeActions {
   pickUpPrizeToBagAfterMerge: boolean
@@ -21,4 +21,5 @@ export interface PercentGameState {
   mergeActions: MergeActions
   isSelling: boolean
   isCutting: boolean
+  metaStatus: META_STATUS
 }

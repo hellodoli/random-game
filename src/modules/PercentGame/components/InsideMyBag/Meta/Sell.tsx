@@ -1,31 +1,32 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, memo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Scissors from 'components/Icons/Game/Scissors'
+import ProfitIcon from 'components/Icons/Game/Profit'
 import { META_TYPE } from 'modules/PercentGame/types/enum'
 import { actions } from 'modules/PercentGame/slices'
 import {
-  isCuttingSelector,
+  isSellingSelector,
   isDisabledActionSelector,
 } from 'modules/PercentGame/selectors'
 import MetaBtn from './MetaBtn'
 
-const Cut = () => {
+const Sell = () => {
   const dispatch = useDispatch()
-  const isCutting = useSelector(isCuttingSelector)
+  const isSelling = useSelector(isSellingSelector)
   const isDisabledAction = useSelector(isDisabledActionSelector)
   const onClick = useCallback(() => {
-    dispatch(actions.toggleIsCuttingPrize())
+    dispatch(actions.toggleIsSellingPrize())
   }, [])
+
   return (
     <MetaBtn
-      type={META_TYPE.CUT}
-      icon={<Scissors size={24} />}
-      isActive={isCutting}
-      isDisabled={isDisabledAction && !isCutting}
-      title="Cut Prize"
+      type={META_TYPE.SELL}
+      icon={<ProfitIcon size={24} />}
+      isActive={isSelling}
+      isDisabled={isDisabledAction && !isSelling}
+      title="Sell Prize"
       onClick={onClick}
     />
   )
 }
 
-export default Cut
+export default memo(Sell)

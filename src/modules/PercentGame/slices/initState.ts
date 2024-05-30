@@ -4,7 +4,7 @@ import {
   DEFAULT_SLOTS,
   DEFAULT_GRADIENT_COLOR_SET,
 } from 'modules/PercentGame/constants'
-import { MERGE_STATUS, PercentGameState } from '../types'
+import { MERGE_STATUS, META_STATUS, PercentGameState } from '../types'
 import { getRandomPrizes } from 'modules/PercentGame/utils/prize'
 
 const initialState: PercentGameState = {
@@ -24,6 +24,7 @@ const initialState: PercentGameState = {
   },
   isSelling: false,
   isCutting: false,
+  metaStatus: META_STATUS.INITITAL,
 }
 
 export { initialState }

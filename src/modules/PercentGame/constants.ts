@@ -36,6 +36,7 @@ export const DEFAULT_SELL_PRIZE_PERCENT = 0.8
 export const DEFAULT_LIST_ROLL_BTN = [
   {
     id: 1,
+    name: 'BRONZE',
     rollType: GradientSet.BRONZE,
     consume: 1,
     rates: [
@@ -47,6 +48,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
   {
     id: 2,
+    name: 'SILVER',
     rollType: GradientSet.SILVER,
     consume: 4,
     rates: [
@@ -58,6 +60,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
   {
     id: 3,
+    name: 'GOLD',
     rollType: GradientSet.GOLD,
     consume: 16,
     rates: [
@@ -68,6 +71,7 @@ export const DEFAULT_LIST_ROLL_BTN = [
   },
   {
     id: 4,
+    name: 'DIAMOND',
     rollType: GradientSet.DIAMOND,
     consume: 64,
     rates: [

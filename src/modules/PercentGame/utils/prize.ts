@@ -65,8 +65,7 @@ export const getMergePrizeSameType = (
 
   const newPrize = {
     ...combinePrize,
-    number:
-      typeof combinePrize.number === 'number' ? combinePrize.number + 1 : 1,
+    number: combinePrize.number + 1,
   }
 
   return {
@@ -88,6 +87,7 @@ export const getPrize = (type = RESULT_ROLL_TYPE.BRONZE) => {
     iconName: randomPrize.name,
     gradientSet: getGradientSet(type),
     gradient: Gradient.HORIZONTAL,
+    number: 0,
   }
   return prize
 }

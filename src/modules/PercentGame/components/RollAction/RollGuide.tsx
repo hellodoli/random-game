@@ -14,7 +14,7 @@ const GuideText = () => {
           return (
             <div key={roll.id}>
               <span style={{ fontWeight: 'bold', marginRight: 4 }}>
-                [{roll.rollType}]
+                [{roll.name}]
               </span>
               <span>(</span>
               <>

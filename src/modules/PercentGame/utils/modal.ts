@@ -10,10 +10,11 @@ interface ModalProps {
   modalExtraProps?: ModalExtraProps
   className?: string
   onOk?: () => void
+  onCancel?: () => void
 }
 
 const getModalProps = (props: ModalProps) => {
-  const { modalExtraProps, onOk, ...rest } = props
+  const { modalExtraProps, onOk, onCancel, ...rest } = props
   return {
     ...rest,
     content: props.content || null,
@@ -21,6 +22,7 @@ const getModalProps = (props: ModalProps) => {
     className: `game-module-percent-game-modal ${props.className}`,
     centered: props.centered || false,
     ...(typeof onOk === 'function' ? { onOk } : {}),
+    ...(typeof onCancel === 'function' ? { onCancel } : {}),
   }
 }
 

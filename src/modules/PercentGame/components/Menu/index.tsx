@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'antd'
 import modal from 'modules/modal/provider'
-import { ScrollUnfurled } from 'components/Icons/Game'
+import { AnvilImpact } from 'components/Icons/Game'
 import Bag from '../Header/Bag'
 import './style.scss'
 
@@ -16,7 +16,7 @@ const Menu = () => {
       <Bag iconSize={28} />
       <Button
         type="primary"
-        icon={<ScrollUnfurled size={28} classNames="my-bag-icon" />}
+        icon={<AnvilImpact size={28} />}
         className="btn-item btn-item-action btn-open-bag size--medium"
         onClick={onClickOpenMerge}
         style={{

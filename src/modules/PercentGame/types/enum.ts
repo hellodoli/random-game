@@ -35,3 +35,9 @@ export enum META_TYPE {
   CUT,
   SELL,
 }
+
+export enum META_STATUS {
+  INITITAL,
+  PREPARE,
+  OPEN_MODAL,
+}

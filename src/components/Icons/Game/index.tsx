@@ -8,6 +8,7 @@ import PerspectiveDice6FacesRandom from './PerspectiveDice6FacesRandom'
 import WingedSword from './WingedSword'
 import Profit from './Profit'
 import Scissors from './Scissors'
+import AnvilImpact from './AnvilImpact'
 
 export {
   Backpack,
@@ -20,4 +21,5 @@ export {
   WingedSword,
   Profit,
   Scissors,
+  AnvilImpact,
 }
