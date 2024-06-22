@@ -2,6 +2,7 @@
 import { Modal } from 'antd'
 import { ModalExtraProps } from 'modules/modal/types'
 import { MODAL_EXTRA_PROPS_DEFAULT } from 'modules/modal/constants'
+import { themeProviderClass } from 'utils/settings'
 
 interface ModalProps {
   title?: string
@@ -9,14 +10,18 @@ interface ModalProps {
   centered?: boolean
   modalExtraProps?: ModalExtraProps
   className?: string
+  wrapClassName?: string
   onOk?: () => void
   onCancel?: () => void
 }
 
 const getModalProps = (props: ModalProps) => {
   const { modalExtraProps, onOk, onCancel, ...rest } = props
+  let wrapClassName = `${themeProviderClass}`
+  if (props.wrapClassName) wrapClassName += `${props.wrapClassName}`
   return {
     ...rest,
+    wrapClassName,
     content: props.content || null,
     ...(modalExtraProps || MODAL_EXTRA_PROPS_DEFAULT),
     className: `game-module-percent-game-modal ${props.className}`,

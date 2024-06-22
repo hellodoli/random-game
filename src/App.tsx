@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { Toaster } from 'react-hot-toast'
 import { GAME_TYPE } from 'types/enum'
 import { gameSelector } from 'selectors'
-import { PercentGame, MainMenu, Modals } from './modules'
+import { PercentGame, MainMenu, Modals, GlobalTheme } from './modules'
+import { themeProviderClass } from 'utils/settings'
 
 function App() {
   const game = useSelector(gameSelector)
@@ -16,7 +17,8 @@ function App() {
     }
   }
   return (
-    <div className="App main">
+    <div className={`App main ${themeProviderClass}`}>
+      <GlobalTheme />
       <Modals />
       <Toaster />
       <MainMenu />

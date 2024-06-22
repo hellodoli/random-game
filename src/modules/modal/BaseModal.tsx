@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { Modal } from 'antd'
 import { BaseModalCompProps } from './types'
 import { MODAL_EXTRA_PROPS_DEFAULT } from './constants'
+import { themeProviderClass } from 'utils/settings'
 
 const BaseModal = ({
   children,
@@ -9,6 +10,7 @@ const BaseModal = ({
   onClose,
   centered = true,
   className = '',
+  wrapClassName = '',
   modalExtraProps = MODAL_EXTRA_PROPS_DEFAULT,
 }: BaseModalCompProps) => {
   const {
@@ -34,6 +36,7 @@ const BaseModal = ({
       closable={closable}
       cancelButtonProps={{ style: { display: 'none' } }}
       className={className}
+      wrapClassName={`${themeProviderClass} ${wrapClassName}`}
     >
       {children}
     </Modal>

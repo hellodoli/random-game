@@ -5,6 +5,7 @@ interface Base {
   // optional
   centered?: boolean
   className?: string
+  wrapClassName?: string
 }
 
 export interface BaseModalProps {
