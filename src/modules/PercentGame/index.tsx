@@ -9,6 +9,7 @@ import RollAction from './components/RollAction'
 import TrackMousePointer from './components/TrackMousePointer'
 import Menu from './components/Menu'
 import StartInfo from './components/Guide/StartInfo'
+import ThemeEdit from './components/ThemeEdit'
 
 import './style.scss'
 
@@ -28,11 +29,14 @@ const PercentGame = () => {
   }, [])
   return (
     <div className="game-module game-module-percent-game">
-      <div className="game-module-wrapper section-border">
-        <TrackMousePointer />
-        <Header />
-        <Menu />
-        <RollAction />
+      <div className="game-module-percent-game-wrapper h-full relative">
+        <ThemeEdit />
+        <div className="game-module-wrapper section-border">
+          <TrackMousePointer />
+          <Header />
+          <Menu />
+          <RollAction />
+        </div>
       </div>
     </div>
   )

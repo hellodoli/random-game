@@ -26,10 +26,7 @@ const Tickets = () => {
   }
 
   return (
-    <div
-      className="consume-item ticket"
-      style={{ display: 'flex', alignItems: 'center' }}
-    >
+    <div className="flex items-center consume-item ticket">
       <TicketIcon size={20} marginRight={4} />
       <input
         type="number"

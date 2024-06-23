@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal } from 'antd'
 import { ModalExtraProps } from 'modules/modal/types'
 import { MODAL_EXTRA_PROPS_DEFAULT } from 'modules/modal/constants'
@@ -6,6 +5,7 @@ import { themeProviderClass } from 'utils/settings'
 
 interface ModalProps {
   title?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content?: any
   centered?: boolean
   modalExtraProps?: ModalExtraProps
@@ -17,14 +17,12 @@ interface ModalProps {
 
 const getModalProps = (props: ModalProps) => {
   const { modalExtraProps, onOk, onCancel, ...rest } = props
-  let wrapClassName = `${themeProviderClass}`
-  if (props.wrapClassName) wrapClassName += `${props.wrapClassName}`
   return {
     ...rest,
-    wrapClassName,
     content: props.content || null,
     ...(modalExtraProps || MODAL_EXTRA_PROPS_DEFAULT),
     className: `game-module-percent-game-modal ${props.className}`,
+    wrapClassName: `${themeProviderClass}${props.wrapClassName || ''}`,
     centered: props.centered || false,
     ...(typeof onOk === 'function' ? { onOk } : {}),
     ...(typeof onCancel === 'function' ? { onCancel } : {}),

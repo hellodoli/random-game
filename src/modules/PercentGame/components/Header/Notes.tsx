@@ -11,10 +11,8 @@ interface Props {
 const Notes = ({ ticketPrice = DEFAULT_TICKET_PRICE }: Props) => {
   return (
     <div
-      className="consume-item notes"
+      className="flex items-center consume-item notes"
       style={{
-        display: 'flex',
-        alignItems: 'center',
         marginRight: 'auto',
       }}
     >

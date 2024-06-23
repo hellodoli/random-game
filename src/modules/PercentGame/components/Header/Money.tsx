@@ -8,12 +8,8 @@ const Money = () => {
   const money = useSelector(moneySelector)
   return (
     <div
-      className="consume-item coins"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        marginRight: 10,
-      }}
+      className="flex items-center justify-center consume-item coins"
+      style={{ marginRight: 10 }}
     >
       <CrownCoin
         size={20}

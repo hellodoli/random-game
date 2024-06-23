@@ -16,20 +16,18 @@ const MainMenu = () => {
       payload: { game },
     })
   }
-
   const renderGameButtons = () => {
     return (
       <Button
         type="primary"
         size="large"
         onClick={() => switchGame(defaultGame)}
-        className="btn-linear btn-wide play-game-btn"
+        className="btn-linear btn-wide play-game-btn uppercase"
       >
         play
       </Button>
     )
   }
-
   return (
     <>
       {game && (

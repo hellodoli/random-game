@@ -9,6 +9,7 @@ import WingedSword from './WingedSword'
 import Profit from './Profit'
 import Scissors from './Scissors'
 import AnvilImpact from './AnvilImpact'
+import FairyWand from './FairyWand'
 
 export {
   Backpack,
@@ -22,4 +23,5 @@ export {
   Profit,
   Scissors,
   AnvilImpact,
+  FairyWand,
 }
