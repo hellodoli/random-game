@@ -1,3 +1,18 @@
+[class*='btn-'] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.btn-wide {
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  min-width: 180px;
+}
+
 .btn-flex-center {
   display: inline-flex;
   align-items: center;
@@ -37,4 +52,32 @@
     var(--color-gradient-1-start),
     var(--color-gradient-1-end)
   );
+}
+
+.btn-linear,
+.btn-linear-primary {
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  background: linear-gradient(
+    to right,
+    var(--color-secondary),
+    var(--color-primary)
+  );
+  &:not(:disabled):hover,
+  &:not(:disabled):focus {
+    color: var(--color-primary);
+    border-width: 3px;
+  }
+}
+
+.btn-outline,
+.btn-outline-primary {
+  color: var(--color-primary);
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  &:not(:disabled):hover,
+  &:not(:disabled):focus {
+    color: var(--color-primary);
+    background: transparent;
+  }
 }

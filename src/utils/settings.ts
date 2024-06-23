@@ -1,21 +1,21 @@
-import { addStylesheetRules } from 'utils/stylesheet'
+import { addStylesheetRules, getStyleSheet } from 'utils/stylesheet'
 
-interface Map {
+interface MapCssProp {
   [key: string]: string
 }
 
-const CSS_GLOBAL: Map = {
+const CSS_GLOBAL: MapCssProp = {
   '--body-gap': '20px',
 }
 
-const COLORS_GLOBAL: Map = {
+const COLORS_GLOBAL: MapCssProp = {
   '--color-primary': '#108ee9',
   '--color-secondary': '#87d068',
   '--color-black': '#000',
   '--color-white': '#fff',
 }
 
-const COLORS_GRADIENT: Map = {
+const COLORS_GRADIENT: MapCssProp = {
   '--color-gradient-1-start': '#ff4d82',
   '--color-gradient-1-end': '#722ed1',
   '--color-gradient-diamond-from': '#87d068',
@@ -30,28 +30,42 @@ const COLORS_GRADIENT: Map = {
 
 export const themeProviderClass = 'theme-provider-class'
 
-export const getDefaultCssVariables = () => {
+const getCssVariables = (injected: MapCssProp = {}) => {
   return {
     ...CSS_GLOBAL,
     ...COLORS_GLOBAL,
     ...COLORS_GRADIENT,
+    ...injected,
   }
 }
 
-const getGlobalCssVariablesRule = () => {
-  const cssProps = getDefaultCssVariables()
+const getStyleSheetRules = (injected: MapCssProp = {}) => {
+  const cssProps = getCssVariables(injected)
   const keys = Object.keys(cssProps)
   const rules = []
   for (let i = 0; i < keys.length; i++) {
-    const key = keys[i]
-    const value = cssProps[key]
-    rules.push([key, value])
+    const prop = keys[i]
+    const value = cssProps[prop]
+    rules.push([prop, value])
   }
   return rules
 }
 
-export const addTheme = () => {
-  const rules = getGlobalCssVariablesRule()
+export const addTheme = (injected: MapCssProp = {}) => {
+  const rules = getStyleSheetRules(injected)
   console.log({ rules })
   addStylesheetRules([[`.${themeProviderClass}`, ...rules]])
+}
+
+export const removeTheme = () => {
+  const s = getStyleSheet()
+  if (s) {
+    s.deleteRule(0)
+    addTheme({
+      '--color-primary': 'red',
+      '--color-secondary': 'yellow',
+      '--color-black': '#000',
+      '--color-white': '#fff',
+    })
+  }
 }

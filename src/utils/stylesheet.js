@@ -1,3 +1,5 @@
+const styleEl = document.createElement('style')
+
 /**
  * Add a stylesheet rule to the document (it may be better practice
  * to dynamically change classes, so style information can be kept in
@@ -19,8 +21,6 @@ addStylesheetRules([
 */
 
 export function addStylesheetRules(rules) {
-  const styleEl = document.createElement('style')
-
   // Append <style> element to <head>
   document.head.appendChild(styleEl)
 
@@ -46,4 +46,8 @@ export function addStylesheetRules(rules) {
     // Insert CSS Rule
     styleSheet.insertRule(`${selector}{${propStr}}`, styleSheet.cssRules.length)
   }
+}
+
+export function getStyleSheet() {
+  return styleEl.sheet
 }
