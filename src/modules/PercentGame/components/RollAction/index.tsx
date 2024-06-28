@@ -23,7 +23,11 @@ const clearProgressInterval = () => {
   clearInterval(intervalProgress)
 }
 
-const RollAction = () => {
+interface Props {
+  isMirror?: boolean
+}
+
+const RollAction = ({ isMirror = false }: Props) => {
   const dispatch = useDispatch()
   const isRolling = useSelector(isRollingSelector)
   const ticket = useSelector(ticketSelector)
@@ -39,7 +43,7 @@ const RollAction = () => {
       rates: RollResult[],
       gradient: GradientSetColorFromTo,
     ) => {
-      if (isRolling) return
+      if (isRolling || isMirror) return
       flag = false
       dispatch(actions.startRoll({ consume, gradient })) // start rolling
       intervalProgress = setInterval(() => {
@@ -58,7 +62,7 @@ const RollAction = () => {
         })
       }, 200)
     },
-    [isRolling],
+    [isRolling, isMirror],
   )
 
   useEffect(() => {
@@ -93,8 +97,8 @@ const RollAction = () => {
 
   return (
     <div className="game-rolling-area section-border">
-      <PrizePickUp />
-      <RollGuide />
+      {!isMirror && <PrizePickUp />}
+      {!isMirror && <RollGuide />}
 
       <div id="rateProWrapp" className="rate-progress">
         <RollProgress progress={progress} />
@@ -108,8 +112,9 @@ const RollAction = () => {
         wrap
       >
         {rates.map(({ id, rates, rollType, consume }) => {
-          const disabled =
-            isRolling || isAnimate || !ticket || !!(ticket < consume)
+          const disabled = isMirror
+            ? false
+            : isRolling || isAnimate || !ticket || !!(ticket < consume)
           return (
             <RollItem
               key={id}

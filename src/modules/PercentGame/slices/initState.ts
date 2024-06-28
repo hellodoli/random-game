@@ -25,6 +25,7 @@ const initialState: PercentGameState = {
   isSelling: false,
   isCutting: false,
   metaStatus: META_STATUS.INITITAL,
+  isMirror: false,
 }
 
 export { initialState }

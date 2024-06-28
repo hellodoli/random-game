@@ -9,7 +9,7 @@ import RollAction from './components/RollAction'
 import TrackMousePointer from './components/TrackMousePointer'
 import Menu from './components/Menu'
 import StartInfo from './components/Guide/StartInfo'
-import ThemeEdit from './components/ThemeEdit'
+import ThemeEditButton from './components/ThemeEditButton'
 
 import './style.scss'
 
@@ -30,7 +30,7 @@ const PercentGame = () => {
   return (
     <div className="game-module game-module-percent-game">
       <div className="game-module-percent-game-wrapper h-full relative">
-        <ThemeEdit />
+        <ThemeEditButton />
         <div className="game-module-wrapper section-border">
           <TrackMousePointer />
           <Header />

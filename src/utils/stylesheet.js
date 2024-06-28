@@ -1,4 +1,5 @@
-const styleEl = document.createElement('style')
+export const styleEl = document.createElement('style')
+export const mirrorStyleEl = document.createElement('style')
 
 /**
  * Add a stylesheet rule to the document (it may be better practice
@@ -20,7 +21,7 @@ addStylesheetRules([
 ]);
 */
 
-export function addStylesheetRules(rules) {
+export function addStylesheetRules(rules, styleEl) {
   // Append <style> element to <head>
   document.head.appendChild(styleEl)
 
@@ -50,4 +51,8 @@ export function addStylesheetRules(rules) {
 
 export function getStyleSheet() {
   return styleEl.sheet
+}
+
+export function getMirrorStyleSheet() {
+  return mirrorStyleEl.sheet
 }

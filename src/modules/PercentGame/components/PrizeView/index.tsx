@@ -4,9 +4,12 @@ import clsx from 'clsx'
 import { getIconPrize } from 'modules/PercentGame/utils'
 import { prizesSelector } from 'modules/PercentGame/selectors'
 import {
+  PRIZE_VIEW_OPEN_FROM,
   IconSize,
   OnSelectPrize,
-  PRIZE_VIEW_OPEN_FROM,
+  Prize,
+  OnMouseEnterPrize,
+  OnMouseLeavePrize,
 } from 'modules/PercentGame/types'
 import useActions from 'modules/PercentGame/hooks/useActions'
 
@@ -14,24 +17,35 @@ import PrizeItem from '../PrizeItem'
 import PrizeViewWrapp from './PrizeViewWrapp'
 import './style.scss'
 
-interface Props {
+const defaultPrizes: Prize[] = []
+
+interface ViewProps {
   from?: PRIZE_VIEW_OPEN_FROM
   gap?: number
   isBorderWrapper?: boolean
   iconSize?: IconSize
   onClick?: OnSelectPrize
+  isShowNumber?: boolean
 }
 
-const View = ({
-  from = PRIZE_VIEW_OPEN_FROM.INIT,
-  gap = 4,
-  isBorderWrapper = true,
-  iconSize = 'medium',
-  onClick,
-}: Props) => {
-  const prizes = useSelector(prizesSelector)
-  const { onMouseEnter, onMouseLeave } = useActions()
+interface RenderViewProps extends ViewProps {
+  prizes?: Prize[]
+  onMouseEnter?: OnMouseEnterPrize
+  onMouseLeave?: OnMouseLeavePrize
+}
 
+const RenderView = (props: RenderViewProps) => {
+  const {
+    isShowNumber = true,
+    from = PRIZE_VIEW_OPEN_FROM.INIT,
+    gap = 4,
+    isBorderWrapper = true,
+    iconSize = 'medium',
+    onClick,
+    prizes = defaultPrizes,
+    onMouseEnter,
+    onMouseLeave,
+  } = props
   return (
     <div
       className={clsx('game-prize-section', `open-from-view-${from}`, {
@@ -54,6 +68,7 @@ const View = ({
               onMouseEnter={onMouseEnter}
               onMouseLeave={onMouseLeave}
               onClick={onClick}
+              isShowNumber={isShowNumber}
             />
           )
         })}
@@ -62,7 +77,21 @@ const View = ({
   )
 }
 
+const View = (props: ViewProps) => {
+  const prizes = useSelector(prizesSelector)
+  const { onMouseEnter, onMouseLeave } = useActions()
+  return (
+    <RenderView
+      {...props}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      prizes={prizes}
+    />
+  )
+}
+
+const PrizeRenderView = memo(RenderView)
 const PrizeView = memo(View)
 
-export { PrizeViewWrapp, PrizeView }
+export { PrizeViewWrapp, PrizeRenderView, PrizeView }
 export default PrizeView

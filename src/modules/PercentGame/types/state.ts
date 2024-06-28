@@ -22,4 +22,5 @@ export interface PercentGameState {
   isSelling: boolean
   isCutting: boolean
   metaStatus: META_STATUS
+  isMirror: boolean
 }

@@ -6,6 +6,9 @@ interface Base {
   centered?: boolean
   className?: string
   wrapClassName?: string
+  isHideCancel?: boolean
+  isDisabledCancel?: boolean
+  isDisabledOk?: boolean
 }
 
 export interface BaseModalProps {
@@ -17,6 +20,8 @@ export interface BaseModalCompProps extends Base {
   modalExtraProps?: ModalExtraProps
   isOpen: boolean
   onClose: () => void
+  onCancel?: () => void
+  onOk?: () => void
 }
 
 export interface ModalCompProps extends Base {

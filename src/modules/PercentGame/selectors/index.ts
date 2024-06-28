@@ -118,3 +118,8 @@ export const isDisabledActionSelector = createSelector(
   [selectSlice],
   (state) => state.isSelling || state.isCutting || false,
 )
+
+export const isMirrorSelector = createSelector(
+  [selectSlice],
+  (state) => state.isMirror,
+)

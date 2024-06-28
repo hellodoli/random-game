@@ -6,14 +6,14 @@ import { modifyActions } from './actions/modify'
 import { sortActions } from './actions/sort'
 import { sellActions } from './actions/sell'
 import { cutActions } from './actions/cut'
+import { themeActions } from './actions/theme'
 
 export const slice = createSlice({
   initialState,
   name: 'percentGame',
   reducers: {
-    resetState: () => {
-      return initialState
-    },
+    resetState: () => initialState,
+    ...themeActions,
     ...ticketActions,
     ...sortActions,
     ...rollActions,

@@ -10,6 +10,7 @@ interface Props {
   iconSize?: number
   btnStyle?: { [key: string]: string | number }
   shape?: 'circle' | 'round' | 'default'
+  isMirror?: boolean
 }
 
 const Bag = ({
@@ -17,11 +18,14 @@ const Bag = ({
   iconSize = 20,
   btnStyle = btnStyleDefault,
   shape = 'default',
+  isMirror = false,
 }: Props) => {
   const onClick = () => {
-    modal.percentGame.openBag({
-      maskClosable: false,
-    })
+    if (!isMirror) {
+      modal.percentGame.openBag({
+        maskClosable: false,
+      })
+    }
   }
   return (
     <Button

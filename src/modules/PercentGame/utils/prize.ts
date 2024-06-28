@@ -4,6 +4,7 @@ import {
   RESULT_ROLL_TYPE,
   ICONS,
   Prize,
+  PrizeItem,
   ListPrizeOb,
   IconSize,
 } from 'modules/PercentGame/types'
@@ -32,6 +33,21 @@ const getGradientSet = (type: RESULT_ROLL_TYPE = RESULT_ROLL_TYPE.BRONZE) => {
     default:
       return GradientSet.BRONZE
   }
+}
+
+export const createNewPrize = (
+  prizeItem: PrizeItem,
+  gradientSet: GradientSet,
+) => {
+  const prize: Prize = {
+    id: uuidv4(),
+    iconId: prizeItem.id,
+    iconName: prizeItem.name,
+    gradientSet: gradientSet,
+    gradient: Gradient.HORIZONTAL,
+    number: 0,
+  }
+  return prize
 }
 
 export const getPrizes = (listPrizeOb: ListPrizeOb) => {
@@ -80,16 +96,7 @@ export const getPrize = (type = RESULT_ROLL_TYPE.BRONZE) => {
   //const gradientItems = [Gradient.HORIZONTAL, Gradient.RADIAL];
   const randomPrize = getRandomItemFromList(prizeSetItems)
   //const randomGradient = getRandomItemFromList(gradientItems);
-
-  const prize: Prize = {
-    id: uuidv4(),
-    iconId: randomPrize.id,
-    iconName: randomPrize.name,
-    gradientSet: getGradientSet(type),
-    gradient: Gradient.HORIZONTAL,
-    number: 0,
-  }
-  return prize
+  return createNewPrize(randomPrize, getGradientSet(type))
 }
 
 export const getIconPrize = (iconId: ICONS) => {
