@@ -13,21 +13,28 @@
   .ant-modal-content {
     padding: var(--modal-content-gap-y) var(--modal-content-gap-x);
   }
-  .ant-btn {
-    &.ant-btn-primary {
-      background-color: var(--color-primary);
-      &:disabled {
-        cursor: not-allowed;
-        border-color: #d9d9d9;
-        color: rgba(0, 0, 0, 0.25);
-        background-color: rgba(0, 0, 0, 0.04);
-        box-shadow: none;
+  .ant-modal-footer {
+    .ant-btn {
+      &.ant-btn-primary {
+        background-color: var(--color-primary);
+        &:disabled {
+          cursor: not-allowed;
+          border-color: #d9d9d9;
+          color: rgba(0, 0, 0, 0.25);
+          background-color: rgba(0, 0, 0, 0.04);
+          box-shadow: none;
+        }
       }
     }
   }
   &.content-scrollable {
     max-height: 100vh;
     overflow: hidden;
+    &.content-scrollable-always-full {
+      .ant-modal-content {
+        height: calc(100vh - 2 * var(--modal-content-gap-y));
+      }
+    }
     .ant-modal-content {
       max-height: calc(100vh - 2 * var(--modal-content-gap-y));
       display: flex;
@@ -38,25 +45,8 @@
       flex: 1;
       overflow: hidden auto;
     }
-    &.split {
-      .ant-modal-body {
-        display: flex;
-        width: 100%;
-        overflow: hidden;
-        & > * {
-          flex: 0 0 auto;
-          width: 50%;
-        }
-      }
-      &.split-left .ant-modal-body {
-        & > *:first-child {
-          width: 40%;
-          overflow: hidden auto;
-        }
-        & > *:last-child {
-          width: 60%;
-        }
-      }
+    &.split .ant-modal-body {
+      display: flex;
     }
   }
   &.full-screen {

@@ -22,7 +22,7 @@ const MainMenu = () => {
         type="primary"
         size="large"
         onClick={() => switchGame(defaultGame)}
-        className="btn-linear btn-wide play-game-btn uppercase"
+        className="btn-linear btn-wide play-game-btn uppercase fixed left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2"
       >
         play
       </Button>
@@ -35,7 +35,7 @@ const MainMenu = () => {
           type="primary"
           size="large"
           onClick={() => switchGame(null)}
-          className="btn-outline back-to-btn"
+          className="btn-outline back-to-btn fixed right-5 top-5 font-semibold leading-[28px] h-[28px]"
         >
           Back
         </Button>

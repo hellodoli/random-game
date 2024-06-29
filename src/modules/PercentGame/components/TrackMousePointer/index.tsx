@@ -1,6 +1,8 @@
 import React, { memo, useMemo, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Type, Shape } from 'types'
+import { themeProviderMirrorClass, themeProviderClass } from 'utils/settings'
+import { isMirrorSelector } from 'modules/PercentGame/selectors'
 import {
   prizeNameHoverSelector,
   prizeIconIdHoverSelector,
@@ -14,6 +16,7 @@ import useTrackMouse from 'modules/PercentGame/hooks/useTrackMouse'
 import './style.scss'
 
 const TrackMouse = () => {
+  const isMirror = useSelector(isMirrorSelector)
   const iconId = useSelector(prizeIconIdHoverSelector)
   const iconName = useSelector(prizeNameHoverSelector)
   const gradient = useSelector(prizeGradientHoverSelector)
@@ -46,7 +49,9 @@ const TrackMouse = () => {
         left: `${x}px`,
         visibility: isDisplay ? 'visible' : 'hidden',
       }}
-      className="game-item-pointer-view"
+      className={`${
+        isMirror ? themeProviderMirrorClass : themeProviderClass
+      } game-item-pointer-view`}
     >
       <div className="icon">{renderIcon()}</div>
       <div className="info-row">

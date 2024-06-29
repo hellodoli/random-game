@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { Form } from 'antd'
+import { Form, Button } from 'antd'
 import { BaseModalProps, BaseModal, useModal } from 'modules/modal'
 import {
   getStyleSheetRules,
@@ -10,13 +10,45 @@ import {
   MapCssProp,
 } from 'utils/settings'
 import { actions } from 'modules/PercentGame/slices'
-import MirrorPreview from './MirrorPreview'
-import PickColor from './PickColor'
+import Layout from './Layout'
+import Custom from './Custom'
 
-const getMapCss = {
-  colorsGlobal: true,
-  colorsGradient: true,
-  global: false,
+const isMirror = true
+
+const colorGlobalRules = getStyleSheetRules(
+  {},
+  {
+    colorsGlobal: true,
+    colorsGradient: false,
+    global: false,
+  },
+  isMirror,
+)
+
+const colorGradientRules = getStyleSheetRules(
+  {},
+  {
+    colorsGlobal: false,
+    colorsGradient: true,
+    global: false,
+  },
+  isMirror,
+)
+
+const navButtons = [
+  { id: 1, text: 'global colors' },
+  { id: 2, text: 'gradient colors' },
+]
+
+const getRules = (activeId: number) => {
+  switch (activeId) {
+    case 1:
+      return colorGlobalRules
+    case 2:
+      return colorGradientRules
+    default:
+      return colorGlobalRules
+  }
 }
 
 const EditTheme = ({ type: modalType }: BaseModalProps) => {
@@ -24,7 +56,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
   const [isDirty, setIsDirty] = useState(false)
-  const colorRules = useMemo(() => getStyleSheetRules({}, getMapCss, true), [])
+  const [activeNav, setActiveNav] = useState(navButtons[0].id)
   const mapCssProp = useRef<MapCssProp>({})
 
   const onCancel = useCallback(() => {
@@ -54,32 +86,40 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
     <BaseModal
       isOpen={isOpen}
       onClose={onClose}
-      className="game-module-percent-game-modal content-scrollable full-screen split split-left"
+      className="game-module-percent-game-modal content-scrollable content-scrollable-always-full full-screen split split-left"
       isHideCancel={false}
       isDisabledOk={!isDirty}
       modalExtraProps={modalExtraProps}
       onOk={onOk}
       onCancel={onCancel}
     >
-      <div className="col-left">
-        <Form form={form} layout="horizontal">
-          {colorRules.map((rule) => {
+      <Layout>
+        <div className="mb-10">
+          {navButtons.map(({ id, text }) => {
+            const isActive = activeNav === id
             return (
-              <Form.Item key={rule[0]} label={rule[0]}>
-                <PickColor
-                  initColor={rule[1]}
-                  pro={rule[0]}
-                  setIsDirty={setIsDirty}
-                  applyThemeColor={applyThemeColor}
-                />
-              </Form.Item>
+              <Button
+                key={id}
+                type="primary"
+                className={`${
+                  isActive ? 'btn-linear' : 'btn-outline'
+                } uppercase mt-2 lg:mt-0 lg:ml-2 first:ml-0 first:mt-0 w-full lg:w-auto`}
+                style={{ ...(isActive && { color: '#fff' }) }}
+                onClick={() => setActiveNav(id)}
+              >
+                {text}
+              </Button>
             )
           })}
+        </div>
+        <Form form={form} layout="horizontal">
+          <Custom
+            applyThemeColor={applyThemeColor}
+            setIsDirty={setIsDirty}
+            rules={getRules(activeNav)}
+          />
         </Form>
-      </div>
-      <div className="col-right">
-        <MirrorPreview />
-      </div>
+      </Layout>
     </BaseModal>
   )
 }

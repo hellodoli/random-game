@@ -1,6 +1,11 @@
 .game-rolling-area {
   padding: var(--body-gap);
   flex: 1;
+  &.is-mirror {
+    .btn-roll {
+      cursor: not-allowed;
+    }
+  }
   .rate-title {
     display: flex;
     align-items: center;
@@ -15,10 +20,9 @@
     margin: 8px 0;
     &.off-transition {
       .ant-progress-bg {
-        transition: none!important;
+        transition: none !important;
       }
     }
-    
   }
   .btn-roll {
     display: flex;
@@ -33,7 +37,7 @@
       color: var(--color-white);
     }
     &:disabled {
-      opacity: .5;
+      opacity: 0.5;
       cursor: not-allowed;
     }
     .consume-ticket-count {

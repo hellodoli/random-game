@@ -8,10 +8,6 @@
   color: #6c757d !important;
 }
 
-.text-uppercase {
-  text-transform: uppercase !important;
-}
-
 .App {
   width: 100vw;
   height: 100vh;
@@ -24,18 +20,8 @@
 }
 
 .main {
-  .play-game-btn {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
   .back-to-btn {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 0.875rem;
     height: 28px;
     line-height: 28px;
     padding: 0 8px;

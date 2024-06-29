@@ -96,9 +96,13 @@ const RollAction = ({ isMirror = false }: Props) => {
   }, [])
 
   return (
-    <div className="game-rolling-area section-border">
+    <div
+      className={`game-rolling-area section-border ${
+        isMirror ? 'is-mirror' : ''
+      }`}
+    >
       {!isMirror && <PrizePickUp />}
-      {!isMirror && <RollGuide />}
+      <RollGuide />
 
       <div id="rateProWrapp" className="rate-progress">
         <RollProgress progress={progress} />
