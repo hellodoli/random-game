@@ -21,7 +21,7 @@ const getModalProps = (props: ModalProps) => {
     ...rest,
     content: props.content || null,
     ...(modalExtraProps || MODAL_EXTRA_PROPS_DEFAULT),
-    className: `game-module-percent-game-modal ${props.className}`,
+    className: `game-module-percent-game-modal ${props.className || ''}`,
     wrapClassName: `${themeProviderClass}${props.wrapClassName || ''}`,
     centered: props.centered || false,
     ...(typeof onOk === 'function' ? { onOk } : {}),

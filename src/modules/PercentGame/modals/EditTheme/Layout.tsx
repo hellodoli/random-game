@@ -13,7 +13,7 @@ const Layout = ({
       <div className="col-left flex-[0_0_auto] md:w-2/5 md:flex-shrink-0 lg:overflow-x-hidden lg:overflow-y-auto">
         {children}
       </div>
-      <div className="col-right flex-1 ml-4">
+      <div className="col-right flex-1 ml-0 md:ml-4">
         {isShowMirrorPreview && <MirrorPreview />}
       </div>
     </div>

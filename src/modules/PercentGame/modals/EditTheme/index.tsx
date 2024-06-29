@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from 'react'
+import React, { useCallback, useState, useEffect, useRef, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Form, Button } from 'antd'
 import { BaseModalProps, BaseModal, useModal } from 'modules/modal'
@@ -13,43 +13,10 @@ import { actions } from 'modules/PercentGame/slices'
 import Layout from './Layout'
 import Custom from './Custom'
 
-const isMirror = true
-
-const colorGlobalRules = getStyleSheetRules(
-  {},
-  {
-    colorsGlobal: true,
-    colorsGradient: false,
-    global: false,
-  },
-  isMirror,
-)
-
-const colorGradientRules = getStyleSheetRules(
-  {},
-  {
-    colorsGlobal: false,
-    colorsGradient: true,
-    global: false,
-  },
-  isMirror,
-)
-
 const navButtons = [
   { id: 1, text: 'global colors' },
   { id: 2, text: 'gradient colors' },
 ]
-
-const getRules = (activeId: number) => {
-  switch (activeId) {
-    case 1:
-      return colorGlobalRules
-    case 2:
-      return colorGradientRules
-    default:
-      return colorGlobalRules
-  }
-}
 
 const EditTheme = ({ type: modalType }: BaseModalProps) => {
   const { isOpen, onClose, modalExtraProps } = useModal(modalType)
@@ -58,6 +25,34 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
   const [isDirty, setIsDirty] = useState(false)
   const [activeNav, setActiveNav] = useState(navButtons[0].id)
   const mapCssProp = useRef<MapCssProp>({})
+
+  const colorGlobalRules = useMemo(
+    () =>
+      getStyleSheetRules(
+        {},
+        {
+          colorsGlobal: true,
+          colorsGradient: false,
+          global: false,
+        },
+        true,
+      ),
+    [],
+  )
+
+  const colorGradientRules = useMemo(
+    () =>
+      getStyleSheetRules(
+        {},
+        {
+          colorsGlobal: false,
+          colorsGradient: true,
+          global: false,
+        },
+        true,
+      ),
+    [],
+  )
 
   const onCancel = useCallback(() => {
     resetMirrorCss()
@@ -75,6 +70,20 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
       ...css,
     }
   }, [])
+
+  const getRules = useCallback(
+    (activeId: number) => {
+      switch (activeId) {
+        case 1:
+          return colorGlobalRules
+        case 2:
+          return colorGradientRules
+        default:
+          return colorGlobalRules
+      }
+    },
+    [colorGlobalRules, colorGradientRules],
+  )
 
   useEffect(() => {
     return () => {
