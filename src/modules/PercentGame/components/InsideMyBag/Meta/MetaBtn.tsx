@@ -74,7 +74,7 @@ const MetaButton = (props: Props) => {
         ref={ref}
         type="primary"
         className={clsx(
-          'btn-item btn-item-meta',
+          'btn-item btn-linear-1',
           `btn-item-meta--${type}`,
           className,
           {
