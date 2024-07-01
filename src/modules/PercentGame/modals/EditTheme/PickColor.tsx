@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo, useRef } from 'react'
+import React, { useState, useCallback, memo, useRef, useEffect } from 'react'
 import { SketchPicker, ColorChangeHandler } from 'react-color'
 
 interface Props {
@@ -6,6 +6,7 @@ interface Props {
   pro: string
   setIsDirty: (isDirty: boolean) => void
   applyThemeColor: (pro: string, color: string) => void
+  isResetDefault?: boolean
 }
 
 const styles = {
@@ -40,7 +41,13 @@ const OnClosePopover = ({ onHandleClose }: { onHandleClose: () => void }) => {
   )
 }
 
-const PickColor = ({ initColor, pro, setIsDirty, applyThemeColor }: Props) => {
+const PickColor = ({
+  initColor,
+  pro,
+  setIsDirty,
+  applyThemeColor,
+  isResetDefault = false,
+}: Props) => {
   const [colorHex, setColorHex] = useState(initColor)
   const [displayColorPicker, setDisplayColorPicker] = useState(false)
   const timeout = useRef<string | number | NodeJS.Timeout | undefined>()
@@ -71,6 +78,10 @@ const PickColor = ({ initColor, pro, setIsDirty, applyThemeColor }: Props) => {
     },
     [pro, applyThemeColor],
   )
+
+  useEffect(() => {
+    if (isResetDefault) setColorHex(initColor)
+  }, [isResetDefault, initColor])
 
   return (
     <div>

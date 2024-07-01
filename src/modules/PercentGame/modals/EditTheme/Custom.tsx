@@ -6,6 +6,7 @@ interface Props {
   rules: string[][]
   setIsDirty: (isDirty: boolean) => void
   applyThemeColor: (pro: string, color: string) => void
+  isResetDefault?: boolean
 }
 
 const defaultRules: string[][] = []
@@ -20,6 +21,7 @@ const Custom = ({
   rules = defaultRules,
   applyThemeColor,
   setIsDirty,
+  isResetDefault = false,
 }: Props) => {
   return (
     <>
@@ -27,12 +29,13 @@ const Custom = ({
         const pro = rule[0]
         const color = rule[1]
         return (
-          <Form.Item key={pro} label={getColorLabel(pro)}>
+          <Form.Item key={`${pro}-${color}`} label={getColorLabel(pro)}>
             <PickColor
               initColor={color}
               pro={pro}
               setIsDirty={setIsDirty}
               applyThemeColor={applyThemeColor}
+              isResetDefault={isResetDefault}
             />
           </Form.Item>
         )

@@ -26,6 +26,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
   const [form] = Form.useForm()
   const [isDirty, setIsDirty] = useState(false)
   const [activeNav, setActiveNav] = useState(navButtons[0].id)
+  const [isResetDefault, setIsResetDefault] = useState(false)
   const mapCssProp = useRef<MapCssProp>({})
 
   const colorGlobalRules = useMemo(
@@ -39,7 +40,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
         },
         true,
       ),
-    [],
+    [activeNav, isResetDefault],
   )
 
   const colorGradientRules = useMemo(
@@ -53,7 +54,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
         },
         true,
       ),
-    [],
+    [activeNav, isResetDefault],
   )
 
   const onCancel = useCallback(() => {
@@ -76,6 +77,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
       const cssProp = { [pro]: color }
       updateMirrortheme(cssProp)
       updateMapCssProp(cssProp)
+      setIsResetDefault(false)
     },
     [updateMapCssProp],
   )
@@ -93,6 +95,14 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
     },
     [colorGlobalRules, colorGradientRules],
   )
+
+  const resetDefault = () => {
+    if (isResetDefault) return
+    setIsDirty(true)
+    setIsResetDefault(true)
+    resetMirrorCss({ resetDefault: true })
+    updateMapCssProp(getInjectedMirrorCss(DEFAULT_MIRROR_CSS))
+  }
 
   useEffect(() => {
     return () => {
@@ -117,11 +127,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
             <Button
               type="text"
               className="uppercase w-full lg:w-auto lg:m-1 mt-2"
-              onClick={() => {
-                setIsDirty(true)
-                resetMirrorCss({ resetDefault: true })
-                updateMapCssProp(getInjectedMirrorCss(DEFAULT_MIRROR_CSS))
-              }}
+              onClick={resetDefault}
             >
               Reset to default
             </Button>
@@ -148,6 +154,7 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
             applyThemeColor={applyThemeColor}
             setIsDirty={setIsDirty}
             rules={getRules(activeNav)}
+            isResetDefault={isResetDefault}
           />
         </Form>
       </Layout>
