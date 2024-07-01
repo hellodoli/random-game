@@ -7,8 +7,10 @@ import {
   resetMirrorCss,
   updateMirrortheme,
   updateMainTheme,
-  MapCssProp,
+  getInjectedMirrorCss,
+  DEFAULT_MIRROR_CSS,
 } from 'utils/settings'
+import type { MapCssProp } from 'utils/settings'
 import { actions } from 'modules/PercentGame/slices'
 import Layout from './Layout'
 import Custom from './Custom'
@@ -62,14 +64,21 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
     updateMainTheme({ ...mapCssProp.current })
   }, [])
 
-  const applyThemeColor = useCallback((pro: string, color: string) => {
-    const css = { [pro]: color }
-    updateMirrortheme(css)
+  const updateMapCssProp = useCallback((cssProp: MapCssProp) => {
     mapCssProp.current = {
       ...mapCssProp.current,
-      ...css,
+      ...cssProp,
     }
   }, [])
+
+  const applyThemeColor = useCallback(
+    (pro: string, color: string) => {
+      const cssProp = { [pro]: color }
+      updateMirrortheme(cssProp)
+      updateMapCssProp(cssProp)
+    },
+    [updateMapCssProp],
+  )
 
   const getRules = useCallback(
     (activeId: number) => {
@@ -104,22 +113,35 @@ const EditTheme = ({ type: modalType }: BaseModalProps) => {
     >
       <Layout>
         <div className="mb-10">
-          {navButtons.map(({ id, text }) => {
-            const isActive = activeNav === id
-            return (
-              <Button
-                key={id}
-                type="primary"
-                className={`${
-                  isActive ? 'btn-linear' : 'btn-outline'
-                } uppercase mt-2 lg:mt-0 lg:ml-2 first:ml-0 first:mt-0 w-full lg:w-auto`}
-                style={{ ...(isActive && { color: '#fff' }) }}
-                onClick={() => setActiveNav(id)}
-              >
-                {text}
-              </Button>
-            )
-          })}
+          <div className="lg:-m-1">
+            <Button
+              type="text"
+              className="uppercase w-full lg:w-auto lg:m-1 mt-2"
+              onClick={() => {
+                setIsDirty(true)
+                resetMirrorCss({ resetDefault: true })
+                updateMapCssProp(getInjectedMirrorCss(DEFAULT_MIRROR_CSS))
+              }}
+            >
+              Reset to default
+            </Button>
+            {navButtons.map(({ id, text }) => {
+              const isActive = activeNav === id
+              return (
+                <Button
+                  key={id}
+                  type="primary"
+                  className={`${
+                    isActive ? 'btn-linear' : 'btn-outline'
+                  } uppercase w-full lg:w-auto lg:m-1 mt-2`}
+                  style={{ ...(isActive && { color: '#fff' }) }}
+                  onClick={() => setActiveNav(id)}
+                >
+                  {text}
+                </Button>
+              )
+            })}
+          </div>
         </div>
         <Form form={form} layout="horizontal">
           <Custom

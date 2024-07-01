@@ -4,7 +4,7 @@ export interface MapCssProp {
   [key: string]: string
 }
 
-interface MirrorMapCssProp {
+export interface MirrorMapCssProp {
   [key: string]: MapCssProp
 }
 
@@ -46,6 +46,7 @@ const COLORS_GRADIENT: MapCssProp = {
   '--color-gradient-bronze-to': '#a0522d',
 }
 
+export const DEFAULT_MIRROR_CSS = getMirrorCss()
 const MIRROR_CSS = getMirrorCss()
 
 export const themeProviderClass = 'theme-provider-class'
@@ -175,8 +176,8 @@ export const updateMirrortheme = (injected: MapCssProp = {}) => {
   updateTheme({
     styleEl: mirrorStyleEl,
     classNameProvider: themeProviderMirrorClass,
-    isMirror: true,
     injected: injected,
+    isMirror: true,
   })
 }
 
@@ -185,15 +186,27 @@ export const updateMainTheme = (injected: MapCssProp = {}) => {
     styleEl: styleEl,
     classNameProvider: themeProviderClass,
     injected: injected,
+    isMirror: false,
   })
 }
 
-export const resetMirrorCss = () => {
-  const injectedArr = Object.values(getMirrorCss())
-  const injected = injectedArr.reduce((cur, mapCss) => {
+const defaultParamsResetMirrorCss = {
+  resetDefault: false,
+}
+export const getInjectedMirrorCss = (cssProp: MirrorMapCssProp) => {
+  const injectedArr = Object.values(cssProp)
+  return injectedArr.reduce((cur, mapCss) => {
     cur = { ...cur, ...mapCss }
     return cur
   }, {})
+}
+export const resetMirrorCss = ({
+  resetDefault = false,
+}: {
+  resetDefault?: boolean
+} = defaultParamsResetMirrorCss) => {
+  const cssProp = !resetDefault ? getMirrorCss() : DEFAULT_MIRROR_CSS
+  const injected = getInjectedMirrorCss(cssProp)
   updateTheme({
     styleEl: mirrorStyleEl,
     classNameProvider: themeProviderMirrorClass,
