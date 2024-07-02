@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useSlice } from './slices/useSlice'
 import { actions } from './slices'
 import { showModalInfo } from 'modules/PercentGame/utils'
+import { getLocalStorage, STORAGE_KEYS } from 'utils/storages'
 
 import Header from './components/Header'
 import RollAction from './components/RollAction'
@@ -18,11 +19,15 @@ const PercentGame = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     // show initial info
-    showModalInfo({
-      title: 'Hi! You will receive these items when start:',
-      content: <StartInfo />,
-      centered: true,
-    })
+    const key = STORAGE_KEYS.IS_HIDE_START_GAME_INFO_FOREVER
+    const isHide = getLocalStorage(key)
+    if (!isHide) {
+      showModalInfo({
+        title: 'Hi! You will receive these items when start:',
+        content: <StartInfo />,
+        centered: true,
+      })
+    }
     return () => {
       dispatch(actions.resetState())
     }

@@ -1,5 +1,7 @@
 export const STORAGE_KEYS = {
   SETTING_GLOBAL_THEME: 'setting_global_theme',
+  IS_HIDE_START_GAME_INFO_TODAY: 'is_hide_start_game_info_today',
+  IS_HIDE_START_GAME_INFO_FOREVER: 'is_hide_start_game_info_forever',
 }
 
 /*const REMOVE_STORAGE_KEYS = {

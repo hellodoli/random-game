@@ -1,6 +1,10 @@
 .game-module-percent-game,
 .game-module-percent-game-modal {
   --game-module-gap: 8px;
+  --game-border-radius-outer: calc(
+    var(--game-module-gap) + var(--game-border-radius-inner)
+  );
+  --game-border-radius-inner: 0px;
   --coin-color: #fcd975;
   .section-border {
     border: 3px solid var(--color-black);
@@ -27,13 +31,12 @@
 
 .game-module-percent-game {
   height: calc(100vh - 2 * var(--body-gap));
-
   .game-module-wrapper {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
     background: var(--color-primary);
-    border-radius: 8px;
+    border-radius: var(--game-border-radius-outer);
     padding: var(--game-module-gap);
     min-height: 400px;
     max-width: 500px;

@@ -1,11 +1,17 @@
 import React from 'react'
-import { Space } from 'antd'
+import { Space, Checkbox } from 'antd'
+import type { CheckboxProps } from 'antd'
 import { GameStartInfo } from './types'
 import {
   DEFAULT_MONEY,
   DEFAULT_TICKET_NUMBER,
   DEFAULT_ITEM_RANDOM_NUMBER,
 } from 'modules/PercentGame/constants'
+import {
+  setLocalStorage,
+  STORAGE_KEYS,
+  removeLocalStorage,
+} from 'utils/storages'
 import {
   CrownCoin,
   Ticket,
@@ -35,11 +41,20 @@ const listGameStartInfo: GameStartInfo[] = [
 ]
 
 const StartInfo = () => {
+  const onChange: CheckboxProps['onChange'] = (e) => {
+    const checked = !!e.target.checked
+    const key = STORAGE_KEYS.IS_HIDE_START_GAME_INFO_FOREVER
+    removeLocalStorage(key)
+    if (checked) setLocalStorage(key, `${checked}`)
+  }
   return (
-    <Space direction="vertical" size="middle">
+    <Space direction="vertical" size="middle" className="w-full">
       {listGameStartInfo.map((item) => (
         <RowItem key={item.id} {...item} />
       ))}
+      <div className="mx-auto mt-4">
+        <Checkbox onChange={onChange}>Never show again</Checkbox>
+      </div>
     </Space>
   )
 }
