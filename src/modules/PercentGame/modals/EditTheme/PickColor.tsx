@@ -67,14 +67,12 @@ const PickColor = ({
         color.rgb?.a || 1
       })`
       const colorPick = color.rgb?.a === 1 ? colorHex : colorRGBA
-      if (colorHex !== initColor) {
-        setColorHex(colorPick)
-        setIsDirty(true)
-        clearTimeout(timeout.current)
-        timeout.current = setTimeout(() => {
-          applyThemeColor(pro, colorPick)
-        })
-      }
+      setColorHex(colorPick)
+      setIsDirty(true)
+      clearTimeout(timeout.current)
+      timeout.current = setTimeout(() => {
+        applyThemeColor(pro, colorPick)
+      })
     },
     [pro, applyThemeColor],
   )
