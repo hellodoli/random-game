@@ -7,7 +7,7 @@ import './style.scss'
 const GameHeader = () => {
   return (
     <div className="game-header">
-      <div className="consume">
+      <div className="consume flex items-center w-full">
         <Notes />
         <Money />
         <Tickets />

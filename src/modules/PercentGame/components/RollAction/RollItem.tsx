@@ -56,7 +56,7 @@ const RollItem = ({
   }
 
   return (
-    <div className="roll-block">
+    <div className="roll-block flex items-center w-full gap-2">
       <Button
         shape="round"
         onClick={() => onClickStartRoll(consume, 1)}

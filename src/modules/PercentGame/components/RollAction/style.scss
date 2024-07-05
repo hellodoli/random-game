@@ -6,16 +6,6 @@
       cursor: not-allowed;
     }
   }
-  .rate-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 400;
-    color: var(--color-white);
-    .game-icon {
-      cursor: pointer;
-    }
-  }
   .rate-progress {
     margin: 8px 0;
     &.off-transition {
@@ -46,11 +36,5 @@
       font-size: 12px;
       font-weight: bold;
     }
-  }
-  .roll-block {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    gap: 8px;
   }
 }

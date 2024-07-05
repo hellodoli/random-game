@@ -23,4 +23,6 @@ export interface PercentGameState {
   isCutting: boolean
   metaStatus: META_STATUS
   isMirror: boolean
+  curLevel: number
+  curExp: number
 }

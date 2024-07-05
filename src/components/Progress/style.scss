@@ -2,4 +2,12 @@
   .ant-progress-bg {
     height: 16px !important;
   }
+  &.transition-none {
+    .ant-progress-bg {
+      transition: none;
+      &::before {
+        display: none;
+      }
+    }
+  }
 }

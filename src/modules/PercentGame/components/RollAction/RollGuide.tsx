@@ -44,8 +44,8 @@ const RollTitleGuide = () => {
   }
 
   return (
-    <div className="rate-title">
-      <HelpIcon size={16} onClick={onClick} />
+    <div className="rate-title flex items-center gap-2 font-normal text-color-white">
+      <HelpIcon size={16} onClick={onClick} classNames="cursor-pointer" />
       <span>Choose your roll type:</span>
     </div>
   )

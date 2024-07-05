@@ -1,12 +1,9 @@
-@import 'variables.scss';
-@import 'reset.scss';
-@import 'animate.scss';
-@import 'buttons.scss';
-@import 'modal.scss';
-
-.text-muted {
-  color: #6c757d !important;
-}
+@import 'variables';
+@import 'reset';
+@import 'helpers';
+@import 'animate';
+@import 'modal';
+@import 'buttons';
 
 .App {
   width: 100vw;

@@ -123,3 +123,13 @@ export const isMirrorSelector = createSelector(
   [selectSlice],
   (state) => state.isMirror,
 )
+
+export const curLevelSelector = createSelector(
+  [selectSlice],
+  (state) => state.curLevel,
+)
+
+export const curExpSelector = createSelector(
+  [selectSlice],
+  (state) => state.curExp,
+)

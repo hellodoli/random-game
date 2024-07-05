@@ -10,21 +10,11 @@ interface Props {
 
 const Notes = ({ ticketPrice = DEFAULT_TICKET_PRICE }: Props) => {
   return (
-    <div
-      className="flex items-center consume-item notes"
-      style={{
-        marginRight: 'auto',
-      }}
-    >
+    <div className="flex items-center text-sm mr-auto text-color-white">
       <span>(</span>
-      <TicketIcon size={14} marginRight={4} />
+      <TicketIcon size={14} classNames="mr-1" />
       <span>{`= ${ticketPrice}`}</span>
-      <CrownCoin
-        size={14}
-        marginLeft={2}
-        marginRight={4}
-        classNames="coin-icon"
-      />
+      <CrownCoin size={14} classNames="coin-icon mx-1" />
       <span>)</span>
     </div>
   )

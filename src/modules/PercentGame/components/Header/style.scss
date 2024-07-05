@@ -1,16 +1,8 @@
 .game-header {
-  .consume {
-    display: flex;
-    align-items: center;
-    flex-grow: 1;
-  }
   .number-coin,
   .number-ticket,
   .notes {
-    color: #fff;
-  }
-  .notes {
-    font-size: 14px;
+    color: var(--color-white);
   }
   .number-ticket {
     min-width: 30px;
@@ -29,7 +21,6 @@
   .ticket-icon {
     fill: var(--color-secondary);
   }
-
   .buy-ticket-btn {
     display: inline-flex;
     align-items: center;

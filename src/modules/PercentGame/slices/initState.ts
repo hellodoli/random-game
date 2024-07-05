@@ -26,6 +26,8 @@ const initialState: PercentGameState = {
   isCutting: false,
   metaStatus: META_STATUS.INITITAL,
   isMirror: false,
+  curExp: 0,
+  curLevel: 1,
 }
 
 export { initialState }

@@ -17,7 +17,19 @@ import {
   getNextGradientSet,
   getPrizeResultWhenMergeRandom,
 } from 'modules/PercentGame/utils/merge'
-import { DEFAULT_SLOTS } from 'modules/PercentGame/constants'
+import { addExp_Redux } from 'modules/PercentGame/utils/exp'
+import { DEFAULT_SLOTS, DEFAULT_EXP_TAKE } from 'modules/PercentGame/constants'
+
+function createNewPrize(prize: Prize | null): Prize | null {
+  if (prize) {
+    return {
+      ...prize,
+      id: uuidv4(),
+      gradientSet: getNextGradientSet(prize.gradientSet),
+    }
+  }
+  return null
+}
 
 export const modifyActions = {
   hoverPrize: (
@@ -126,24 +138,16 @@ export const modifyActions = {
         if (prize && (!prize.number || prize.number === 0)) delete prizes[id]
       })
 
+      const mergeStatus = MERGE_STATUS.MERGE_FAILED
       state.slots = DEFAULT_SLOTS
       state.prizes = prizes
-      state.mergeStatus = MERGE_STATUS.MERGE_FAILED
+      state.mergeStatus = mergeStatus
+      addExp_Redux(state, { exp: DEFAULT_EXP_TAKE[mergeStatus] })
       cb(false, null)
       return
     }
 
     // create new prize
-    const createNewPrize = (prize: Prize | null): Prize | null => {
-      if (prize) {
-        return {
-          ...prize,
-          id: uuidv4(),
-          gradientSet: getNextGradientSet(prize.gradientSet),
-        }
-      }
-      return null
-    }
     const generatePrize = randomMergeResult
       ? createNewPrize(getPrizeResultWhenMergeRandom([...state.slots]).prize)
       : createNewPrize(prizeWhenMergeSameIcon)
@@ -164,9 +168,11 @@ export const modifyActions = {
       const zeroQuantityPrizeIds = getZeroQuantityPrizeIds(prizes)
       zeroQuantityPrizeIds.forEach((id) => delete prizes[id])
 
+      const mergeStatus = MERGE_STATUS.MERGE_SUCCESS
       state.slots = DEFAULT_SLOTS
       state.prizes = prizes
-      state.mergeStatus = MERGE_STATUS.MERGE_SUCCESS
+      state.mergeStatus = mergeStatus
+      addExp_Redux(state, { exp: DEFAULT_EXP_TAKE[mergeStatus] })
     }
     cb(true, generatePrize)
   },

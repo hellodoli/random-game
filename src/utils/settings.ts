@@ -1,62 +1,68 @@
+import type { GetMapCss, MapCssProp, GlobalMapCssProp } from 'types/theme'
 import { addStylesheetRules, mirrorStyleEl, styleEl } from 'utils/stylesheet'
+import {
+  getGlobalThemeFromStorage,
+  getLocalStorage,
+  STORAGE_KEYS,
+  removeLocalStorage,
+} from 'utils/storages'
+import { GLOBAL_THEME, defaultGetMapCss } from '../constants'
 
-export interface MapCssProp {
-  [key: string]: string
-}
-
-export interface MirrorMapCssProp {
-  [key: string]: MapCssProp
-}
-
-export interface GetMapCss {
-  global?: boolean
-  colorsGlobal?: boolean
-  colorsGradient?: boolean
-}
-
-const defaultGetMapCss = {
-  global: true,
-  colorsGlobal: true,
-  colorsGradient: true,
-}
-
-const CSS_GLOBAL: MapCssProp = {
-  '--body-gap': '20px',
-  '--modal-content-gap-x': '16px',
-  '--modal-content-gap-y': '20px',
-}
-
-const COLORS_GLOBAL: MapCssProp = {
-  '--color-primary': '#108ee9',
-  '--color-secondary': '#87d068',
-  '--color-black': '#000',
-  '--color-white': '#fff',
-}
-
-const COLORS_GRADIENT: MapCssProp = {
-  '--color-gradient-1-start': '#ff4d82',
-  '--color-gradient-1-end': '#722ed1',
-  '--color-gradient-diamond-from': '#87d068',
-  '--color-gradient-diamond-to': '#ff4d82',
-  '--color-gradient-gold-from': '#a67c00',
-  '--color-gradient-gold-to': '#ffbf00',
-  '--color-gradient-silver-from': '#afafaf',
-  '--color-gradient-silver-to': '#c0c2ce',
-  '--color-gradient-bronze-from': '#cd8500',
-  '--color-gradient-bronze-to': '#a0522d',
-}
-
-export const DEFAULT_MIRROR_CSS = getMirrorCss()
+// Global variables
+const CSS_ROOT = getInitGlobalCss()
+const CSS_GLOBAL: MapCssProp = { ...CSS_ROOT.CSS_GLOBAL }
+const COLORS_GLOBAL: MapCssProp = { ...CSS_ROOT.COLORS_GLOBAL }
+const COLORS_GRADIENT: MapCssProp = { ...CSS_ROOT.COLORS_GRADIENT }
 const MIRROR_CSS = getMirrorCss()
 
-export const themeProviderClass = 'theme-provider-class'
-export const themeProviderMirrorClass = 'theme-mirror-provider-class'
+const themeProviderClass = 'theme-provider-class'
+const themeProviderMirrorClass = 'theme-mirror-provider-class'
 
-export function getMirrorCss(): MirrorMapCssProp {
+export { themeProviderClass, themeProviderMirrorClass }
+
+// function scope
+export function getInitGlobalCss() {
+  const clearTheme = () => {
+    removeLocalStorage(STORAGE_KEYS.IS_REMEMBER_THEME)
+    removeLocalStorage(STORAGE_KEYS.SETTING_GLOBAL_THEME)
+  }
+  const isRememberTheme = getLocalStorage(STORAGE_KEYS.IS_REMEMBER_THEME)
+  const globalTheme = getGlobalThemeFromStorage()
+  if (isRememberTheme && globalTheme) return globalTheme
+  clearTheme()
+  return GLOBAL_THEME
+}
+export function getMirrorCss(): GlobalMapCssProp {
   return {
     CSS_GLOBAL: { ...CSS_GLOBAL },
     COLORS_GLOBAL: { ...COLORS_GLOBAL },
     COLORS_GRADIENT: { ...COLORS_GRADIENT },
+  }
+}
+export function getGlobalCss(
+  { injected = {} }: { injected?: MapCssProp } = {
+    injected: {},
+  },
+) {
+  const cssGlobal = { ...CSS_GLOBAL }
+  const colorsGlobal = { ...COLORS_GLOBAL }
+  const colorsGradient = { ...COLORS_GRADIENT }
+  const keys = Object.keys(injected)
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i]
+    const value = injected[key]
+    if (cssGlobal[key]) {
+      cssGlobal[key] = value
+    } else if (colorsGlobal[key]) {
+      colorsGlobal[key] = value
+    } else if (colorsGradient[key]) {
+      colorsGradient[key] = value
+    }
+  }
+  return {
+    CSS_GLOBAL: cssGlobal,
+    COLORS_GLOBAL: colorsGlobal,
+    COLORS_GRADIENT: colorsGradient,
   }
 }
 
@@ -193,7 +199,7 @@ export const updateMainTheme = (injected: MapCssProp = {}) => {
 const defaultParamsResetMirrorCss = {
   resetDefault: false,
 }
-export const getInjectedMirrorCss = (cssProp: MirrorMapCssProp) => {
+export const getInjectedMirrorCss = (cssProp: GlobalMapCssProp) => {
   const injectedArr = Object.values(cssProp)
   return injectedArr.reduce((cur, mapCss) => {
     cur = { ...cur, ...mapCss }
@@ -205,7 +211,7 @@ export const resetMirrorCss = ({
 }: {
   resetDefault?: boolean
 } = defaultParamsResetMirrorCss) => {
-  const cssProp = !resetDefault ? getMirrorCss() : DEFAULT_MIRROR_CSS
+  const cssProp = !resetDefault ? getMirrorCss() : GLOBAL_THEME
   const injected = getInjectedMirrorCss(cssProp)
   updateTheme({
     styleEl: mirrorStyleEl,

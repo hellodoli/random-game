@@ -7,11 +7,7 @@ import {
   DEFAULT_TICKET_NUMBER,
   DEFAULT_ITEM_RANDOM_NUMBER,
 } from 'modules/PercentGame/constants'
-import {
-  setLocalStorage,
-  STORAGE_KEYS,
-  removeLocalStorage,
-} from 'utils/storages'
+import { STORAGE_KEYS, saveLocalStorageByCheckbox } from 'utils/storages'
 import {
   CrownCoin,
   Ticket,
@@ -44,8 +40,7 @@ const StartInfo = () => {
   const onChange: CheckboxProps['onChange'] = (e) => {
     const checked = !!e.target.checked
     const key = STORAGE_KEYS.IS_HIDE_START_GAME_INFO_FOREVER
-    removeLocalStorage(key)
-    if (checked) setLocalStorage(key, `${checked}`)
+    saveLocalStorageByCheckbox(checked, key)
   }
   return (
     <Space direction="vertical" size="middle" className="w-full">

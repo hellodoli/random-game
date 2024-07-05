@@ -7,6 +7,7 @@ import { sortActions } from './actions/sort'
 import { sellActions } from './actions/sell'
 import { cutActions } from './actions/cut'
 import { themeActions } from './actions/theme'
+import { levelActions } from './actions/level'
 
 export const slice = createSlice({
   initialState,
@@ -20,6 +21,7 @@ export const slice = createSlice({
     ...modifyActions,
     ...sellActions,
     ...cutActions,
+    ...levelActions,
   },
 })
 

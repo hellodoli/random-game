@@ -4,6 +4,7 @@ import {
   /* enum */
   RESULT_ROLL_TYPE,
   SORT_TYPE,
+  MERGE_STATUS,
   /* interface */
   Slots,
   ListSortPrizeArr,
@@ -125,4 +126,12 @@ export const DEFAULT_SORT_PRIZE: ListSortPrizeArr = [
 export const DEFAULT_TRACK_MOUSE_OPTIONS: TrackMouseOptions = {
   offsetWidth: 0,
   isNotShowWhenInit: false,
+}
+
+/**
+ * EXP
+ */
+export const DEFAULT_EXP_TAKE = {
+  [MERGE_STATUS.MERGE_FAILED]: 50,
+  [MERGE_STATUS.MERGE_SUCCESS]: 200,
 }
