@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/random-game/static/css/main.a2f7a777.css",
-    "main.js": "/random-game/static/js/main.834477e5.js",
+    "main.css": "/random-game/static/css/main.8da1a689.css",
+    "main.js": "/random-game/static/js/main.6ad557b6.js",
     "index.html": "/random-game/index.html",
-    "main.a2f7a777.css.map": "/random-game/static/css/main.a2f7a777.css.map",
-    "main.834477e5.js.map": "/random-game/static/js/main.834477e5.js.map"
+    "main.8da1a689.css.map": "/random-game/static/css/main.8da1a689.css.map",
+    "main.6ad557b6.js.map": "/random-game/static/js/main.6ad557b6.js.map"
   },
   "entrypoints": [
-    "static/css/main.a2f7a777.css",
-    "static/js/main.834477e5.js"
+    "static/css/main.8da1a689.css",
+    "static/js/main.6ad557b6.js"
   ]
 }
