@@ -38,7 +38,7 @@ export const GLOBAL_THEME: GlobalMapCssProp = {
     '--modal-content-gap-y': '20px',
   },
   COLORS_GLOBAL: {
-    '--color-primary': '#108ee9',
+    '--color-primary': '#4a90e2',
     '--color-secondary': '#87d068',
     '--color-black': '#000',
     '--color-white': '#fff',

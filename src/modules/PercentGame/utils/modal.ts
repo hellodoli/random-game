@@ -1,6 +1,7 @@
 import { Modal } from 'antd'
 import { ModalExtraProps } from 'modules/modal/types'
 import { MODAL_EXTRA_PROPS_DEFAULT } from 'modules/modal/constants'
+import modal from 'modules/modal/provider'
 import { themeProviderClass } from 'utils/settings'
 
 interface ModalProps {
@@ -54,5 +55,12 @@ export const showModalConfirm = (props: ModalProps) => {
   Modal.confirm({
     ...getModalProps(props),
     title: props.title || 'Confirm',
+  })
+}
+
+export const openModalRefining = (modalExtraProps?: ModalExtraProps) => {
+  modal.percentGame.refining({
+    maskClosable: false,
+    ...modalExtraProps,
   })
 }

@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import clsx from 'clsx'
 import { Button } from 'antd'
 import modal from 'modules/modal/provider'
 import { Backpack } from 'components/Icons/Game'
@@ -32,11 +33,13 @@ const Bag = ({
       type="primary"
       shape={rounded ? 'circle' : shape}
       icon={<Backpack size={iconSize} classNames="my-bag-icon" />}
-      className="btn-item btn-item-action btn-open-bag size--medium"
+      className={clsx('btn-item btn-item-action btn-open-bag size--medium', {
+        'rounded-[50%]': rounded,
+        'rounded-3xl': !rounded,
+      })}
       onClick={onClick}
       style={{
         width: rounded ? 'auto' : '100%',
-        borderRadius: rounded ? '50%' : 20,
         ...btnStyle,
       }}
     />
