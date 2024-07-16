@@ -131,7 +131,21 @@ export const DEFAULT_TRACK_MOUSE_OPTIONS: TrackMouseOptions = {
 /**
  * EXP
  */
+const BASE_EXP_TAKE = 50
+const REDUCE_EXP_TAKE_RATE = 0.8
 export const DEFAULT_EXP_TAKE = {
-  [MERGE_STATUS.MERGE_FAILED]: 50,
-  [MERGE_STATUS.MERGE_SUCCESS]: 200,
+  [MERGE_STATUS.MERGE_FAILED]: BASE_EXP_TAKE,
+  [MERGE_STATUS.MERGE_SUCCESS]: {
+    [GradientSet.CUSTOM]: Math.round(1.25 * BASE_EXP_TAKE),
+    [GradientSet.BRONZE]: Math.round(1.25 * BASE_EXP_TAKE),
+    [GradientSet.SILVER]: Math.round(
+      1.25 * BASE_EXP_TAKE * 4 * REDUCE_EXP_TAKE_RATE,
+    ),
+    [GradientSet.GOLD]: Math.round(
+      1.25 * BASE_EXP_TAKE * 16 * REDUCE_EXP_TAKE_RATE,
+    ),
+    [GradientSet.DIAMOND]: Math.round(
+      1.25 * BASE_EXP_TAKE * 64 * REDUCE_EXP_TAKE_RATE,
+    ),
+  },
 }

@@ -20,7 +20,6 @@ const Buttons = () => {
           disabled={isDisabled}
           title="Open Refining"
         />
-
         <div className="ml-auto flex items-center gap-2">
           <Sell />
           <Cut />

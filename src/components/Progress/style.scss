@@ -1,6 +1,6 @@
 .progress-wrapper {
-  .ant-progress-bg {
-    height: 16px !important;
+  .ant-progress-outer {
+    width: 100% !important;
   }
   &.transition-none {
     .ant-progress-bg {

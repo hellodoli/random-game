@@ -30,11 +30,21 @@ const getModalProps = (props: ModalProps) => {
   }
 }
 
-export const showModalInfo = (props: ModalProps) => {
-  Modal.info({
+export const showModalInfo = (props: ModalProps, isChain = false) => {
+  const modalFuncProps = {
     ...getModalProps(props),
     title: props.title || '',
-  })
+  }
+  if (!isChain) {
+    Modal.info(modalFuncProps)
+    return
+  }
+  const modal = Modal.info(modalFuncProps)
+  const closeModal = () => modal.destroy()
+  return {
+    modal,
+    closeModal,
+  }
 }
 
 export const showModalSuccess = (props: ModalProps) => {
@@ -60,6 +70,13 @@ export const showModalConfirm = (props: ModalProps) => {
 
 export const openModalRefining = (modalExtraProps?: ModalExtraProps) => {
   modal.percentGame.refining({
+    maskClosable: false,
+    ...modalExtraProps,
+  })
+}
+
+export const openModalRoll = (modalExtraProps?: ModalExtraProps) => {
+  modal.percentGame.roll({
     maskClosable: false,
     ...modalExtraProps,
   })

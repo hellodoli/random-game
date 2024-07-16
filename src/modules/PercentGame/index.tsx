@@ -40,7 +40,7 @@ const PercentGame = () => {
           <TrackMousePointer />
           <Header />
           <Menu />
-          <RollAction />
+          <RollAction isShowPrizePickUp={true} isParallel={false} />
         </div>
       </div>
     </div>

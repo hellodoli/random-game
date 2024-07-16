@@ -10,6 +10,7 @@ interface Props {
   status?: 'normal' | 'exception' | 'active' | 'success'
   showInfo?: boolean
   offTransition?: boolean
+  strokeWidth?: number
 }
 
 const Progress = ({
@@ -19,6 +20,7 @@ const Progress = ({
   status = 'active',
   showInfo = true,
   offTransition = false,
+  strokeWidth = 16,
 }: Props) => {
   const strokeColor = useMemo(
     () => ({
@@ -27,6 +29,7 @@ const Progress = ({
     }),
     [fromColor, toColor],
   )
+  const size = useMemo<[number, number]>(() => [0, strokeWidth], [strokeWidth])
   return (
     <div
       className={clsx('progress-wrapper', {
@@ -38,6 +41,7 @@ const Progress = ({
         strokeColor={strokeColor}
         status={status}
         showInfo={showInfo}
+        size={size}
       />
     </div>
   )

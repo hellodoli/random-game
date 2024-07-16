@@ -5,6 +5,7 @@ const modalPercentGame = getMergeModalName('PERCENT_GAME', [
   'OPEN_BAG',
   'REFINING',
   'EDIT_THEME',
+  'ROLL',
 ])
 
 export const MODAL_TYPE = {

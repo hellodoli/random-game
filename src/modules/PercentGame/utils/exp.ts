@@ -1,6 +1,12 @@
 import { getDispatch } from 'utils/reduxStore'
-import { PercentGameState } from 'modules/PercentGame/types'
+import {
+  PercentGameState,
+  AddExpPayload,
+  ListPrizeOb,
+  MERGE_STATUS,
+} from 'modules/PercentGame/types'
 import { actions } from 'modules/PercentGame/slices'
+import { DEFAULT_EXP_TAKE } from 'modules/PercentGame/constants'
 
 const HOLD_EXP_RATE = 1.125
 const BASE_EXP = 800
@@ -210,7 +216,7 @@ export const dispatchAddExp = (exp: number) => {
 
 export const addExp_Redux = (
   state: PercentGameState,
-  payload: { exp: number },
+  payload: AddExpPayload,
 ) => {
   const { exp } = payload
   const { nextExp, nextLevel } = getAddExp({
@@ -220,4 +226,16 @@ export const addExp_Redux = (
   })
   state.curExp = nextExp
   state.curLevel = nextLevel
+}
+
+export const getExpSetPrizesAfterRoll = (setPrizes: ListPrizeOb) => {
+  let exp = 0
+  const prizes = Object.values(setPrizes)
+  for (let i = 0; i < prizes.length; i++) {
+    const prize = prizes[i]
+    const expPrize =
+      DEFAULT_EXP_TAKE[MERGE_STATUS.MERGE_SUCCESS][prize.gradientSet]
+    exp += expPrize
+  }
+  return exp
 }

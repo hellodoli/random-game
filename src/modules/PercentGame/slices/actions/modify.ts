@@ -12,11 +12,9 @@ import {
   getMergePrizeSameType,
   getZeroQuantityPrizeIds,
   getPrizesFromSlots,
-} from 'modules/PercentGame/utils'
-import {
   getNextGradientSet,
   getPrizeResultWhenMergeRandom,
-} from 'modules/PercentGame/utils/merge'
+} from 'modules/PercentGame/utils'
 import { addExp_Redux } from 'modules/PercentGame/utils/exp'
 import { DEFAULT_SLOTS, DEFAULT_EXP_TAKE } from 'modules/PercentGame/constants'
 
@@ -172,7 +170,9 @@ export const modifyActions = {
       state.slots = DEFAULT_SLOTS
       state.prizes = prizes
       state.mergeStatus = mergeStatus
-      addExp_Redux(state, { exp: DEFAULT_EXP_TAKE[mergeStatus] })
+      addExp_Redux(state, {
+        exp: DEFAULT_EXP_TAKE[mergeStatus][generatePrize.gradientSet],
+      })
     }
     cb(true, generatePrize)
   },

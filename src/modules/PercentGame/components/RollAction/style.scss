@@ -1,11 +1,6 @@
 .game-rolling-area {
   padding: var(--body-gap);
   flex: 1;
-  &.is-mirror {
-    .btn-roll {
-      cursor: not-allowed;
-    }
-  }
   .rate-progress {
     margin: 8px 0;
     &.off-transition {
@@ -35,6 +30,19 @@
       align-items: center;
       font-size: 12px;
       font-weight: bold;
+    }
+  }
+  &__resert-modal {
+    background: rgba(0, 0, 0, 0.8);
+    .game-header {
+      padding: var(--body-gap);
+      padding-bottom: 0;
+      .guide-help-icon {
+        display: none;
+      }
+    }
+    .ant-progress .ant-progress-inner {
+      background: rgba(0, 0, 0, 0.2);
     }
   }
 }

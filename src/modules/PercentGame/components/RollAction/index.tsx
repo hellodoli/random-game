@@ -1,6 +1,6 @@
-import React, { useState, useEffect, memo, useCallback } from 'react'
+import React, { useState, useEffect, memo, useCallback, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
+import clsx from 'clsx'
 import { GradientSetColorFromTo } from 'types/enum/color'
 import {
   isRollingSelector,
@@ -24,10 +24,16 @@ const clearProgressInterval = () => {
 }
 
 interface Props {
+  isParallel?: boolean
   isMirror?: boolean
+  isShowPrizePickUp?: boolean
 }
 
-const RollAction = ({ isMirror = false }: Props) => {
+const RollAction = ({
+  isMirror = false,
+  isShowPrizePickUp = false,
+  isParallel = true,
+}: Props) => {
   const dispatch = useDispatch()
   const isRolling = useSelector(isRollingSelector)
   const ticket = useSelector(ticketSelector)
@@ -35,6 +41,7 @@ const RollAction = ({ isMirror = false }: Props) => {
   const [progress, setProgress] = useState(0)
   const [isAnimate, setIsAnimate] = useState(false)
   const [rates] = useState(DEFAULT_LIST_ROLL_BTN)
+  const rateProWrapp = useRef<HTMLDivElement>(null)
 
   const onRoll = useCallback(
     (
@@ -43,7 +50,7 @@ const RollAction = ({ isMirror = false }: Props) => {
       rates: RollResult[],
       gradient: GradientSetColorFromTo,
     ) => {
-      if (isRolling || isMirror) return
+      if (isRolling) return
       flag = false
       dispatch(actions.startRoll({ consume, gradient })) // start rolling
       intervalProgress = setInterval(() => {
@@ -62,12 +69,12 @@ const RollAction = ({ isMirror = false }: Props) => {
         })
       }, 200)
     },
-    [isRolling, isMirror],
+    [isRolling],
   )
 
   useEffect(() => {
     if (!isRolling) {
-      const proWrapp = document.getElementById('rateProWrapp')
+      const proWrapp = rateProWrapp.current
       if (!proWrapp) {
         setProgress(0)
         return
@@ -97,14 +104,15 @@ const RollAction = ({ isMirror = false }: Props) => {
 
   return (
     <div
-      className={`game-rolling-area section-border ${
-        isMirror ? 'is-mirror' : ''
-      }`}
+      className={clsx('game-rolling-area section-border', {
+        'is-mirror': isMirror,
+        'is-parallel': isParallel,
+      })}
     >
-      {!isMirror && <PrizePickUp />}
+      {isShowPrizePickUp && <PrizePickUp />}
       <RollGuide />
 
-      <div id="rateProWrapp" className="rate-progress">
+      <div className="rate-progress" ref={rateProWrapp}>
         <RollProgress progress={progress} />
       </div>
 
@@ -116,9 +124,8 @@ const RollAction = ({ isMirror = false }: Props) => {
         wrap
       >
         {rates.map(({ id, rates, rollType, consume }) => {
-          const disabled = isMirror
-            ? false
-            : isRolling || isAnimate || !ticket || !!(ticket < consume)
+          const disabled =
+            isRolling || isAnimate || !ticket || !!(ticket < consume)
           return (
             <RollItem
               key={id}

@@ -13,6 +13,10 @@ import {
   getMergePrizeSameType,
   showModalError,
 } from 'modules/PercentGame/utils'
+import {
+  addExp_Redux,
+  getExpSetPrizesAfterRoll,
+} from 'modules/PercentGame/utils/exp'
 
 export const rollActions = {
   startRoll: (
@@ -56,6 +60,9 @@ export const rollActions = {
     if (!Object.values(setPrizes).length) {
       const title = 'Oh no, you got nothing item (T_T)'
       showModalError({ title })
+    } else {
+      const exp = getExpSetPrizesAfterRoll(setPrizes)
+      addExp_Redux(state, { exp })
     }
     console.log({
       prizes,
