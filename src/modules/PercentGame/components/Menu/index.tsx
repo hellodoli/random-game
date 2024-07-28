@@ -15,7 +15,7 @@ const Menu = () => {
         type="primary"
         icon={<AnvilImpact size={28} />}
         className="btn-item btn-item-action btn-open-bag size--medium w-full mt-3 rounded-3xl"
-        onClick={openModalRefining}
+        onClick={() => openModalRefining()}
         style={{
           width: '100%',
         }}

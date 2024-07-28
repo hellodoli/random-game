@@ -16,7 +16,7 @@ const Buttons = () => {
           type="primary"
           className="btn-item btn-item-action"
           icon={<AnvilImpact size={24} />}
-          onClick={openModalRefining}
+          onClick={() => openModalRefining()}
           disabled={isDisabled}
           title="Open Refining"
         />
