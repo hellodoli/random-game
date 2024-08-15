@@ -72,9 +72,9 @@ const PrizeItem = ({
     <div
       className="game-prize-item"
       style={{ margin: `${gap}px` }}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
       onClick={() => onClick?.(id, slotId)}
+      onPointerEnter={onMouseEnter}
+      onPointerLeave={onMouseLeave}
     >
       <Icon
         size={getIconSize(iconSize)}

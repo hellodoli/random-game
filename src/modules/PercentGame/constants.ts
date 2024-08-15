@@ -9,7 +9,6 @@ import {
   Slots,
   ListSortPrizeArr,
   PrizeSet,
-  TrackMouseOptions,
 } from './types'
 
 export * from './data'
@@ -123,8 +122,10 @@ export const DEFAULT_SORT_PRIZE: ListSortPrizeArr = [
 /**
  * TRACK MOUSE
  */
-export const DEFAULT_TRACK_MOUSE_OPTIONS: TrackMouseOptions = {
-  offsetWidth: 0,
+export const DEFAULT_TRACK_MOUSE_OPTIONS = {
+  offsetY: 12,
+  offsetX: 12,
+  offsetWidth: 1,
   isNotShowWhenInit: false,
 }
 

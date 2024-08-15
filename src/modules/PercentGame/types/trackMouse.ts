@@ -1,4 +1,6 @@
 export interface TrackMouseOptions {
-  offsetWidth: number
-  isNotShowWhenInit: boolean
+  offsetWidth?: number
+  offsetY?: number
+  offsetX?: number
+  isNotShowWhenInit?: boolean
 }

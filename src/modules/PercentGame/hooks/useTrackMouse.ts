@@ -1,15 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
-import { DEFAULT_TRACK_MOUSE_OPTIONS as defaultProps } from 'modules/PercentGame/constants'
+import type { TrackMouseOptions } from 'modules/PercentGame/types/trackMouse'
+import { DEFAULT_TRACK_MOUSE_OPTIONS as dfProps } from 'modules/PercentGame/constants'
 
-interface Props {
-  offsetWidth?: number
-  isNotShowWhenInit?: boolean
-}
-
-const useTrackMouse = (props: Props = defaultProps) => {
+const useTrackMouse = (props: TrackMouseOptions = dfProps) => {
   const {
-    offsetWidth = defaultProps.offsetWidth,
-    isNotShowWhenInit = defaultProps.isNotShowWhenInit,
+    isNotShowWhenInit = dfProps.isNotShowWhenInit,
+    offsetY = dfProps.offsetY,
+    offsetX = dfProps.offsetX,
+    offsetWidth = dfProps.offsetWidth,
   } = props
   const [mounted, setMounted] = useState(false)
   const [x, setX] = useState(0)
@@ -25,23 +23,24 @@ const useTrackMouse = (props: Props = defaultProps) => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const track = (event: { clientY: number; clientX: number }) => {
-      const threshold = 12
-      const windowWidth = window.innerWidth
-      const containerWidth = offsetWidth
-      const y = event.clientY + threshold
+      if (offsetWidth === 0) return
+
+      const maxWidth = window.innerWidth
+      const containerWith = offsetWidth + offsetX
       let x = event.clientX
-      const containerWithT = containerWidth + threshold
-      if (x + containerWithT >= windowWidth) {
-        x -= containerWithT
-      } else x += threshold
+      if (x + containerWith >= maxWidth) {
+        x -= containerWith
+      } else {
+        x += offsetX
+      }
       setX(x)
-      setY(y)
+      setY(event.clientY + offsetY)
     }
     window.addEventListener('mousemove', track)
     return () => {
       window.removeEventListener('mousemove', track)
     }
-  }, [offsetWidth, isNotShowWhenInit])
+  }, [offsetWidth, offsetY, offsetX, isNotShowWhenInit])
 
   return { isShow, x, y }
 }
